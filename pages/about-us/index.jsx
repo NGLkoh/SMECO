@@ -11,7 +11,6 @@ import Content from '../../components/content/index'
 import ImageBanner from '../../components/imagebanner'
 import ListAuthor from '../../components/listAuthors'
 import Footer from '../../components/footer'
-import Testimonials from '../../components/testimonials'
 export default class index extends Component  {
   render () {
 		return (<> 
@@ -23,7 +22,6 @@ export default class index extends Component  {
 	<ImageBanner/>
 	<ListAuthor/>
 	<Footer/>
-	
 	</>)
   }
 }

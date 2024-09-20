@@ -45,10 +45,10 @@ const Navbar = () => {
 		 direction={"row"}
 		 spacing={4}>
 			<Box align="right" flex="1">
-				<Text display="inline" color="white" p={4}>Home</Text>
-			    <Text display="inline" color="white" p={4}>Blog</Text>
-			    <Text display="inline" color="white" p={4}>About Us</Text>
-			    <Text display="inline" color="white" p={4}>Contact Us</Text>
+				<Text display="inline" color="white" p={4}><a href='/../homepage'>Home</a></Text>
+			    <Text display="inline" color="white" p={4}><a href='/../blog'>Blog</a></Text>
+			    <Text display="inline" color="white" p={4}><a href='/../about-us'>About Us</a></Text>
+			    <Text display="inline" color="white" p={4}><a href='/../contact-us'>Contact Us</a></Text>
                  <Box display="inline" color="white">
 				<InputGroup w="150px" display="inline-block" backgroundColor={"white"} borderRadius={5}>
 					<Input placeholder='Search' height={6} fontSize={14} paddingBottom={1} textColor={'black'}/>
