@@ -1,0 +1,42 @@
+[
+	{
+		"section": "featured_blog",
+	    "section_id": "featured_blog",
+		"section_title":"Featured Blog",
+		"name": "Juan Dela Cruz",
+		"discription" : "Posted on 27th January 2024",
+		"header": "Step-by-step guide to choosing great font pairs",
+		"width": "100%",
+		"hight": "100%"
+	},
+	{
+		"section":"featured_image",
+		"image": "default_image",
+		"width": "100%",
+		"hight": "100%"
+	},
+	{
+		"section":"blog_details",
+		"html": "Lorem Ipsum Lorem Ipsim",
+		"fontSize": "20px",
+		"color": "100%"
+	},
+	{
+		"section":"blog_details",
+		"html": "Lorem Ipsum Lorem Ipsim",
+		"fontSize": "20px",
+		"color": "100%"
+	},
+	{
+		"section":"blog_details",
+		"html": "Lorem Ipsum Lorem Ipsim",
+		"fontSize": "20px",
+		"color": "100%"
+		},
+	{
+		"section":"blog_details",
+		"html": "Lorem Ipsum Lorem Ipsim",
+		"fontSize": "20px",
+		"color": "100%"
+		}
+	]

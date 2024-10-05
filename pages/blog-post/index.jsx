@@ -9,20 +9,21 @@ import Category from '../../components/category/index'
 import FeaturedPost from '../../components/featuredPost/index'
 import Content from '../../components/content/index'
 import ImageBanner from '../../components/imagebanner'
-import ListAuthor from '../../components/listAuthors'
+import ColumnCenter from '../../components/column_center'
 import Footer from '../../components/footer'
-import Testimonials from '../../components/testimonials'
-
+import FeaturedBlog from '../../components/featured_blog'
+import FeaturedImage from '../../components/featured_image'
 export default class index extends Component  {
   render () {
 		return (<> 
 	<Navbar page='homepage' />
-	<Banner/>
-	<FeaturedPost/>
-     <Content/>
+	<FeaturedBlog/>
+	<FeaturedImage/>
+	<ColumnCenter/>
+     {/* <Content/>
 	<Category/>
 	<ImageBanner/>
-	<ListAuthor/>
+	<ListAuthor/> */}
 	<Footer/>
 	
 	</>)

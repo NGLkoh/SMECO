@@ -1,12 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import { Flex, Box, useColorModeValue, Image, ChakraProvider, Stack, Text, InputRightElement, InputLeftElement, Input, InputGroup} from '@chakra-ui/react'
 import Header  from '../header/index'
-import { Search2Icon, AddIcon, WarningIcon, PhoneIcon, CheckIcon } from '@chakra-ui/icons'
+import { Search2Icon } from '@chakra-ui/icons'
 
 
-const Navbar = () => {
+const Navbar = (data:any) => {
+
    return (<ChakraProvider>
   <Header/>
    <Flex
@@ -15,7 +16,6 @@ const Navbar = () => {
 	minH={'60px'}
     py={{base: 2}}
 	px={{base: 2}}
-	borderButtom={1}
 	borderStyle={'solid'}
 	borderColor={useColorModeValue('gray.200', 'gray.900')}
 	align={'center'}>
@@ -44,7 +44,9 @@ const Navbar = () => {
 	    paddingRight="20px"
 		 direction={"row"}
 		 spacing={4}>
-			<Box align="right" flex="1">
+
+			{
+           data.page != "register" ? (<Box align="right" flex="1">
 				<Text display="inline" color="white" p={4}><a href='/../homepage'>Home</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../blog'>Blog</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../about-us'>About Us</a></Text>
@@ -56,8 +58,10 @@ const Navbar = () => {
 					<Search2Icon color='gray.500' position={'relative'} top={'-7px'} height={16} left={1} />
 					</InputRightElement>
 				</InputGroup>
-                 </Box>
-		</Box>
+             </Box>
+		  </Box>) : ""
+            }
+			
      </Stack>
 	</Flex>
 

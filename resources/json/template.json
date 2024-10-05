@@ -1,0 +1,43 @@
+{
+  "id": "1",
+  "data": [
+    {
+     "section":"featured_blog",
+     "html": "Lorem Ipsum Lorem Ipsim",
+     "width": "100%",
+     "hight": "100%"
+    },
+    {
+     "section":"featured_image",
+     "image": "default_image",
+     "width": "100%",
+     "hight": "100%"
+    },
+    {
+     "section":"blog_details",
+     "html": "Lorem Ipsum Lorem Ipsim",
+     "fontSize": "20px",
+     "color": "100%"
+    },
+     {
+     "section":"blog_details",
+     "html": "Lorem Ipsum Lorem Ipsim",
+    "fontSize": "20px",
+     "color": "100%"
+    },
+   {
+     "section":"blog_details",
+     "html": "Lorem Ipsum Lorem Ipsim",
+     "fontSize": "20px",
+     "color": "100%"
+    },
+   {
+     "section":"blog_details",
+     "html": "Lorem Ipsum Lorem Ipsim",
+     "fontSize": "20px",
+     "color": "100%"
+    }
+  ]
+}
+
+

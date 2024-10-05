@@ -32,7 +32,7 @@ const Category = () => {
          <SimpleGrid display="inline-flex" spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
 			{
               CardJson.map((e => (<Card  w={'100%'} display={'inline-block'}>
-				<CardBody>
+				<CardBody key={e.title}>
                 <Avatar mb={2} name='Segun Adebayo' src={e.image} />
 				<Heading mb={2} size='md' fontWeight={600}> {e.title}</Heading>
 				<Text>{e.sub}</Text>
