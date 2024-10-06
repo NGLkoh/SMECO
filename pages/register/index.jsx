@@ -3,7 +3,7 @@
 
 import React, {useState} from 'react'
 import {Box, Text, ChakraProvider, PinInputField, Image,useColorModeValue, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
-import '../../resources/css/style.css'
+
 import { FaGoogle} from 'react-icons/fa'; 
 import CaptionCarousel from '../../components/carousel'; 
 import axios from "axios";

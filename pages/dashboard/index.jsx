@@ -4,7 +4,6 @@
 import React, {useState, useEffect} from 'react'
 import {SidebarWithHeader}  from '../../components/sidebar'
 import {Box, Text, ChakraProvider, Grid, GridItem, Image,useColorModeValue, Input, Flex, CardBody, Spacer , Button, Stack, StackDivider , useToast, position } from '@chakra-ui/react'
-import '../../resources/css/style.css'
 import { FaGoogle} from 'react-icons/fa'; 
 import CaptionCarousel from '../../components/carousel'; 
 import axios from "axios";

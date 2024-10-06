@@ -6,17 +6,29 @@ import React, { useState } from 'react'
 import {TableContainer , Table, useDisclosure, Flex, Accordion, AccordionButton,AccordionItem , AccordionIcon , AccordionPanel, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
 import Head from 'next/head'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import {
-  FileUploadDropzone,
-  FileUploadList,
-  FileUploadRoot,
-} from "@/components/ui/file-button"
+import { FileUploader } from "react-drag-drop-files";
 import { FaTrash } from 'react-icons/fa'; 
-
+const fileTypes = ["JPG", "PNG", "GIF"];
  
- const featured_image = () => {
-	 retrun (<><Box mt={2}>
-			<Accordion allowMultiple>
+ const featured_image = ({ name, hight, width, image, section_title, handleChangeStateTemplate }) => {
+	const [file, setFile] = useState(null);
+	const handleChange = (file) => {
+		 var reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function () {
+			console.log(reader.result);
+		};
+		reader.onerror = function (error) {
+			console.log('Error: ', error);
+		};
+		
+		setFile(file);
+	};
+	const handelSave = () => {
+	}
+
+	 return (<><Box mt={2}>
+			<Accordion defaultIndex={[0]} allowMultiple>
 			<AccordionItem>
 		    <AccordionButton background={'#232536'} color={'#ffffff'} _hover={{ background: '#232536', color: "#ffffff" }}>
              <Box as='span' flex='1' textAlign='left'>
@@ -26,14 +38,9 @@ import { FaTrash } from 'react-icons/fa';
 			</AccordionButton>
            <AccordionPanel pb={4}>
            <Box mt={2}>
-			<Text mb='8px'>{hight.title}</Text>
-		     <FileUploadRoot maxW="xl" alignItems="stretch" maxFiles={10}>
-			<FileUploadDropzone
-				label="Drag and drop here to upload"
-				description=".png, .jpg up to 5MB"
-			/>
-			<FileUploadList />
-			</FileUploadRoot>
+			<Text mb='8px'>{image.title}</Text>
+		   
+               <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
 		   </Box>
 		   <Box mt={2}>
 			<Text mb='8px'>{hight.title}</Text>
@@ -56,6 +63,10 @@ import { FaTrash } from 'react-icons/fa';
 						size='sm'
 					/>
 			    </Box>
+                  <Button colorScheme='teal' mt={4} width={'100%'} bg={'#FFD050'} variant='solid' onClick={handelSave}>
+				   Save
+				  </Button>
+
 				</AccordionPanel>
 				</AccordionItem>
 				</Accordion>
@@ -63,10 +74,14 @@ import { FaTrash } from 'react-icons/fa';
 		</>)
 }
 
-const featured_blog = ({ name, hight, width, discription, section_title }) => {
+const featured_blog = ({ name, hight, width, discription, section_title, handleChangeStateTemplate }) => {
+        const [data, setData] = useState({})
+		const handelSave = () => {
+			console.log(data)
+	    }
 		return (<>
 		<Box mt={2}>
-			<Accordion allowMultiple>
+			<Accordion  defaultIndex={[0]} allowMultiple>
 			<AccordionItem>
 		    <AccordionButton background={'#232536'} color={'#ffffff'} _hover={{ background: '#232536', color: "#ffffff" }}>
              <Box as='span' flex='1' textAlign='left'>
@@ -80,6 +95,7 @@ const featured_blog = ({ name, hight, width, discription, section_title }) => {
 				bg={'#FFFFFF'}
 				color={'#4A5568'}
 				borderRadius={8}
+				onChange={(e) => setData({...data,[(name.title).toLowerCase()]: {"value" :e.target.value, "title":name.title}})}
 				size='sm'
 			/>
 			
@@ -90,6 +106,7 @@ const featured_blog = ({ name, hight, width, discription, section_title }) => {
 				bg={'#FFFFFF'}
 				color={'#4A5568'}
 				borderRadius={8}
+		        onChange={(e) => setData({...data, [(discription.title).toLowerCase()]: {"value" :e.target.value, "title":discription.title}  })}
 				size='sm'
 			/>
 			</Box>
@@ -101,6 +118,77 @@ const featured_blog = ({ name, hight, width, discription, section_title }) => {
 				bg={'#FFFFFF'}
 				color={'#4A5568'}
 				borderRadius={8}
+				onChange={(e) => setData({...data, [(hight.title).toLowerCase()]: {"value" :e.target.value, "title":hight.title}  })}
+				size='sm'
+			/>
+			</Box>
+
+			   <Box mt={2}>
+					<Text mb='8px'>{width.title}</Text>
+					<Input
+						type='text'
+						bg={'#FFFFFF'}
+						color={'#4A5568'}
+						onChange={(e) => setData({...data, [(width.title).toLowerCase()]: {"value" :e.target.value, "title":width.title}  })}
+						borderRadius={8}
+						size='sm'
+					/>
+			    </Box>
+				<Button colorScheme='teal' mt={4} width={'100%'} bg={'#FFD050'} variant='solid' onClick={handelSave}>
+				   Save
+				  </Button>
+				</AccordionPanel>
+				</AccordionItem>
+				</Accordion>
+			</Box>
+		</>)
+	}
+
+const featured_description = ({ header, hight, width, discription, section_title, handleChangeStateTemplate }) => {
+ const [data, setData] = useState({})
+		const handelSave = () => {
+			console.log(data)
+	    }
+		return (<>
+		<Box mt={2}>
+			<Accordion defaultIndex={[0]} allowMultiple>
+			<AccordionItem>
+		    <AccordionButton background={'#232536'} color={'#ffffff'} _hover={{ background: '#232536', color: "#ffffff" }}>
+             <Box as='span' flex='1' textAlign='left'>
+			  <Text fontSize='xl' fontWeight={600}  mb={2} >{section_title}</Text>
+			</Box>
+				<AccordionIcon />
+			</AccordionButton>
+           <AccordionPanel pb={4}>
+			<Text mb='8px'>{header.title}</Text>
+			<Input
+				bg={'#FFFFFF'}
+				color={'#4A5568'}
+				borderRadius={8}
+				onChange={(e) => setData({...data, [(header.title).toLowerCase()]: {"value" :e.target.value, "title":header.title}  })}
+				size='sm'
+			/>
+			
+			<Box mt={2}>
+			<Text mb='8px'>{discription.title}</Text>
+			<Input
+				type='text'
+				bg={'#FFFFFF'}
+				color={'#4A5568'}
+				borderRadius={8}
+				onChange={(e) => setData({...data, [(discription.title).toLowerCase()]: {"value" :e.target.value, "title":discription.title}  })}
+				size='sm'
+			/>
+			</Box>
+
+		   <Box mt={2}>
+			<Text mb='8px'>{hight.title}</Text>
+			<Input
+				type='text'
+				bg={'#FFFFFF'}
+				color={'#4A5568'}
+				borderRadius={8}
+			    onChange={(e) => setData({...data, [(hight.title).toLowerCase()]: {"value" :e.target.value, "title":hight.title}  })}
 				size='sm'
 			/>
 			</Box>
@@ -112,9 +200,13 @@ const featured_blog = ({ name, hight, width, discription, section_title }) => {
 						bg={'#FFFFFF'}
 						color={'#4A5568'}
 						borderRadius={8}
+			            onChange={(e) => setData({...data, [(width.title).toLowerCase()]: {"value" :e.target.value, "title":width.title}  })}
 						size='sm'
 					/>
 			    </Box>
+                 <Button colorScheme='teal' mt={4} width={'100%'} bg={'#FFD050'} variant='solid' onClick={handelSave}>
+				   Save
+				  </Button>
 				</AccordionPanel>
 				</AccordionItem>
 				</Accordion>
@@ -143,9 +235,21 @@ const Template = () => {
 		"image": {"value": "sample", "title": "Drop Image"},
 	    "width" : {"value": "100%", "title": "Width"},
 		"hight":  {"value": "100%", "title": "Hight"}
+	 },
+	  {
+		"section": featured_description,
+        "section_id": "featured_discription",
+		"section_title":"Featured Discription",
+		"header":  {"value": "Step-by-step guide to choosing great font pairs", "title": "Header"},
+		"discription" : {"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.", "title": "Discription"},
+		"width" : {"value": "100%", "title": "Width"},
+		"hight":  {"value": "100%", "title": "Hight"}
 	 }
 	])
+  const handleChangeStateTemplate = () => {
   
+  }
+
   const [ add, setAdd ] = useState(false)
    return (
 	<ChakraProvider>
@@ -220,7 +324,7 @@ const Template = () => {
   </Table>
 </TableContainer>) : (
   <>  {
-		defualtTemplale.map((e, key) => (<>{<e.section  name={e.name} hight={e.hight} width={e.width} discription={e.discription} section_title={e.section_title} />} </>))
+		defualtTemplale.map((e, key) => (<>{<e.section key={e.section_id} handleChangeStateTemplate={handleChangeStateTemplate} name={e.name} hight={e.hight} header={e.header}  width={e.width} image={e.image} discription={e.discription} section_title={e.section_title} />} </>))
 	  }
 
   </>)
