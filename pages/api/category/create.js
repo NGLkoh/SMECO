@@ -1,18 +1,15 @@
    
 import axios from "axios";
+
 export default async function handler(req, res) {
-	let { email, password, firstName, lastName, code, ids } = req.body;
-     console.log(email , " test")
+	let { id, title } = req.body;
+    const currentTime = new Date(); 
+
      try {
-       const response = await axios.post('http://localhost:3001/user/create', {
-         username: email,
-         password: password,
-		 firstName: firstName,
-		 lastName: lastName,
-		 email: email,
-		 code: code,
-		 userType: 'user',
-		 ids: ids
+       const response = await axios.post('http://localhost:3001/category/create', {
+         ids: id,
+         title: title,
+		 date: currentTime
          // add more data if needed
        });
        console.log(response.data);

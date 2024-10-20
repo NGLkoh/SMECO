@@ -49,10 +49,13 @@ import {
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import AddNewSection from '../addNew/index'
+import AddNewCategory from '../addNewCategory/index'
 import Template from '../../components/templates'
 import  {getCookiesData} from '../../lib/getCookieData'
+import Editor from '../template-category/index'
 import axios from "axios";
-
+import TemplateCategory from '../template-category/index';
+import AddSubUser from '../addSubUser/index'
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -76,6 +79,7 @@ interface MobileProps extends FlexProps {
 interface SidebarProps extends BoxProps {
   onClose: () => void;
   setNav: Function;
+   user: any;
 }
 
 const LinkItems: Array<LinkItemProps> = [
@@ -87,15 +91,15 @@ const LinkItems: Array<LinkItemProps> = [
     subLinks: [
       { name: 'Add New', icon: FiPlus,  id: 'addnew' },
 	  { name: 'Add Template', icon: FiPlus,  id: 'addTemplate' },
-	  { name: 'Categories', icon: FiLayers,  id: 'Categories'},
+	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
   { name: 'Media', icon: FiCamera,  id: 'sample' },
   { name: 'Users', icon: FiUser,
-  id: 'sample',
+  id: 'users',
  subLinks: [
-      { name: 'Add New', icon: FiUsers, id: 'sample' },
+      { name: 'Add New', icon: FiUsers, id: 'addNewUser' },
     ],
   },
   { name: 'Settings', icon: FiSettings, id: 'sample'},
@@ -106,7 +110,7 @@ const MainLinkItems: Array<LinkItemProps> = [
 ];
 
 
-const SidebarContent = ({ onClose,  setNav, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, user,  setNav, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -125,10 +129,16 @@ const SidebarContent = ({ onClose,  setNav, ...rest }: SidebarProps) => {
         <img src="logo.png" alt="logo" /> 
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
+      {LinkItems.map((link) => (<> 
+   {
+     user ? user.ids && link.id == "users"  ? "" :
+       <NavItem key={link.name} icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
           {link.name}
-        </NavItem>
+        </NavItem> : ""
+   }
+
+		</>
+      
       ))}
 
 	  <NavItem icon={FiPocket} setNav={setNav} id={''} position={'absolute'} bottom={'0'} marginBottom={'5'} mx={'5'} _hover={'none'}>
@@ -280,7 +290,7 @@ export const SidebarWithHeader = () => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'white')}>
-      <SidebarContent onClose={onClose} display={{ base: 'none', md: 'block' }}   setNav={setNav}/>
+      <SidebarContent user={user} onClose={onClose} display={{ base: 'none', md: 'block' }}   setNav={setNav}/>
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -290,15 +300,16 @@ export const SidebarWithHeader = () => {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} setNav={setNav} />
+          <SidebarContent user={user} onClose={onClose} setNav={setNav} />
         </DrawerContent>
       </Drawer>
       <MobileNav onOpen={onOpen} user={user}/>
       <Box ml={{ base: 0, md: 60 }} p="4">
         {/* Content */}
         { nav === 'addnew'  && (<AddNewSection/>) }
-     { nav === 'addTemplate'  && (<Template/>) } 
-		
+        { nav === 'addTemplate'  && (<Template user={user}/>) } 
+		{ nav === 'addNewCategory'  && (<TemplateCategory user={user}/>) } 
+		{ nav === 'addNewUser'  && (<AddSubUser user={user}/>) } 
       </Box>
     </Box>
   );

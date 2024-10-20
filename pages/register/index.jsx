@@ -30,6 +30,7 @@ const Register = () => {
 		console.log(file)
 		setFile(file);
 	};
+
 	let fields = [
 		{
 			function: setFirstname,
