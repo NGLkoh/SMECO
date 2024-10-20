@@ -33,7 +33,7 @@ const styleMap = {
 
 const Template = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()
-   const [ defualtTemplale, setdefualtTemplate] = useState([])
+   const [ category, setCategoryState] = useState([])
    const [ imagesUpload, setUploadedImagesData] = useState()
    const [ modalTemplate, setModalTemplate] = useState(false)
    const [ modalHtmlTemplate, setModalHtmlTemplate] = useState(false)
@@ -49,17 +49,28 @@ const Template = ({user}) => {
 
 	useEffect(() => {
       getTemplate()
+	  getCategory()
 	}, [])
 
    const handleTemplateSave = () => {
     setModalTemplate(true)
    }
+
+   const getCategory = async () => {
+	try {
+		let checking = user.ids ? user.ids : user._id
+		const res = await axios.post('/api/category/search', {id: checking})
+	   setCategoryState(res.data.result)
+		console.log(res)
+	} catch (e) { }
+    }
    const getTemplate = async () => {
-let checking = user.ids ? user.ids : user._id
+   let checking = user.ids ? user.ids : user._id
        const res = await axios.post('/api/template/search', {id: checking})
 	   setTemplateState(res.data.result)
 		console.log(res)
    }
+
    const onEditorStateChange = (editorState) => {
 		// let html = convertToHTML(editorState.getCurrentContent());
 		let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -152,6 +163,7 @@ let checking = user.ids ? user.ids : user._id
     <Thead>
       <Tr  background='#232536' color={'white'}>
         <Th  color={'white'}>Title</Th>
+         <Th  color={'white'}>Category</Th>
         <Th  color={'white'}>Date Created</Th>
         <Th  color={'white'} >Action</Th>
       </Tr>
