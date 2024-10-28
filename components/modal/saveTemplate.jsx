@@ -7,13 +7,16 @@ import {Modal , ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,Input,
 import Head from 'next/head'
 import axios from "axios";
 
-const SaveTemplate = ({modalTemplate, closeModal, html, user}) => {
+const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) => {
    const [ title, setTitle] = useState()
+
    const handleSaveTemplate = async () => {
-let checking = user.ids ? user.ids : user._id
-	        console.log(user)
+            let checking = user.ids ? user.ids : user._id
+	        console.log(html)
 			const res = await axios.post('/api/template/create', { id: checking, data: html , title: title})
-			closeModal()
+			refresh()
+            back(false)
+            closeModal()
    }
   return (
     <>

@@ -8,7 +8,7 @@ import {EditorState, ContentState, convertFromHTML } from 'draft-js'
 import axios from "axios";
 import moment from 'moment' 
 import AddSubUserIndex from './add'
-
+import { FaPen, FaTrash, FaTexT, FaImage, HiBarsArrowDown, FaCode, FaEye  } from 'react-icons/fa'; 
 
 const AddSubUser = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()
@@ -104,7 +104,6 @@ const AddSubUser = ({user}) => {
 		<Td >{moment(e.date).calendar()}</Td>
 	    <Td >{e.userType}</Td>
 		<Td position={'relative'}><Box display={'inline'}>
-			
 			</Box><Box display={'inline'}>	
 			<Button
 			bg={'black'} variant='solid'
@@ -112,7 +111,7 @@ const AddSubUser = ({user}) => {
 			color={'#ffffff'}
 			size={'md'}
 			mr={4}>
-			Delete
+			<FaTrash/>
 			</Button>
 		</Box></Td>
 	</Tr>)) : ""

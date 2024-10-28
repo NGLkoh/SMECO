@@ -100,10 +100,10 @@ const Template = ({user}) => {
       file: file,
       localSrc: URL.createObjectURL(file),
     }
-    console.log(imageObject)
+
     uploadedImages.push(imageObject);
 
-    setUploadedImagesData(file)
+    setUploadedImagesData(uploadedImages)
      
     // We need to return a promise with the image src
     // the img src we will use here will be what's needed
@@ -252,7 +252,7 @@ const Template = ({user}) => {
   </>)
 }
 <HtmlModalTemplate modalHtmlTemplate={modalHtmlTemplate} setRawHtml={setRawHtml} html={html} handleSaveHtml={handleSaveHtml} closeModalHtml={closeModalHtml}/>
-<SaveTemplate closeModal={closeModal} refresh={getTemplate} back={setAdd} html={html} user={user} modalTemplate={modalTemplate}/>
+<SaveTemplate closeModal={closeModal} html={html} user={user} modalTemplate={modalTemplate}/>
 </ChakraProvider>) 
 }
 

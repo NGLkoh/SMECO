@@ -5,7 +5,6 @@ import { Flex, Box, useColorModeValue, Image, ChakraProvider, Stack, Text, Input
 import Header  from '../header/index'
 import { Search2Icon } from '@chakra-ui/icons'
 
-
 const Navbar = (data:any) => {
 
    return (<ChakraProvider>
@@ -33,7 +32,7 @@ const Navbar = (data:any) => {
 		flex={{base:1}}
 		justify={{base:'center', md: 'start'}}>
 			<Box>
-				<Image src="logo.png" className="logo" w="150px"/>
+				<Image src="http://localhost:3000/logo.png" className="logo" w="150px"/>
 			</Box>
 		</Flex>
 
@@ -48,7 +47,7 @@ const Navbar = (data:any) => {
 			{
            data.page != "register" ? (<Box align="right" flex="1">
 				<Text display="inline" color="white" p={4}><a href='/../homepage'>Home</a></Text>
-			    <Text display="inline" color="white" p={4}><a href='/../blog'>Blog</a></Text>
+			    <Text display="inline" color="white" p={4}><a href='/../blog-post'>Blog</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../about-us'>About Us</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../contact-us'>Contact Us</a></Text>
                  <Box display="inline" color="white">

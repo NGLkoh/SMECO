@@ -32,7 +32,7 @@ const ListAuthor = () => {
 		<Box w={'100%'} padding={"10px"} textAlign={'center'}>
          <SimpleGrid display="inline-flex"  w={'100%'}  spacing={4}  templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
 			{
-              CardJson.map((e => (<Card  w={'100%'} display={'inline-block'}>
+              CardJson.map((e,index) => (<Card  key={index} w={'100%'} display={'inline-block'}>
 				<CardBody>
                 <Avatar mb={2} name='Segun Adebayo' src={e.image} />
 				<Heading mb={2} size='md' fontWeight={600}> {e.title}</Heading>
@@ -44,7 +44,7 @@ const ListAuthor = () => {
 						<Text display={'inline-block'} m={1}> <FaLinkedin/></Text>
                 </Box>
 				</CardBody>
-			</Card>)))
+			</Card>))
 	       }  
        </SimpleGrid>
 	  </Box>

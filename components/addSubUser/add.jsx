@@ -69,7 +69,7 @@ const AddSubUserIndex = ({user, getTemplate, setAdd}) => {
 
    return ( <>
 	  <Box >      
-				{ fields.map(row => (<InputCustom data={row}/> ))}
+				{ fields.map(row => (<InputCustom data={row} key={row.title}/> ))}
 				<Button
 					bg={'#FFD050'} 
 					w={'100%'}

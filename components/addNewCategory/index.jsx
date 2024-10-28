@@ -316,7 +316,7 @@ const AddNewCategory = () => {
   </Table>
 </TableContainer>) : (
   <>  {
-		defualtTemplale.map((e, key) => (<>{<e.section key={e.section_id} handleChangeStateTemplate={handleChangeStateTemplate} name={e.name} hight={e.hight} header={e.header}  width={e.width} image={e.image} discription={e.discription} section_title={e.section_title} />} </>))
+		defualtTemplale.map((e) => (<Box key={e.section_id}>{<e.section  handleChangeStateTemplate={handleChangeStateTemplate} name={e.name} hight={e.hight} header={e.header}  width={e.width} image={e.image} discription={e.discription} section_title={e.section_title} />} </Box>))
 	  }
 
   </>)

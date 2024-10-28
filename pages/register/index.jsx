@@ -122,7 +122,7 @@ const Register = () => {
 		<Box colSpan={3} bg={useColorModeValue('#232536', 'gray.800')} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
 		   
 			    { next == 1  ? (  <Box pl={'25%'} pr={'25%'}>  <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
-				{ fields.map(row => (<InputCustom data={row}/> ))}
+				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
 			  
                 <Box textAlign={'center'} mt={4} >
 				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={(e) =>  setNext(2)}>

@@ -49,6 +49,7 @@ import {
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import AddNewSection from '../addNew/index'
+import ClientDashboard from '../dashboard/index'
 import AddNewCategory from '../addNewCategory/index'
 import Template from '../../components/templates'
 import  {getCookiesData} from '../../lib/getCookieData'
@@ -129,15 +130,14 @@ const SidebarContent = ({ onClose, user,  setNav, ...rest }: SidebarProps) => {
         <img src="logo.png" alt="logo" /> 
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (<> 
-   {
-     user ? user.ids && link.id == "users"  ? "" :
-       <NavItem key={link.name} icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
+      {LinkItems.map((link) => (<Box  key={link.name}> 
+   {user ? user.ids && link.id == "users"  ? "" :
+       <NavItem icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
           {link.name}
         </NavItem> : ""
    }
 
-		</>
+		</Box>
       
       ))}
 
@@ -310,6 +310,7 @@ export const SidebarWithHeader = () => {
         { nav === 'addTemplate'  && (<Template user={user}/>) } 
 		{ nav === 'addNewCategory'  && (<TemplateCategory user={user}/>) } 
 		{ nav === 'addNewUser'  && (<AddSubUser user={user}/>) } 
+        { nav === 'dashboard'  && (<ClientDashboard user={user}/>) } 
       </Box>
     </Box>
   );
