@@ -1,5 +1,6 @@
 'use client'
-
+import React, {useState, useEffect} from 'react'
+import axios from "axios";
 import {
   Box,
   Heading,
@@ -51,11 +52,24 @@ const BlogAuthor = (props) => {
 }
 
 const FeaturedSecond = () => {
+  const [templateState, setTemplateState] = useState()
+
+ useEffect(() => {
+      getTemplate()
+	}, [])
+
+    const getTemplate = async () => {
+         const res = await axios.post('/api/template/searchAll')
+	      setTemplateState(res.data.result)
+		console.log(res.data.result)
+   }
+
   return (
  <ChakraProvider>
     <Container maxW={'7xl'} p="12">
       <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts</Heading>
-      <Box
+       {
+             templateState?   templateState.map(row => ( <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
         flexDirection={{ base: 'column', sm: 'row' }}
@@ -100,7 +114,7 @@ const FeaturedSecond = () => {
           <BlogTags tags={['Engineering']} />
           <Heading marginTop="1">
             <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              Blog article title
+              {row.title}
             </Text>
           </Heading>
           <Text
@@ -115,7 +129,9 @@ const FeaturedSecond = () => {
           </Text>
           <BlogAuthor name="John Doe" date={new Date('2021-04-06T19:01:27Z')} />
         </Box>
-      </Box>
+      </Box>) ) : ""
+        }
+      
     
     </Container>
  </ChakraProvider>
