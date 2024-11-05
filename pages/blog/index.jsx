@@ -8,19 +8,17 @@ import Banner from '../../components/banner'
 import Category from '../../components/category/index'
 import FeaturedPost from '../../components/featuredPost/index'
 import Content from '../../components/content/index'
-import ImageBanner from '../../components/imagebanner'
-import ListAuthor from '../../components/listAuthors'
+import FeaturedSecond from '../../components/blog-featured-second/index'
+import BlogFeatured from '../../components/blog-featured/index'
 import Footer from '../../components/footer'
+
+
 export default class index extends Component  {
   render () {
 		return (<> 
 	<Navbar/>
-	<Banner/>
-	<FeaturedPost/>
-     <Content/>
-	<Category/>
-	<ImageBanner/>
-	<ListAuthor/>
+	 <BlogFeatured/>
+     <FeaturedSecond/>
 	<Footer/>
 	</>)
   }
