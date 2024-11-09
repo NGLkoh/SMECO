@@ -6,6 +6,7 @@ import {
   Heading,
   Image,
   Text,
+  Link,
   Divider,
   HStack,
   Tag,
@@ -61,15 +62,24 @@ const FeaturedSecond = () => {
     const getTemplate = async () => {
          const res = await axios.post('/api/template/searchAll')
 	      setTemplateState(res.data.result)
-		console.log(res.data.result)
+	
+   }
+
+  const GetUsers = async ({ids, date}) => {
+        //  const res = await axios.post('/api/users/usersById', {id :  id})
+	    //  console.log(res)
+         return <BlogAuthor name={ids ? 'title': ""} date={new Date(date)} />
    }
 
   return (
  <ChakraProvider>
     <Container maxW={'7xl'} p="12">
+       
       <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts</Heading>
        {
-             templateState?   templateState.map(row => ( <Box
+             templateState?   templateState.map(row => (
+      <Link color='teal.500' href={`/blog-client/${row._id}`}>  
+      <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
         flexDirection={{ base: 'column', sm: 'row' }}
@@ -127,12 +137,12 @@ const FeaturedSecond = () => {
             1500s, when an unknown printer took a galley of type and scrambled it to make
             a type specimen book.
           </Text>
-          <BlogAuthor name="John Doe" date={new Date('2021-04-06T19:01:27Z')} />
+          {/* { row.ids ? <GetUsers ids={row.ids} date={row.date}/> : "" } */}
         </Box>
-      </Box>) ) : ""
+      </Box>    </Link>) ) : ""
         }
       
-    
+
     </Container>
  </ChakraProvider>
   )

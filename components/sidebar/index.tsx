@@ -57,6 +57,7 @@ import Editor from '../template-category/index'
 import axios from "axios";
 import TemplateCategory from '../template-category/index';
 import AddSubUser from '../addSubUser/index'
+import AddNewImageSection from '../addImage/index'
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -96,7 +97,7 @@ const LinkItems: Array<LinkItemProps> = [
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
-  { name: 'Media', icon: FiCamera,  id: 'sample' },
+  { name: 'Media', icon: FiCamera,  id: 'imageUpload' },
   { name: 'Users', icon: FiUser,
   id: 'users',
  subLinks: [
@@ -311,6 +312,7 @@ export const SidebarWithHeader = () => {
 		{ nav === 'addNewCategory'  && (<TemplateCategory user={user}/>) } 
 		{ nav === 'addNewUser'  && (<AddSubUser user={user}/>) } 
         { nav === 'dashboard'  && (<ClientDashboard user={user}/>) } 
+        { nav === 'imageUpload'  && (<AddNewImageSection user={user}/>) } 
       </Box>
     </Box>
   );
