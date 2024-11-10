@@ -3,7 +3,7 @@
 
 import React, {useState} from 'react'
 import {Box, Text, ChakraProvider, PinInputField, Image,useColorModeValue, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
-
+import ModalImage from '../../components/modal/viewModalImage'
 import { FaGoogle} from 'react-icons/fa'; 
 import CaptionCarousel from '../../components/carousel'; 
 import axios from "axios";
@@ -16,6 +16,8 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 const Register = () => {
 	const [firstName, setFirstname] = useState(String)
 	const [lastName, setlastName] = useState(String)
+    const [businessPermit, setBusinessPermit] = useState(String)
+	const [barangayClearance, setBarangayClearabce] = useState(String)
 	const [email,setEmail] = useState(String)
  	const [password, setPassword] = useState(String)
     const [next, setNext] = useState(1)
@@ -25,12 +27,11 @@ const Register = () => {
 	const [code2, setCode2] = useState(Number)  
 	const [code3, setCode3] = useState(Number)  
 	const [code4, setCode4] = useState(Number)  
-    const [code, setCode] = useState(Number)  
-	const handleChange = (file) => {
-		console.log(file)
-		setFile(file);
-	};
-
+    const [filenameBP, setFilenameBP] = useState()  
+    const [filenameBC, setFilenameBC] = useState()  
+	const [ title, setTitle] = useState("")
+	const [ source, setSource] = useState('')
+	const [ open, setOpen] = useState(false)
 	let fields = [
 		{
 			function: setFirstname,
@@ -58,20 +59,61 @@ const Register = () => {
 		}
 	]
 	const toast = useToast()
+  const handleOpenModal = (title, source) => {
+      setOpen(true)
+      setTitle(title)
+      setSource(source)
+   }
 
-	const handelRegister = async () => {
-        // const res = await axios.post('/api/email/sendEmail', { email: "ianmedina9090@gmail.com" })
-		//  setNext(2)
-       
-	 }
+   const onCloseModal = () => {
+     setOpen(false)
+    }
+  const handleChangeBusinessPermit = async (file)  => {
+    let r = (Math.random() + 1).toString(36).substring(7)
+         setFilenameBP(`${r}-${file.name}`)
+        const base64 = new Promise((resolve, reject) => {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = () => {
+              setBusinessPermit(reader.result)
+			 resolve(reader.result)
+			}
+			reader.onerror = reject
+		})
+	};
+	const handleChangeBarangayClearance = async (file)  => {
+    let r = (Math.random() + 1).toString(36).substring(7)
+         setFilenameBC(`${r}-${file.name}`)
+        const base64 = new Promise((resolve, reject) => {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = () => {
+              setBarangayClearabce(reader.result)
+			 resolve(reader.result)
+			}
+			reader.onerror = reject
+		})
+	};
 
 	const handleSendingEmail =  async () => {
 		let val = Math.floor(1000 + Math.random() * 9000);
 		console.log(val);
-		 const res = await axios.post('/api/users/create', {username: email, password: password, email: email, firstName: firstName, lastName: lastName, code: val  })
+         try{ await axios.post('/api/s3/upload', {filename: filenameBP, base64: businessPermit})}
+         catch(e) {}
+         try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
+         catch(row) { }
+
+		 const res = await axios.post('/api/users/create', 
+		{   username: email,
+            password: password,
+            email: email, 
+            firstName: firstName, 
+            lastName: lastName, 
+			code: val, 
+            businessPermit: filenameBP, 
+            barangayClearance: filenameBC  })
 		if(res.data.message === 'true') {
 		 const emailRes = await axios.post('/api/email/sendEmail', { email:  email, code: val})
-		 setCode(val)
           toast({
           title: 'Successfully Email Send',
           status: 'success',
@@ -146,22 +188,22 @@ const Register = () => {
 				   
 				   <Box pl={'15%'} pr={'15%'} pb={'15%'} mt={4}> 
 					<Text mb={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Business Permit</Text>
-				     <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+				      <FileUploader handleChange={(e) => handleChangeBusinessPermit(e)} name="file" types={fileTypes} />
 					  <Text mb={2} mt={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Barangay Clearance</Text>
-                      <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+                      <FileUploader handleChange={(e) => handleChangeBarangayClearance(e)} name="file" types={fileTypes} />
                      
 					<Text mt={4} opacity={0.7} fontSize={{ base: '10px', md: 'xsm', lg: 'xsm' }} className='req-text'> Formats accepted are .pdf, .jpg, and .png </Text>
 					<Text mt={4} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}> If you do not have a file you can use the sample below: </Text>
 					<Box mt={2}mr={'20%' }> 
-						<Image src="first.png" className="logo" w="150px" mb={2}/>
-						<Image src="second.png" className="logo" w="150px"/>
+						<Image onClick={(e) => handleOpenModal('Business Permit','document/business-permit.png')} src="first.png" className="logo" w="150px" mb={2}/>
+						<Image onClick={(e) =>  handleOpenModal('Barangay Clearance','document/business-clearance-sample.png')} src="second.png" className="logo" w="150px"/>
 					</Box>
 
 					<Box  mt={6}> 
 					<Button   onClick={(e) => setNext(1)}  margin={2} colorScheme='teal' mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
 					</Button> 
-					<Button margin={2}  onClick={(e) => handleSendingEmail(e)} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+					<Button margin={2} disabled={ businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Continue
 					</Button>
 			 	</Box>
@@ -234,6 +276,7 @@ const Register = () => {
 			</Box>
 			</Box>
 		</Box>
+ <ModalImage open={open} onCloseModal={onCloseModal} source={source} title={title}/>
 </ChakraProvider>
 </Box>)
 

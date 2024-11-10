@@ -99,7 +99,7 @@ const FeaturedSecond = () => {
               <Image
                 borderRadius="lg"
                 src={
-                  'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
+                  `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`
                 }
                 alt="some good alt text"
                 objectFit="contain"
@@ -132,10 +132,7 @@ const FeaturedSecond = () => {
             marginTop="2"
             color={useColorModeValue('gray.700', 'gray.200')}
             fontSize="lg">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry&apos;s standard dummy text ever since the
-            1500s, when an unknown printer took a galley of type and scrambled it to make
-            a type specimen book.
+            {row.description}
           </Text>
           {/* { row.ids ? <GetUsers ids={row.ids} date={row.date}/> : "" } */}
         </Box>

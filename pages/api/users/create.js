@@ -1,7 +1,7 @@
    
 import axios from "axios";
 export default async function handler(req, res) {
-	let { email, password, firstName, lastName, code, ids } = req.body;
+	let { email, password, firstName, lastName, code, ids, businessPermit, barangayClearance } = req.body;
      console.log(email , " test")
      try {
        const response = await axios.post('http://localhost:3001/user/create', {
@@ -11,6 +11,10 @@ export default async function handler(req, res) {
 		 lastName: lastName,
 		 email: email,
 		 code: code,
+         businessPermit: businessPermit? businessPermit : "",
+         barangayClearance: barangayClearance ? barangayClearance : "",
+         profileSet: 0,
+         active: false,
 		 userType: 'user',
 		 ids: ids
          // add more data if needed

@@ -14,8 +14,17 @@ const Login = () => {
 	const toast = useToast()
 	const  handelLogin = async ()  => {
 		const res = await axios.post('/api/users/login', {username: username, password: password})
-		console.log(res.data.message)
-		if(res.data.message === 'true') {
+	     
+        if(res.data.message === 'false') {
+          toast({
+          title: 'Login Failed, Incorrect password', 
+          status: 'warning',
+	      position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        })
+        } else if ((res.data.message === 'true') ) { 
+          if(res.data.result[0].active) {
 		  let origin = window.location.origin
 		  window.location.href = `${origin}/dashboard`
           toast({
@@ -27,13 +36,15 @@ const Login = () => {
         })
          } else {
 	       toast({
-          title: 'Login Failed, Incorrect password',
+          title: 'Please wait email to verify your account',
           status: 'warning',
 	      position: 'top-right',
           duration: 9000,
           isClosable: true,
         })
 		}
+        }
+		
 	 	console.log(username)
 		console.log(password)
    }
@@ -104,7 +115,7 @@ const Login = () => {
 					Continue with Google
 				   </Button>
 					<Box textAlign={'center'} mt={4} position={'relative'}>
-				     	 <Text  mt={2} mb={'8px'} display={'inline'}>Don’t have an account?</Text><Text ml={2} color={'#FFD050'} display={'inline'}>Create now</Text>
+				     	 <Text  mt={2} mb={'8px'} display={'inline'}>Don’t have an account?</Text><Text ml={2} color={'#FFD050'} display={'inline'} ><a href='/../register'>Create Now</a></Text>
 				    </Box>
 				</Box>
 			</Box>

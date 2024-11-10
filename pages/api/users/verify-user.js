@@ -1,17 +1,12 @@
    
 import axios from "axios";
-
 export default async function handler(req, res) {
-	let { id, data, title, fileName, description } = req.body;
-    const currentTime = new Date(); 
+	let { id, value } = req.body;
+     console.log(id , " test")
      try {
-       const response = await axios.post('http://localhost:3001/template/create', {
-         ids: id,
-         title: title,
-         data: data,
-         fileName: fileName,
-         description: description,
-		 date: currentTime
+       const response = await axios.post('http://localhost:3001/user/confirm-verify', {
+         id: id,  
+         value: value
          // add more data if needed
        });
        console.log(response.data);

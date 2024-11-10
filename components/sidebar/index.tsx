@@ -20,6 +20,9 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+Textarea,
+Input,
+Button
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -50,6 +53,7 @@ import {
 import { IconType } from 'react-icons';
 import AddNewSection from '../addNew/index'
 import ClientDashboard from '../dashboard/index'
+import AdminDashboard from '../dashboard-admin/index'
 import AddNewCategory from '../addNewCategory/index'
 import Template from '../../components/templates'
 import  {getCookiesData} from '../../lib/getCookieData'
@@ -57,7 +61,12 @@ import Editor from '../template-category/index'
 import axios from "axios";
 import TemplateCategory from '../template-category/index';
 import AddSubUser from '../addSubUser/index'
+import AddSubUserAdmin from '../addUser/index'
 import AddNewImageSection from '../addImage/index'
+
+const fileTypes = ["JPG", "PNG", "GIF"];
+import { FileUploader } from "react-drag-drop-files";
+
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -107,6 +116,19 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Settings', icon: FiSettings, id: 'sample'},
 ];
 
+
+const LinkAdmin: Array<LinkItemProps> = [
+  { name: 'Dashboard', icon: FiLayout, id: 'dashboard-admin' },
+  { name: 'Users', icon: FiUser,
+  id: 'users',
+ subLinks: [
+      { name: 'Add New', icon: FiUsers, id: 'addNewUser-admin' },
+    ],
+  },
+  { name: 'Settings', icon: FiSettings, id: 'sample'},
+];
+
+
 const MainLinkItems: Array<LinkItemProps> = [
   { name: 'Settings', icon: FiSettings, id: 'sample'},
 ];
@@ -131,16 +153,18 @@ const SidebarContent = ({ onClose, user,  setNav, ...rest }: SidebarProps) => {
         <img src="logo.png" alt="logo" /> 
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (<Box  key={link.name}> 
+      {user && user.userType === "admin"?  LinkAdmin.map((link) => (<Box  key={link.name}> 
    {user ? user.ids && link.id == "users"  ? "" :
        <NavItem icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
           {link.name}
         </NavItem> : ""
-   }
-
-		</Box>
-      
-      ))}
+   } </Box>)) :  LinkItems.map((link) => (<Box  key={link.name}> 
+   {user ? user.ids && link.id == "users"  ? "" :
+       <NavItem icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
+          {link.name}
+        </NavItem> : "" } 
+        </Box>
+       ))} 
 
 	  <NavItem icon={FiPocket} setNav={setNav} id={''} position={'absolute'} bottom={'0'} marginBottom={'5'} mx={'5'} _hover={'none'}>
          Send Feedback
@@ -276,11 +300,32 @@ const  handleLogout = async () => {
 export const SidebarWithHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [nav, setNav] = useState('');
- 	const [user, setUser] = useState()
-
+ 	const [user, setUser] = useState<any>()
+ 	const [fileName, setFileName] = useState<any>()
+    const [file, setFile] = useState<any>()
+    const [description, setDescription] = useState<any>()
+    const [facebook, setFacebook] = useState<any>()
+    const [twitter, setTwitter] = useState<any>()
+    const [instagram, setInstagram] = useState<any>()
+    const [linkIn, setLinkIn] = useState<any>()
 	useEffect(() => {
       getCookieUserData()
 	}, [])
+
+   const handleChange = async (event:any)  => {
+    console.log(event)
+    let r = (Math.random() + 1).toString(36).substring(7)
+         setFileName(`${r}-${event.name}`)
+        const base64 = new Promise((resolve, reject) => {
+			const reader = new FileReader()
+			reader.readAsDataURL(event)
+			reader.onload = () => {
+              setFile(reader.result)
+			 resolve(reader.result)
+			}
+			reader.onerror = reject
+		})
+	};
 
   const getCookieUserData = async () => {
 	const data = await getCookiesData()
@@ -289,8 +334,44 @@ export const SidebarWithHeader = () => {
 	setUser(user)
   }
 
+   const handleSaveTemplate = async () => {
+            // let checking = user.ids ? user.ids : user._id
+	        // console.log(html)
+            console.log(fileName)
+            console.log(file)
+            let data = { facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
+            const upload = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+			const res = await axios.post('/api/users/profile', { id: user._id, data: data})
+			// console.log(res)
+            // refresh()
+            // back(false)
+            // closeModal()
+   }
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'white')}>
+    
+      <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
+            <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
+			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
+                <Text mb={2}>Blog Profile Image:</Text>
+				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
+				<Text mt={2} mb={2}>Blog Profile Description:</Text>
+                <Textarea  onChange={(e:any) => setDescription(e.target.value)}/>
+                <Text mt={2} mb={2}>Facebook:</Text>
+                <Input onChange={(e:any) => setFacebook(e.target.value)}/>
+                <Text mt={2} mb={2}>Twitter:</Text>
+                <Input onChange={(e:any) => setTwitter(e.target.value)}/>
+                <Text mt={2} mb={2}>Instagram:</Text>
+                <Input onChange={(e:any) => setInstagram(e.target.value)}/>
+                <Text mt={2} mb={2}>LinkIn:</Text>
+                <Input onChange={(e:any) => setLinkIn(e.target.value)}/>
+
+                 <Button colorScheme='blue' onClick={(e => handleSaveTemplate())} mt={2} mr={3} w={'100%'}>
+				Save
+				</Button>
+            </Box>
+       </Box>
       <SidebarContent user={user} onClose={onClose} display={{ base: 'none', md: 'block' }}   setNav={setNav}/>
       <Drawer
         isOpen={isOpen}
@@ -313,6 +394,8 @@ export const SidebarWithHeader = () => {
 		{ nav === 'addNewUser'  && (<AddSubUser user={user}/>) } 
         { nav === 'dashboard'  && (<ClientDashboard user={user}/>) } 
         { nav === 'imageUpload'  && (<AddNewImageSection user={user}/>) } 
+        { nav === 'dashboard-admin'  && (<AdminDashboard user={user}/>) } 
+        { nav === 'addNewUser-admin'  && (<AddSubUserAdmin user={user}/>) } 
       </Box>
     </Box>
   );

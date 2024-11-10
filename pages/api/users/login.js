@@ -13,10 +13,13 @@ export default async function handler(req, res) {
        });
        console.log(response.data, 'dsdsd');
 	   let data = response.data.result[0]
-	   console.log(data)
-	   const cookie = new Cookies(req, res)
-	   cookie.set('auth',response.data.message, {httpOnly: true})
-       cookie.set('userData', JSON.stringify(data))
+	  if(data) {
+       if(data.active) {
+		const cookie = new Cookies(req, res)
+		cookie.set('auth',response.data.message, {httpOnly: true})
+		cookie.set('userData', JSON.stringify(data))
+       } }
+
        res.status(200).json(response.data);
      } catch (error) {
        console.log(error);
