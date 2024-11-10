@@ -140,7 +140,7 @@ const AddSubUserAdmin = ({user}) => {
               mr={4}>
                <FaEye/>
             </Button></Td>
-		<Td >{moment(e.date).calendar()}</Td>
+		<Td >{e.userType}</Td>
 
 	    <Td > <Select placeholder='Select option'  onChange={(r) => handleConfirmUser(e._id, r.target.value, `${e.firstName} ${e.lastName}`)} value={e.active} width={'150px'}>
 				<option value={false}> unverify</option> 
