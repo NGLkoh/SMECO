@@ -20,6 +20,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+ useToast,
 Textarea,
 Input,
 Button
@@ -308,6 +309,7 @@ export const SidebarWithHeader = () => {
     const [twitter, setTwitter] = useState<any>()
     const [instagram, setInstagram] = useState<any>()
     const [linkIn, setLinkIn] = useState<any>()
+ 	const toast = useToast()
 	useEffect(() => {
       getCookieUserData()
 	}, [])
@@ -336,25 +338,33 @@ export const SidebarWithHeader = () => {
 
    const handleSaveTemplate = async () => {
             // let checking = user.ids ? user.ids : user._id
-	        // console.log(html)
-            console.log(fileName)
-            console.log(file)
-            let data = { facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
-            const upload = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-			const res = await axios.post('/api/users/profile', { id: user._id, data: data})
-			// console.log(res)
-            // refresh()
-            // back(false)
-            // closeModal()
+		let newUsers:any = user;
+		delete newUsers.profileSet;
+		newUsers["profileSet"] = 1; 
+		console.log(newUsers)
+		const cookie: any = await axios.post('/api/users/getUpdateCookies', { user: newUsers})
+		let data = { facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
+		const upload = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+		const res = await axios.post('/api/users/profile', { id: user._id, data: data})
+
+		 toast({
+          title: 'Save Profile Success',
+          status: 'success',
+	      position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        })
+       
+     let origin = window.location.origin
+     window.location.href = `${origin}/dashboard`
    }
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'white')}>
-    
-      <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
+      { user ? user.profileSet === 0 ? <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
             <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
 			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
-                <Text mb={2}>Blog Profile Image:</Text>
+                <Text mb={2}>Blog Profile Image: {user.profileSet}</Text>
 				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
                 <Textarea  onChange={(e:any) => setDescription(e.target.value)}/>
@@ -371,7 +381,8 @@ export const SidebarWithHeader = () => {
 				Save
 				</Button>
             </Box>
-       </Box>
+       </Box> : "" : ""}
+      
       <SidebarContent user={user} onClose={onClose} display={{ base: 'none', md: 'block' }}   setNav={setNav}/>
       <Drawer
         isOpen={isOpen}
