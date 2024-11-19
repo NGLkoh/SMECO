@@ -33,14 +33,7 @@ const getName = async (id) => {
    return (<Box margin={"auto"} p={2}>  
           
 			<Box mt={2} border={"2px solid #000000"} h={'600px'} p={6} >
-                 Conversation with : { message ? message[0] ?  message[0].convo.map((idN) => {
-               if(idN.id !== user._id) {
-                  
-                  } else {
-				return
-             	}
-
-               } ) : "" : ""}
+                 Conversation with : { message ? message[0] ?  message[0].convo.map((idN) => { } ) : "" : ""}
                			<Box mt={2} border={"2px solid #000000"} h={'400px'} p={6} >
                     {message ? message[0] ? message[0].convo.map((data) =>  <Box> <Box p={2} float={data.id === user._id ? 'right' : 'left'} mt={data.id !== user._id ? '80px' : ''} bg={data.id === user._id ? '#232536' : 'gray'} w={'auto'} color={'white'} borderRadius={6}>{data.message}</Box>     </Box>): "" : ""} 
 				</Box>  
