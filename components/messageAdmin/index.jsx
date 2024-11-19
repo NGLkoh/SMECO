@@ -18,6 +18,7 @@ const getMessage = async () => {
          const res = await axios.post('/api/message/search', {
 				"id": checking,
 			})
+         
 		setMessage(res.data.result)
   }
 
@@ -34,7 +35,7 @@ const getName = async (id) => {
 			<Box mt={2} border={"2px solid #000000"} h={'600px'} p={6} >
                  Conversation with : { message ? message[0] ?  message[0].convo.map((idN) => {
                if(idN.id !== user._id) {
-                  return    await getName(idN.id)
+                  
                   } else {
 				return
              	}
