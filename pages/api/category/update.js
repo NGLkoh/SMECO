@@ -2,10 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-	let { id } = req.body;
+	let { id, title} = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/user/search-by-id', {
-         id: id
+       const response = await axios.post('http://localhost:3001/category/updateById', {
+         ids: id, 
+         title: title
        });
        console.log(response.data);
        res.status(200).json(response.data);

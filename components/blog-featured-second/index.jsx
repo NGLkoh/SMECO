@@ -53,31 +53,33 @@ const BlogAuthor = (props) => {
 }
 
 const FeaturedSecond = () => {
-  const [templateState, setTemplateState] = useState()
+  const [templateState, setTemplateState] = useState([])
 
  useEffect(() => {
       getTemplate()
 	}, [])
 
+
     const getTemplate = async () => {
+       setTemplateState([])
          const res = await axios.post('/api/template/searchAll')
-	      setTemplateState(res.data.result)
-	
-   }
-
-  const GetUsers = async ({ids, date}) => {
-        //  const res = await axios.post('/api/users/usersById', {id :  id})
-	    //  console.log(res)
-         return <BlogAuthor name={ids ? 'title': ""} date={new Date(date)} />
-   }
-
+         res.data.result.map(async (tem) => {
+           console.log(tem.category_id, "KUPAL")
+             let categoryRes
+	         if(tem.category_id){
+                 categoryRes  = await axios.post('/api/category/searchById', {id: tem.category_id})
+                 setTemplateState(prevState => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
+             }
+         }) 
+	 }
+ console.log(templateState)
   return (
  <ChakraProvider>
     <Container maxW={'7xl'} p="12">
        
       <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts</Heading>
        {
-             templateState?   templateState.map(row => (
+             templateState ?   templateState.map(row => (
       <Link color='teal.500' href={`/blog-client/${row._id}`}>  
       <Box
         marginTop={{ base: '1', sm: '5' }}
@@ -121,10 +123,10 @@ const FeaturedSecond = () => {
           flexDirection="column"
           justifyContent="center"
           marginTop={{ base: '3', sm: '0' }}>
-          <BlogTags tags={['Engineering']} />
+          { row.category ?  <BlogTags tags={[row.category]} />  : ""} 
           <Heading marginTop="1">
             <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              {row.title}
+              {row.title} {row._id}
             </Text>
           </Heading>
           <Text
@@ -136,7 +138,7 @@ const FeaturedSecond = () => {
           </Text>
           {/* { row.ids ? <GetUsers ids={row.ids} date={row.date}/> : "" } */}
         </Box>
-      </Box>    </Link>) ) : ""
+      </Box>    </Link> ) ) : ""
         }
       
 

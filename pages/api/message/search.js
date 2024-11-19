@@ -4,7 +4,7 @@ import axios from "axios";
 export default async function handler(req, res) {
 	let { id } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/user/search-by-id', {
+       const response = await axios.post('http://localhost:3001/message/search', {
          id: id
        });
        console.log(response.data);

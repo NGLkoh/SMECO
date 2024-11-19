@@ -30,7 +30,8 @@ const TemplateCategory = ({user}) => {
    const toast = useToast()
    const [ title, setTitle] = useState("")
    const [ add, setAdd ] = useState(false)
-   const [ html, setRawHtml] = useState('')
+   const [ edit, setEdit] = useState(false)
+   const [ updateState, setUpdateState] = useState()
    const [ editorState, setEditorState] = useState(EditorState.createWithContent(
         ContentState.createFromBlockArray(
           convertFromHTML('<p className="gago ka">My initial content.</p>')
@@ -44,7 +45,7 @@ const TemplateCategory = ({user}) => {
 	}, [])
 
    const handleTemplateSave = async () => {
-let checking = user.ids ? user.ids : user._id
+     let checking = user.ids ? user.ids : user._id
        const res = await axios.post('/api/category/create', {
 			"id": checking,
 			"title": title
@@ -68,8 +69,53 @@ let checking = user.ids ? user.ids : user._id
 		console.log(res)
 	} catch (e) { }
     }
- 
+  
+   const handleEdit = async (data) => {
+      setAdd(true)
+      setEdit(true)
+      setUpdateState(data)
+    }
 
+    const handleAdd = async () => {
+      setAdd(true)
+      setEdit(false)
+	}
+
+	const handleTemplateUpdate = async() => {
+		console.log(updateState.title, "TITLEEEEEEE")
+		console.log(updateState._id, "IDDDDDDDDDDDDD")
+	try {
+			const res = await axios.post('/api/category/update', {
+				"id": updateState._id,
+				"title": updateState.title
+			})
+	
+			toast({
+			title: 'Category Updated Succces',
+			status: 'success',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+			})
+			getTemplate()
+            setAdd(false)
+            setEdit(false)
+		} catch (e) { 
+           	toast({
+			title: 'Category Not Succces',
+			status: 'warning',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+			})
+		}
+	}
+
+  const onChangeTitle = (event) => { 
+     setUpdateState({...updateState, title: event.target.value})
+     
+
+   }
    return (
 	<ChakraProvider>
    <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -81,7 +127,7 @@ let checking = user.ids ? user.ids : user._id
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontSize={'xl'} fontWeight={'600'}>Create Category</Box>
+            <Box fontSize={'xl'} fontWeight={'600'}>{edit ? "Update Category" : "Create Category" } </Box>
           </HStack>
           <Flex alignItems={'center'}>
 			{add  ? <><Button
@@ -96,7 +142,7 @@ let checking = user.ids ? user.ids : user._id
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => setAdd(true)}>
+			 onClick={(e) => handleAdd()}>
               Add
             </Button></> }
            
@@ -122,7 +168,9 @@ let checking = user.ids ? user.ids : user._id
 			bg={'black'} variant='solid'
 			color={'#ffffff'}
 			size={'md'}
-			mr={4}>
+			mr={4}
+            onClick={(event) => handleEdit(e)}>
+            
 			Update
 			</Button>
 			</Box><Box display={'inline'}>	
@@ -142,8 +190,16 @@ let checking = user.ids ? user.ids : user._id
   </Table>
 </TableContainer>) : (
   <>  
-	<Box position={'relative'}  height={'auto'} padding={2}>
-		<Input placeholder='Please type your Title ' mb={2} onChange={(e) => setTitle(e.target.value)}/>
+   {edit ?  <> <Input placeholder='Please type your Title ' mb={2} defaultValue={updateState.title} onChange={(e) => onChangeTitle(e)}/>
+		<Button
+              bg={'#FFD050'} variant='solid'
+			  color={'#ffffff'}
+			  size={'md'}
+              mr={4}
+			 onClick={(e) => handleTemplateUpdate()}>
+              Update Category
+        </Button></> : <Box position={'relative'}  height={'auto'} padding={2}>
+		<Input placeholder='Please type your Title ' mb={2}  onChange={(e) => setTitle(e.target.value)}/>
 		<Button
               bg={'#FFD050'} variant='solid'
 			  color={'#ffffff'}
@@ -152,7 +208,8 @@ let checking = user.ids ? user.ids : user._id
 			 onClick={(e) => handleTemplateSave()}>
               Save Category
         </Button>
-   </Box>
+   </Box>}
+
   </>)
 }
  

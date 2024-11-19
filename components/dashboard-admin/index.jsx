@@ -4,13 +4,15 @@ import React from 'react'
 import {Box, Text,ChakraProvider,  Grid, GridItem, Image, CardHeader, Heading, CardBody, Card, Button, Stack, StackDivider } from '@chakra-ui/react'
 import BasicStatistics from '../stats/index'
 import ContainerGraph from '../graph/index'
+
 const AdminDashboard = ({user}) => {
+ console.log(user, "UISERSSSS")
    return (<ChakraProvider>
       <Box>
-	   <BasicStatistics/>
+	   <BasicStatistics user={user}/>
   </Box>
    <Box>
-	   <ContainerGraph/>
+	   <ContainerGraph user={user}/>
   </Box>
 </ChakraProvider>)
 }

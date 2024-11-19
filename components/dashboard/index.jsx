@@ -7,10 +7,10 @@ import ContainerGraph from '../graph/index'
 const ClientDashboard = ({user}) => {
    return (<ChakraProvider>
       <Box>
-	   <BasicStatistics/>
+	   <BasicStatistics user={user}/>
   </Box>
    <Box>
-	   <ContainerGraph/>
+	   <ContainerGraph user={user}/>
   </Box>
 </ChakraProvider>)
 }

@@ -10,11 +10,13 @@ import {
   StatNumber,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { ReactNode } from 'react'
+
+import { ReactNode, useState, useEffect } from 'react'
 import { BsPerson } from 'react-icons/bs'
 import { FiServer } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
-import { FaShare, FaComments, FaPodcast } from 'react-icons/fa'
+import axios from 'axios'
+import { FaShare, FaComments, FaPodcast, FaEye } from 'react-icons/fa'
 interface StatsCardProps {
   title: string
   stat: string
@@ -51,20 +53,40 @@ function StatsCard(props: StatsCardProps) {
   )
 }
 
-export default function BasicStatistics() {
+export default function BasicStatistics({user} :any) {
+  const [templateState, setTemplateState] = useState<any>([])
+  const [post, setPost] = useState<any>(0)
+  const [comment, setComment] = useState<any>(0)
+   useEffect(() => {
+      getTemplate()
+	}, [])
+
+   const getTemplate = async () => {
+   let checking = user.ids ? user.ids : user._id
+       const res = await axios.post('/api/template/search', {id: checking})
+        res.data.result.map(async (row:any) => {
+            const commentRes =await axios.post('/api/comment/search', {id: row._id})
+              setComment(comment + commentRes.data.result.length)
+         })
+        // const res = await axios.post('/api/comment/search', {id: params[4]})
+       setPost(res.data.result.length)
+	   setTemplateState(res.data.result)
+		console.log(res)
+   }
+
   return (
     <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1  fontSize={'xl'} fontWeight={'bold'}>
        Interactions
       </chakra.h1>
        <chakra.h4  fontSize={'sm'} py={2}>
-        Hal-hal yang perlu kamu tangani
+        Activity
       </chakra.h4>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-        <StatsCard title={'Posts'} stat={'7'} icon={<FaPodcast size={'3em'} />} />
+        <StatsCard title={'Posts'} stat={post} icon={<FaPodcast size={'3em'} />} />
         {/* <StatsCard title={'Profile Views'} stat={'5,000'} icon={<BsPerson size={'3em'} />} /> */}
-        <StatsCard title={'Share'} stat={'1,000'} icon={<FaShare size={'3em'} />} />
-        <StatsCard title={'Comments'} stat={'7'} icon={<FaComments size={'3em'} />} />
+        <StatsCard title={'Views'} stat={'4'} icon={<FaEye size={'3em'} />} />
+        <StatsCard title={'Comments'} stat={comment} icon={<FaComments size={'3em'} />} />
       
       </SimpleGrid>
     </Box>

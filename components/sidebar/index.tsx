@@ -64,7 +64,8 @@ import TemplateCategory from '../template-category/index';
 import AddSubUser from '../addSubUser/index'
 import AddSubUserAdmin from '../addUser/index'
 import AddNewImageSection from '../addImage/index'
-
+import ContactAdmin from '../messageAdmin/index'
+import ContactGuest from '../messageGuest/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 
@@ -107,6 +108,10 @@ const LinkItems: Array<LinkItemProps> = [
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
+  { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
+      { name: 'Contact Admin', icon: FiMessageSquare,  id: 'contactAdmin' },
+	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
+    ], },
   { name: 'Media', icon: FiCamera,  id: 'imageUpload' },
   { name: 'Users', icon: FiUser,
   id: 'users',
@@ -407,6 +412,10 @@ export const SidebarWithHeader = () => {
         { nav === 'imageUpload'  && (<AddNewImageSection user={user}/>) } 
         { nav === 'dashboard-admin'  && (<AdminDashboard user={user}/>) } 
         { nav === 'addNewUser-admin'  && (<AddSubUserAdmin user={user}/>) } 
+        { nav === 'contactAdmin'  && (<ContactAdmin user={user}/>) } 
+        { nav === 'guestMessage'  && (<ContactGuest user={user}/>) } 
+
+
       </Box>
     </Box>
   );
