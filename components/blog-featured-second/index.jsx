@@ -64,7 +64,6 @@ const FeaturedSecond = () => {
        setTemplateState([])
          const res = await axios.post('/api/template/searchAll')
          res.data.result.map(async (tem) => {
-           console.log(tem.category_id, "KUPAL")
              let categoryRes
 	         if(tem.category_id){
                  categoryRes  = await axios.post('/api/category/searchById', {id: tem.category_id})
@@ -126,7 +125,7 @@ const FeaturedSecond = () => {
           { row.category ?  <BlogTags tags={[row.category]} />  : ""} 
           <Heading marginTop="1">
             <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              {row.title} {row._id}
+              {row.title} 
             </Text>
           </Heading>
           <Text
