@@ -8,31 +8,42 @@ import Footer from '../../../components/footer'
 import axios from 'axios'
 import { CSS }  from './style'
 import io from 'socket.io-client'
-
+import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 let socket;
 
 const BlogClient = () => {
 	const [template, setTemplateState] = useState<any>([]) 
     const [comment, setComment] = useState("")
+    const [userId, setUserId] = useState()
     const [comments, setComments] = useState([])
-useEffect(() => {
-      fetchIntialBlog()
-      socketInitialize()
-      fetchIntialComment()
-}, [])
+
+	useEffect(() => {
+		fetchIntialBlog()
+		socketInitialize()
+		fetchIntialComment()
+	}, [])
 
 
 const socketInitialize = async () => {
-        // await fetch('/api/connection/socket')
-        // socket = io()
-        // socket.on('connect', () => {
-        //      console.log('connected')
-        // })
+      
+        socket = io()
+
+        socket.on('connect', () => {
+             console.log('connected')
+        })
+
+      const resfresh = () => {
+         console.log("PUTANGINA MU")
+		 fetchIntialComment()
+	  }
+	  socket.on("refresh-comment", resfresh);
 }
 
 const fetchIntialBlog = async() => {
 	let params = window.location.href.split('/')
   const res = await axios.post('/api/template/template', {id: params[4]})
+       console.log(res.data.result[0].ids, "userId")
+       setUserId(res.data.result[0].ids)
 	   setTemplateState(res.data.result)
 		console.log(res)
   }
@@ -45,12 +56,14 @@ const fetchIntialBlog = async() => {
   }
   
   const handleSaveComment = async () => {
+	  socket = io()
 	  const res = await axios.post('/api/comment/create', { id : template[0]._id, message: comment })
-      console.log("TANGIOANASDADASSD" , res)
+      socket.emit('add-comment', {result: res})
       setComment('')
   }
 
    return (<Box><ChakraProvider>
+     <GuestBlogMessage userId={userId}/>
     <CSS>
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">

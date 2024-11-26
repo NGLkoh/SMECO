@@ -66,6 +66,7 @@ import AddSubUserAdmin from '../addUser/index'
 import AddNewImageSection from '../addImage/index'
 import ContactAdmin from '../messageAdmin/index'
 import ContactGuest from '../messageGuest/index'
+import ProfileEdit from '../settings/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 
@@ -109,7 +110,6 @@ const LinkItems: Array<LinkItemProps> = [
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
   { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
-      { name: 'Contact Admin', icon: FiMessageSquare,  id: 'contactAdmin' },
 	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
     ], },
   { name: 'Media', icon: FiCamera,  id: 'imageUpload' },
@@ -119,7 +119,9 @@ const LinkItems: Array<LinkItemProps> = [
       { name: 'Add New', icon: FiUsers, id: 'addNewUser' },
     ],
   },
-  { name: 'Settings', icon: FiSettings, id: 'sample'},
+  { name: 'Settings', icon: FiSettings, id: 'settings',   subLinks: [
+	  { name: 'Profile Page', icon: FiUsers,  id: 'profile' },
+    ], }
 ];
 
 
@@ -131,7 +133,9 @@ const LinkAdmin: Array<LinkItemProps> = [
       { name: 'Add New', icon: FiUsers, id: 'addNewUser-admin' },
     ],
   },
-  { name: 'Settings', icon: FiSettings, id: 'sample'},
+  { name: 'Settings', icon: FiSettings, id: 'settings',   subLinks: [
+	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
+    ], }
 ];
 
 
@@ -320,7 +324,6 @@ export const SidebarWithHeader = () => {
 	}, [])
 
    const handleChange = async (event:any)  => {
-    console.log(event)
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${event.name}`)
         const base64 = new Promise((resolve, reject) => {
@@ -337,6 +340,7 @@ export const SidebarWithHeader = () => {
   const getCookieUserData = async () => {
 	const data = await getCookiesData()
 	let user =  JSON.parse(data)
+    console.log(user)
 	console.log(user.firstName)
 	setUser(user)
   }
@@ -369,7 +373,7 @@ export const SidebarWithHeader = () => {
       { user ? user.profileSet === 0 ? <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
             <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
 			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
-                <Text mb={2}>Blog Profile Image: {user.profileSet}</Text>
+                <Text mb={2}>Blog Profile Image:</Text>
 				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
                 <Textarea  onChange={(e:any) => setDescription(e.target.value)}/>
@@ -412,11 +416,11 @@ export const SidebarWithHeader = () => {
         { nav === 'imageUpload'  && (<AddNewImageSection user={user}/>) } 
         { nav === 'dashboard-admin'  && (<AdminDashboard user={user}/>) } 
         { nav === 'addNewUser-admin'  && (<AddSubUserAdmin user={user}/>) } 
-        { nav === 'contactAdmin'  && (<ContactAdmin user={user}/>) } 
         { nav === 'guestMessage'  && (<ContactGuest user={user}/>) } 
-
-
+        { nav === 'profile'  && (<ProfileEdit user={user}/>) } 
+         
       </Box>
+       { nav !== 'guestMessage'  && (<ContactAdmin user={user}/>)}
     </Box>
   );
 };

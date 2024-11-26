@@ -14,10 +14,12 @@ import {
   IconButton,
   createIcon,
   IconProps,
+Link,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { FaPen, FaTrash, FaTexT, FaImage, HiBarsArrowDown, FaCode,  FaFacebook, FaTwitter, FaInstagram, FaLinkedin  } from 'react-icons/fa'; 
 
-export default function CallToActionWithVideo() {
+export default function BlogFeaturedProfile({profile, name}) {
   return (
 <ChakraProvider>
     <Container maxW={'7xl'}>
@@ -26,71 +28,17 @@ export default function CallToActionWithVideo() {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 20, md: 28 }}
         direction={{ base: 'column', md: 'row' }}>
-        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-          <Heading
-            lineHeight={1.1}
-            fontWeight={600}
-            fontSize={{ base: '1xl', sm: '2xl', lg: '4xl' }}>
-            <Text
-              as={'span'}
-              position={'relative'}
-              _after={{
-             
-                position: 'absolute',
-                bottom: 1,
-                left: 0,
-               
-                zIndex: -1,
-              }}>
-                Step-by-step guide to choosing great font pairs
-            </Text>
-          </Heading>
-          <Text color={'gray.500'}>
-           Featured Post
-Step-by-step guide to choosing great font pairs
-By Juan Dela Cruz  l   May 23, 2024 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-          </Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-            <Button
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              colorScheme={'red'}
-              bg={'#ffb509'}
-              _hover={{ bg: 'red.500' }}>
-              Read More 
-            </Button>
-            {/* <Button
-              rounded={'full'}
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              leftIcon={<PlayIcon h={4} w={4} color={'gray.300'} />}>
-              How It Works
-            </Button> */}
-          </Stack>
-        </Stack>
+       
         <Flex
           flex={1}
           justify={'center'}
           align={'center'}
           position={'relative'}
           w={'full'}>
-          <Blob
-            w={'100%'}
-            h={'150%'}
-            position={'absolute'}
-            top={'-20%'}
-            left={0}
-            zIndex={-1}
-            color={useColorModeValue('red.50', 'red.400')}
-          />
+       
           <Box
             position={'relative'}
             height={'300px'}
-            rounded={'2xl'}
-            boxShadow={'2xl'}
             width={'full'}
             overflow={'hidden'}>
             {/* <IconButton
@@ -112,11 +60,40 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
               w={'100%'}
               h={'100%'}
               src={
-                '/man-in-white-dress-shirt-sitting-on-black-rolling-chair-while-facing-black-computer-set-and-smiling-840996.png'
+                profile ? `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${profile.fileName}` : ""
               }
             />
           </Box>
         </Flex>
+        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+          <Heading
+            lineHeight={1.1}
+            fontWeight={600}
+            fontSize={{ base: '1xl', sm: '2xl', lg: '4xl' }}>
+            <Text
+              as={'span'}
+              position={'relative'}
+              _after={{
+             
+                position: 'absolute',
+                bottom: 1,
+                left: 0,
+               
+                zIndex: -1,
+              }}>
+               Hey there, I’m {name} and welcome to my Blog
+            </Text>
+          </Heading>
+          <Text color={'gray.500'}>
+          {profile? profile.description: ""}   
+        </Text>
+          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
+				<Link src={profile ? profile.facebook : ""}><FaFacebook/></Link>
+                <Link src={profile  ? profile.twitter : ""}><FaTwitter/></Link>
+                <Link src={profile  ? profile.instagram : "" }><FaInstagram/></Link>
+                <Link src={profile  ? profile.linkIn : ""}><FaLinkedin/></Link>
+          </Stack>
+        </Stack>
       </Stack>
     </Container>
 </ChakraProvider>

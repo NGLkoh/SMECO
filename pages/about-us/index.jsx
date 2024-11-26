@@ -40,13 +40,16 @@ import ImageBanner from '../../components/imagebanner'
 import ListAuthor from '../../components/listAuthors'
 import Footer from '../../components/footer'
 export default class index extends Component  {
-  render () {
+    render () {
 		return (<> 
-	<Navbar/>
-    <ChakraProvider>
-   
-	 <Footer/>
-	 </ChakraProvider></>)
+	<Navbar page='about-us'/>
+     {/* <Content/>
+	<Category/>
+	<ImageBanner/>
+	<ListAuthor/> */}
+	<Footer/>
+	
+	</>)
   }
 }
 
