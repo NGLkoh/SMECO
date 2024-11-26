@@ -88,10 +88,10 @@ export default function BlogFeaturedProfile({profile, name}) {
           {profile? profile.description: ""}   
         </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-				<Link src={profile ? profile.facebook : ""}><FaFacebook/></Link>
-                <Link src={profile  ? profile.twitter : ""}><FaTwitter/></Link>
-                <Link src={profile  ? profile.instagram : "" }><FaInstagram/></Link>
-                <Link src={profile  ? profile.linkIn : ""}><FaLinkedin/></Link>
+				<Link href={profile ? profile.facebook : ""}><FaFacebook/></Link>
+                <Link href={profile  ? profile.twitter : ""}><FaTwitter/></Link>
+                <Link href={profile  ? profile.instagram : "" }><FaInstagram/></Link>
+                <Link href={profile  ? profile.linkIn : ""}><FaLinkedin/></Link>
           </Stack>
         </Stack>
       </Stack>

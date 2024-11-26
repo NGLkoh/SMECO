@@ -96,15 +96,15 @@ const ProfileEdit = ({user}:any) => {
          <Text mb={2}>Blog Profile Image:</Text>
 				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
-                <Textarea  onChange={(e:any) => setDescription(e.target.value)}  defaultValue={user.profile[0].description}/>
+                <Textarea  onChange={(e:any) => setDescription(e.target.value)}  defaultValue={user? user.profile[0].description : ""}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
-                <Input onChange={(e:any) => setFacebook(e.target.value)}  defaultValue={user.profile[0].facebook}/>
+                <Input onChange={(e:any) => setFacebook(e.target.value)}  defaultValue={user? user.profile[0].facebook : ""}/>
                 <Text mt={2} mb={2}>Twitter:</Text>
-                <Input onChange={(e:any) => setTwitter(e.target.value)} defaultValue={user.profile[0].twitter}/>
+                <Input onChange={(e:any) => setTwitter(e.target.value)} defaultValue={ user? user.profile[0].twitter : ""}/>
                 <Text mt={2} mb={2}>Instagram:</Text>
-                <Input onChange={(e:any) => setInstagram(e.target.value)} defaultValue={user.profile[0].instagram}/>
+                <Input onChange={(e:any) => setInstagram(e.target.value)} defaultValue={ user? user.profile[0].instagram : ""}/>
                 <Text mt={2} mb={2}>LinkIn:</Text>
-                <Input onChange={(e:any) => setLinkIn(e.target.value)} defaultValue={user.profile[0].linkIn}/>
+                <Input onChange={(e:any) => setLinkIn(e.target.value)} defaultValue={user? user.profile[0].linkIn : ""}/>
          
          <Button backgroundColor="#ffb509" mt={2} color={'white'}>Submit</Button>
       </Box>

@@ -69,6 +69,7 @@ import ContactGuest from '../messageGuest/index'
 import ProfileEdit from '../settings/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
+import { BsFillCalendarEventFill } from 'react-icons/bs';
 
 interface LinkItemProps {
   name: string;
@@ -109,6 +110,7 @@ const LinkItems: Array<LinkItemProps> = [
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
+  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'event' },
   { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
 	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
     ], },
