@@ -67,6 +67,8 @@ import AddNewImageSection from '../addImage/index'
 import ContactAdmin from '../messageAdmin/index'
 import ContactGuest from '../messageGuest/index'
 import ProfileEdit from '../settings/index'
+import Events from '../events/index'
+import AdminEvents from '../admin-events/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 import { BsFillCalendarEventFill } from 'react-icons/bs';
@@ -110,7 +112,7 @@ const LinkItems: Array<LinkItemProps> = [
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
-  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'event' },
+  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'events' },
   { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
 	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
     ], },
@@ -135,9 +137,10 @@ const LinkAdmin: Array<LinkItemProps> = [
       { name: 'Add New', icon: FiUsers, id: 'addNewUser-admin' },
     ],
   },
-  { name: 'Settings', icon: FiSettings, id: 'settings',   subLinks: [
-	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
-    ], }
+  { name: 'Message', icon: FiMessageSquare, id: 'message',   subLinks: [
+	  { name: 'User Message', icon: FiMessageSquare,  id: 'guestMessage' },
+    ], },
+ { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
 ];
 
 
@@ -420,6 +423,8 @@ export const SidebarWithHeader = () => {
         { nav === 'addNewUser-admin'  && (<AddSubUserAdmin user={user}/>) } 
         { nav === 'guestMessage'  && (<ContactGuest user={user}/>) } 
         { nav === 'profile'  && (<ProfileEdit user={user}/>) } 
+        { nav === 'events'  && (<Events user={user}/>) } 
+        {  nav === 'admin-events'  && (<AdminEvents user={user}/>)}
          
       </Box>
        { nav !== 'guestMessage'  && (<ContactAdmin user={user}/>)}
