@@ -39,7 +39,7 @@ export default function ContainerGraph({user} :any) {
  const getCategory = async () => {
 	try {
 		let checking = user.ids ? user.ids : user._id
-		const res = await axios.post('/api/category/search', {id: checking})
+		const res = await axios.post('/api/category/all')
 	   setCategoryState(res.data.result)
 		console.log(res.data.result, 'catergory')
 	} catch (e) { }
@@ -47,7 +47,7 @@ export default function ContainerGraph({user} :any) {
    const getTemplate = async () => {
    let dateArray:any = []
    let checking = user.ids ? user.ids : user._id
-       const res = await axios.post('/api/template/search', {id: checking})
+       const res = await axios.post('/api/template/all')
        console.log(res.data.result)
       res.data.result.map((data:any) => dateArray.push(moment(data.date).format('L')))
 	   setTemplateState(res.data.result)
@@ -75,7 +75,7 @@ export default function ContainerGraph({user} :any) {
         <Calendar onChange={onChange} value={value}  />
       </GridItem>
         <GridItem  w='100%'>
-			<Box width={'100%'} overflow={'hidden'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
+			<Box width={'100%'}  overflow={'scroll'} height={'400px'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
 			{templateState.map((data:any) => (<Box  key={data._id} width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
 				<Box position={'absolute'}> 
                  <Box fontWeight={600}>{moment(data.date).format("Do")}</Box>	   

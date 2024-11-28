@@ -2,17 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-	let { id, title, description } = req.body;
-    const currentTime = new Date(); 
-
+     	let { ids, userId } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/event/create', {
-         ids: id,
-         title: title,
-		 date: currentTime,
-         description: description, 
-         users: []
-         // add more data if needed
+       const response = await axios.post('http://localhost:3001/event/updateUsersEventById', {
+         ids: ids,
+         userId: userId
        });
        console.log(response.data);
        res.status(200).json(response.data);

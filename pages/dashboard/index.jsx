@@ -33,7 +33,6 @@ const Dashboard = () => {
 		<Box  height={'100%'}>
 		<Box width={'100%'} height={"100%"} minHeight="100vh" margin={'auto'}>
 		<Box w={'100%'} height={"100%"} minHeight="100vh">
-         
         <SidebarWithHeader />
 	  </Box>
       </Box>

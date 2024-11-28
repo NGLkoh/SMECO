@@ -66,6 +66,7 @@ import AddSubUserAdmin from '../addUser/index'
 import AddNewImageSection from '../addImage/index'
 import ContactAdmin from '../messageAdmin/index'
 import ContactGuest from '../messageGuest/index'
+import Comments from '../comments/index'
 import ProfileEdit from '../settings/index'
 import Events from '../events/index'
 import AdminEvents from '../admin-events/index'
@@ -81,6 +82,7 @@ interface LinkItemProps {
 }
 
 interface NavItemProps extends FlexProps {
+  count: number;
   icon: IconType;
   id?: string;
   children: React.ReactNode;
@@ -97,6 +99,7 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
   setNav: Function;
    user: any;
+  count: number;
 }
 
 const LinkItems: Array<LinkItemProps> = [
@@ -111,8 +114,8 @@ const LinkItems: Array<LinkItemProps> = [
 	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
   },
-  { name: 'Comments', icon: FiMessageSquare,  id: 'sample' },
-  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'events' },
+  { name: 'Comments', icon: FiMessageSquare,  id: 'comment' },
+  { name: 'Anouncement', icon: BsFillCalendarEventFill,  id: 'events' },
   { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
 	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
     ], },
@@ -149,7 +152,7 @@ const MainLinkItems: Array<LinkItemProps> = [
 ];
 
 
-const SidebarContent = ({ onClose, user,  setNav, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, user,  count, setNav, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -170,27 +173,28 @@ const SidebarContent = ({ onClose, user,  setNav, ...rest }: SidebarProps) => {
       </Flex>
       {user && user.userType === "admin"?  LinkAdmin.map((link) => (<Box  key={link.name}> 
    {user ? user.ids && link.id == "users"  ? "" :
-       <NavItem icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
+       <NavItem icon={link.icon} count={count} id={link.id} subLinks={link.subLinks} setNav={setNav}>
           {link.name}
         </NavItem> : ""
    } </Box>)) :  LinkItems.map((link) => (<Box  key={link.name}> 
    {user ? user.ids && link.id == "users"  ? "" :
-       <NavItem icon={link.icon} id={link.id} subLinks={link.subLinks} setNav={setNav}>
+       <NavItem icon={link.icon} count={count} id={link.id} subLinks={link.subLinks} setNav={setNav}>
           {link.name}
         </NavItem> : "" } 
         </Box>
        ))} 
 
-	  <NavItem icon={FiPocket} setNav={setNav} id={''} position={'absolute'} bottom={'0'} marginBottom={'5'} mx={'5'} _hover={'none'}>
+	  <NavItem icon={FiPocket} count={count} setNav={setNav} id={''} position={'absolute'} bottom={'0'} marginBottom={'5'} mx={'5'} _hover={'none'}>
          Send Feedback
       </NavItem>
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, subLinks, id, setNav, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+   
+ 
   const toggleSubLinks = (id :any) => {
     setIsOpen(!isOpen);
 	setNav(id) 
@@ -227,7 +231,7 @@ const NavItem = ({ icon, children, subLinks, id, setNav, ...rest }: NavItemProps
               as={icon}
             />
           )}
-          {children}
+          {children} {id == 'events' && count !== 0 ?  <Box ml={2} borderRadius={'100%'} background={'red'} color={'white'} w={'25px'} textAlign={'center'}> {count} </Box>  : ""} 
         </Flex>
       </Box>
       {subLinks && isOpen && (
@@ -323,10 +327,30 @@ export const SidebarWithHeader = () => {
     const [twitter, setTwitter] = useState<any>()
     const [instagram, setInstagram] = useState<any>()
     const [linkIn, setLinkIn] = useState<any>()
+    const [count, setCount] = useState<any>(0)
  	const toast = useToast()
+   
 	useEffect(() => {
       getCookieUserData()
 	}, [])
+
+
+	const getEvent = async (userId:any) => {
+		try {
+		const res = await axios.post('/api/event/event');
+		console.log(res.data.result, "tes")
+        let data = res.data.result
+		data.map((row:any) => {
+			if(row.users.indexOf(userId) > -1) {
+              
+          } else { setCount(count + 1);
+           }
+		})
+	 
+		} catch (error) {
+		console.error('Error fetching messages:', error);
+		}
+	};
 
    const handleChange = async (event:any)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
@@ -348,9 +372,10 @@ export const SidebarWithHeader = () => {
     console.log(user)
 	console.log(user.firstName)
 	setUser(user)
+    getEvent(user._id)
   }
 
-   const handleSaveTemplate = async () => {
+   const handleSaveProfile = async () => {
             // let checking = user.ids ? user.ids : user._id
 		let newUsers:any = user;
 		delete newUsers.profileSet;
@@ -379,7 +404,7 @@ export const SidebarWithHeader = () => {
             <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
 			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
                 <Text mb={2}>Blog Profile Image:</Text>
-				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
+				<FileUploader name="file" handleChange={(e:any) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
                 <Textarea  onChange={(e:any) => setDescription(e.target.value)}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
@@ -391,13 +416,13 @@ export const SidebarWithHeader = () => {
                 <Text mt={2} mb={2}>LinkIn:</Text>
                 <Input onChange={(e:any) => setLinkIn(e.target.value)}/>
 
-                 <Button colorScheme='blue' onClick={(e => handleSaveTemplate())} mt={2} mr={3} w={'100%'}>
+                 <Button colorScheme='blue' onClick={(e => handleSaveProfile())} mt={2} mr={3} w={'100%'}>
 				Save
 				</Button>
             </Box>
        </Box> : "" : ""}
       
-      <SidebarContent user={user} onClose={onClose} display={{ base: 'none', md: 'block' }}   setNav={setNav}/>
+      <SidebarContent user={user} onClose={onClose} display={{ base: 'none', md: 'block' }} count={count}   setNav={setNav}/>
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -407,7 +432,7 @@ export const SidebarWithHeader = () => {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent user={user} onClose={onClose} setNav={setNav} />
+          <SidebarContent count={count} user={user} onClose={onClose} setNav={setNav} />
         </DrawerContent>
       </Drawer>
       <MobileNav onOpen={onOpen} user={user}/>
@@ -425,9 +450,13 @@ export const SidebarWithHeader = () => {
         { nav === 'profile'  && (<ProfileEdit user={user}/>) } 
         { nav === 'events'  && (<Events user={user}/>) } 
         {  nav === 'admin-events'  && (<AdminEvents user={user}/>)}
-         
+        { nav==='comment' && (<Comments user={user}/>)}
       </Box>
        { nav !== 'guestMessage'  && (<ContactAdmin user={user}/>)}
+
+       <Box>
+       
+       </Box>
     </Box>
   );
 };

@@ -15,7 +15,7 @@ const BlogClient = () => {
 	const [templateState, setTemplateState] = useState<any>([]) 
     const [name, setName] = useState("")
     const [comments, setComments] = useState([])
-    const [profile, setProfile] = useState()
+    const [profile, setProfile] = useState<any>()
 
 useEffect(() => {
       fetchIntialBlog()
@@ -66,14 +66,11 @@ const fetchIntialBlog = async() => {
     <CSS>
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
-     <Box width={'100%'} height={'auto'} w={'100%'} position={'relative'} backgroundSize={'cover'}  backgroundImage={'https://www.pixelstalk.net/wp-content/uploads/2016/10/Business-wallpaper-HD-Free.jpg'}>
-
+     <Box width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'}  backgroundImage={  profile  ? profile.backgroundImage ? `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${profile.backgroundImage}` : "" : ""}>
          <BlogFeaturedProfile profile={profile} name={name}/>
-       
       </Box>
 		<Box  height={'100%'}>
 		<Box width={'100%'} height={"100%"} className='client' minHeight="100vh" margin={'auto'} padding={20}>
-
        <Container maxW={'7xl'} p="12">
        <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>My Posts</Heading>
        {templateState ?   templateState.map((row:any) => (

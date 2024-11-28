@@ -11,9 +11,9 @@ let socket;
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
-const AdminEvents = ({user}) => {
+const Comments = ({user}) => {
   console.log(user, "USER ID")
-  const [event, setEvent] = useState([]);
+  const [event, setComment] = useState([]);
   const [title, setTitle] = useState();
 	const toast = useToast()
   useEffect(() => {
@@ -24,9 +24,15 @@ const AdminEvents = ({user}) => {
   const getEvent = async (id) => {
 
     try {
-      const res = await axios.post('/api/event/event');
-      console.log(res.data.result, "tes")
-      setEvent(res.data.result);
+      let checking = user.ids ? user.ids : user._id
+      const res = await axios.post('/api/template/search', {id: checking})
+        res.data.result.map(async (row) => {
+            const commentRes =await axios.post('/api/comment/search', {id: row._id})
+      
+            let data =  [{title: row.title, ...commentRes.data.result[0]}]
+            setComment(prevState => [...prevState, ...data]);
+            //   setComment(commentRes.data.result)
+         })
 
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -75,7 +81,7 @@ const AdminEvents = ({user}) => {
   return (
     <Box >
 		<HStack spacing={8} alignItems={'center'}>
-		  <Box fontSize={'xl'} fontWeight={'600'}>Announcement</Box>
+		  <Box fontSize={'xl'} fontWeight={'600'}>Comments</Box>
 		</HStack>
 
   
@@ -83,21 +89,19 @@ const AdminEvents = ({user}) => {
      	<Table variant='simple' border={'2px solid #dddddd'}>
 			<Thead border={'2px solid #dddddd'}>
 			<Tr border={'2px solid #dddddd'}>
-				<Th border={'2px solid #dddddd'}>Title</Th>
-                <Th border={'2px solid #dddddd'}>Description</Th>
+                 <Th border={'2px solid #dddddd'}>Title</Th>
+				<Th border={'2px solid #dddddd'}>Message</Th>
 				<Th border={'2px solid #dddddd'}>Date</Th>
-                <Th border={'2px solid #dddddd'}>Action</Th>
 			</Tr >
 			</Thead>
 			<Tbody border={'2px solid #dddddd'}>
 
           {
-          event ?  event.map(e => <Tr>
-				<Td border={'2px solid #dddddd'}>{e.title}</Td>
-                <Td border={'2px solid #dddddd'}>{e.description}</Td>
+          event ?  event.map(e => e.message ? <Tr>
+                <Td border={'2px solid #dddddd'}>{e.title}</Td>
+				<Td border={'2px solid #dddddd'}>{e.message}</Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
-                <Td border={'2px solid #dddddd'}> { e.users.indexOf(user._id) > -1 ?  "Joined": <Button  background={'#232536'} color={'white'} onClick={(ed) => handleAddUserEvent(e._id)}>Join</Button>}</Td>
-			</Tr> ) : ""
+      	</Tr> : "") : ""
           }
 			
 			</Tbody>
@@ -108,4 +112,4 @@ const AdminEvents = ({user}) => {
   );
 };
 
-export default AdminEvents;
+export default Comments;

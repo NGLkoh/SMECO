@@ -9,6 +9,7 @@ import axios from 'axios'
 import { CSS }  from './style'
 import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
+import GridBlurredBackdrop from '../../../components/author'
 let socket;
 
 const BlogClient = () => {
@@ -16,6 +17,7 @@ const BlogClient = () => {
     const [comment, setComment] = useState("")
     const [userId, setUserId] = useState()
     const [comments, setComments] = useState([])
+    const [profile, setProfile] = useState([])
 
 	useEffect(() => {
 		fetchIntialBlog()
@@ -26,23 +28,26 @@ const BlogClient = () => {
 
 const socketInitialize = async () => {
       
-        socket = io()
+    socket = io()
 
-        socket.on('connect', () => {
-             console.log('connected')
-        })
+	socket.on('connect', () => {
+			console.log('connected')
+	})
 
       const resfresh = () => {
-         console.log("PUTANGINA MU")
 		 fetchIntialComment()
 	  }
+
 	  socket.on("refresh-comment", resfresh);
 }
 
 const fetchIntialBlog = async() => {
 	let params = window.location.href.split('/')
-  const res = await axios.post('/api/template/template', {id: params[4]})
+    const res = await axios.post('/api/template/template', {id: params[4]})
        console.log(res.data.result[0].ids, "userId")
+        const prof = await axios.post('/api/users/usersById', {id: res.data.result[0].ids})
+         console.log({ ...prof.data.result[0].profile[0], name: `${prof.data.result[0].firstName} ${prof.data.result[0].lastName}`}, "user details")
+       setProfile({ ...prof.data.result[0].profile[0], name: `${prof.data.result[0].firstName} ${prof.data.result[0].lastName}`, id: prof.data.result[0]._id })
        setUserId(res.data.result[0].ids)
 	   setTemplateState(res.data.result)
 		console.log(res)
@@ -52,7 +57,6 @@ const fetchIntialBlog = async() => {
 	let params = window.location.href.split('/')
   const res = await axios.post('/api/comment/search', {id: params[4]})
 	   setComments(res.data.result)
-		console.log(res , "TEST")
   }
   
   const handleSaveComment = async () => {
@@ -84,7 +88,8 @@ const fetchIntialBlog = async() => {
 			size='xl'
 		/>
           <Button cursor={'pointer'} onClick={(e) => handleSaveComment()} mt={2} top={'-54px'} position={'relative'} left={'89%'} background={'#232436'} color={'white'} width={'10%'}> Post</Button>
-           { 
+         <GridBlurredBackdrop profile={profile}/>
+         { 
               comments.map((e:any)=> (<Box mb={2}  key={e._id} border={'2px solid #e0e0e0'} p={4}> 
            	<Avatar name={`Anonymuse`} /> Anonymuse
             <Text pl={14} position={'relative'} bottom={'26px'} left={'-3px'}> {e.message} </Text></Box>
