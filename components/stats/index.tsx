@@ -75,7 +75,7 @@ export default function BasicStatistics({user} :any) {
    }
 
   return (
-    <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+    <Box maxW="100%" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1  fontSize={'xl'} fontWeight={'bold'}>
        Interactions
       </chakra.h1>

@@ -456,7 +456,8 @@ export const SidebarWithHeader = () => {
         {  nav === 'admin-events'  && (<AdminEvents user={user}/>)}
         { nav==='comment' && (<Comments user={user}/>)}
       </Box>
-       { nav !== 'guestMessage'  && (<ContactAdmin user={user}/>)}
+
+       { user ? user.userType == "user" && nav !== 'guestMessage' && (<ContactAdmin user={user}/>) : ""}
 
        <Box>
        
