@@ -16,7 +16,7 @@ const DetailFooter = () => {
               <Link href="/../blog">Blog</Link>
               <Link href="/../about-us">About us</Link>
               <Link href="/../contact-us">Contact us</Link>
-              <Link href="#">Privacy Policy</Link>
+              <Link href="/../privacy-policy">Privacy Policy</Link>
             </HStack>
           </Flex>
 </Box>

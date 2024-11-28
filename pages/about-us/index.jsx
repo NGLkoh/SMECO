@@ -43,10 +43,10 @@ export default class index extends Component  {
     render () {
 		return (<> 
 	<Navbar page='about-us'/>
-     {/* <Content/>
-	<Category/>
-	<ImageBanner/>
-	<ListAuthor/> */}
+      <Content/>
+	{/*<Category/>
+	<ImageBanner/>*/}
+	<ListAuthor/> 
 	<Footer/>
 	
 	</>)
