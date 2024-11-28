@@ -13,6 +13,7 @@ const ContactAdmin = ({ user }) => {
   const [message, setMessage] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // State for toggling chat window
   const [newMessage, setNewMessage] = useState(''); // State for new message input
+  const [messageId, setMessageId] = useState(''); // State for new message input
 
   useEffect(() => {
     if (isOpen) {
@@ -31,8 +32,8 @@ const ContactAdmin = ({ user }) => {
       const res = await axios.post('/api/message/search', {
         id: checking,
       });
+      setMessageId(res.data.result[0]._id)
       setMessage(res.data.result);
-   
 	
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -52,18 +53,35 @@ const socketInitialize = async () => {
 	  socket.on("refresh-chat", resfresh);
 }
   const sendMessage = async () => {
-	socket = io()
-
+    
+	 socket = io()
+     const checking = user.ids ? user.ids : user._id;
       let res = await axios.post('/api/message/send', {
-        userId: user._id,
+        userId: checking,
         message: newMessage,
-        messageId: '673bde797f1b995e094e88b8'
+        messageId: messageId
         
       });
       setNewMessage('');
       socket.emit('add-chat', {result: res.result})
 
   };
+
+  const createMessage = async () =>{
+    setIsOpen(true)
+  if(message[0]) {
+
+  } else {
+  const checking = user.ids ? user.ids : user._id;
+        let res = await axios.post('/api/message/create', {
+        userId: "672ff29e19abf9597c2544f6",
+        message: "Hi",
+        name: `${user.firstName} ${user.lastName}`,
+        id: checking
+        });
+  getMessage()
+  }
+  }
 
   return (
     <Box position="fixed" bottom="20px" right="20px" zIndex={1000}>
@@ -74,7 +92,7 @@ const socketInitialize = async () => {
           bg="#232536"
           color="white"
           size="lg"
-          onClick={() => setIsOpen(true)}
+          onClick={() => createMessage()}
           borderRadius="50%"
         />
       )}
