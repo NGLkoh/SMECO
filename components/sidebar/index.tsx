@@ -231,7 +231,7 @@ const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavI
               as={icon}
             />
           )}
-          {children} {id == 'events' && count !== 0 ?  <Box ml={2} borderRadius={'100%'} background={'red'} color={'white'} w={'25px'} textAlign={'center'}> {count} </Box>  : ""} 
+          {children} {id == 'events' ? <Box ml={2} borderRadius={'100%'} background={'red'} color={'white'} w={'25px'} textAlign={'center'}> {count} </Box>  : ""} 
         </Flex>
       </Box>
       {subLinks && isOpen && (
@@ -336,17 +336,21 @@ export const SidebarWithHeader = () => {
 
 
 	const getEvent = async (userId:any) => {
+      setCount(0); 
 		try {
+        let number = []
 		const res = await axios.post('/api/event/event');
-		console.log(res.data.result, "tes")
+		  
         let data = res.data.result
 		data.map((row:any) => {
+        let add = 1
+        
 			if(row.users.indexOf(userId) > -1) {
-              
-          } else { setCount(count + 1);
+            } else { 
+              number.push(row)
            }
 		})
-	 
+	   setCount(number.length)
 		} catch (error) {
 		console.error('Error fetching messages:', error);
 		}
