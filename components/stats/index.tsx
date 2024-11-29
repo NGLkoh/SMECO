@@ -17,6 +17,11 @@ import { FiServer } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
 import axios from 'axios'
 import { FaShare, FaComments, FaPodcast, FaEye } from 'react-icons/fa'
+import { Line } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+
 interface StatsCardProps {
   title: string
   stat: string
@@ -53,42 +58,89 @@ function StatsCard(props: StatsCardProps) {
   )
 }
 
-export default function BasicStatistics({user} :any) {
+export default function BasicStatistics({ user }: any) {
   const [templateState, setTemplateState] = useState<any>([])
   const [post, setPost] = useState<any>(0)
   const [comment, setComment] = useState<any>(0)
-   useEffect(() => {
-      getTemplate()
-	}, [])
+  const [views, setViews] = useState<any>(4) // Example static view count, update based on actual data
+  const [chartData, setChartData] = useState<any>({
+    labels: [],
+    datasets: [
+      {
+        label: 'Comments',
+        data: [],
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: false,
+      },
+      {
+        label: 'Posts',
+        data: [],
+        borderColor: 'rgb(153, 102, 255)',
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        fill: false,
+      },
+    ],
+  })
 
-   const getTemplate = async () => {
-   let checking = user.ids ? user.ids : user._id
-       const res = await axios.post('/api/template/search', {id: checking})
-        res.data.result.map(async (row:any) => {
-            const commentRes =await axios.post('/api/comment/search', {id: row._id})
-              setComment(comment + commentRes.data.result.length)
-         })
-        // const res = await axios.post('/api/comment/search', {id: params[4]})
-       setPost(res.data.result.length)
-	   setTemplateState(res.data.result)
-		console.log(res)
-   }
+  useEffect(() => {
+    getTemplate()
+  }, [])
+
+  const getTemplate = async () => {
+    let checking = user.ids ? user.ids : user._id
+    const res = await axios.post('/api/template/search', { id: checking })
+    let commentCount = 0
+    const posts = res.data.result.length
+    for (const row of res.data.result) {
+      const commentRes = await axios.post('/api/comment/search', { id: row._id })
+      commentCount += commentRes.data.result.length
+    }
+
+    setPost(posts)
+    setComment(commentCount)
+    setTemplateState(res.data.result)
+
+    // Update chart data
+    setChartData(prevData => {
+      const newLabels = [...prevData.labels, new Date().toLocaleTimeString()]
+      const newCommentData = [...prevData.datasets[0].data, commentCount]
+      const newPostData = [...prevData.datasets[1].data, posts]
+
+      return {
+        labels: newLabels,
+        datasets: [
+          { ...prevData.datasets[0], data: newCommentData },
+          { ...prevData.datasets[1], data: newPostData },
+        ],
+      }
+    })
+
+    console.log(res)
+  }
 
   return (
     <Box maxW="100%" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
-      <chakra.h1  fontSize={'xl'} fontWeight={'bold'}>
-       Interactions
+      <chakra.h1 fontSize={'xl'} fontWeight={'bold'}>
+        Interactions
       </chakra.h1>
-       <chakra.h4  fontSize={'sm'} py={2}>
+      <chakra.h4 fontSize={'sm'} py={2}>
         Activity
       </chakra.h4>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard title={'Posts'} stat={post} icon={<FaPodcast size={'3em'} />} />
-        {/* <StatsCard title={'Profile Views'} stat={'5,000'} icon={<BsPerson size={'3em'} />} /> */}
-        <StatsCard title={'Views'} stat={'4'} icon={<FaEye size={'3em'} />} />
+        <StatsCard title={'Views'} stat={views} icon={<FaEye size={'3em'} />} />
         <StatsCard title={'Comments'} stat={comment} icon={<FaComments size={'3em'} />} />
-      
       </SimpleGrid>
+      
+      <Box mt={5}>
+        <chakra.h4 fontSize={'sm'} py={2}>
+          Activity Graph (Real-time)
+        </chakra.h4>
+        <Line data={chartData} options={{ responsive: true }} />
+
+      </Box>
+
     </Box>
   )
 }

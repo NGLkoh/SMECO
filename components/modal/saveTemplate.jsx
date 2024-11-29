@@ -45,16 +45,17 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
       <Modal isOpen={modalTemplate} onClose={(e) => closeModal()}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Save Template</ModalHeader>
+          <ModalHeader>Publish Post</ModalHeader>
           <ModalCloseButton />
            
           <ModalBody>
             <Text fontSize={11} mb={2}>Featured Image:</Text>
              <FileUploader handleChange={(e) => handleChange(e)} name="file" types={fileTypes} />
-              <Text fontSize={11} mt={2} mb={2}>Featured Decription:</Text>
-              <Textarea  onChange={(e) => setDescription(e.target.value)} />
                <Text fontSize={11} mt={2} mb={2}>Title:</Text>
 	        <Input mt={2} onChange={(e) => setTitle(e.target.value)} />
+              <Text fontSize={11} mt={2} mb={2}>Featured Decription:</Text>
+              <Textarea  onChange={(e) => setDescription(e.target.value)} />
+
           </ModalBody>
 
           <ModalFooter>

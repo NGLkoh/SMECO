@@ -70,11 +70,13 @@ const TemplateCategory = ({user}) => {
 	} catch (e) { }
     }
   
-   const handleEdit = async (data) => {
-      setAdd(true)
-      setEdit(true)
-      setUpdateState(data)
-    }
+   const handleEdit = (template) => {
+    setEditingTemplate(template);  // Set the template that is being edited
+    const content = convertFromHTML(template.content); // Assuming 'content' is HTML in the template object
+    const contentState = ContentState.createFromBlockArray(content.contentBlocks);
+    const newEditorState = EditorState.createWithContent(contentState);
+    setEditorState(newEditorState);  // Set the editor state to the existing template content
+  };
 
     const handleAdd = async () => {
       setAdd(true)
@@ -114,6 +116,11 @@ const TemplateCategory = ({user}) => {
   const onChangeTitle = (event) => { 
      setUpdateState({...updateState, title: event.target.value})
      
+ const handleEditorStateChange = (newEditorState) => {
+    const htmlContent = draftToHtml(convertToRaw(newEditorState.getCurrentContent()));
+    setRawHtml(htmlContent);
+    setEditorState(newEditorState);
+  };
 
    }
    return (
@@ -127,7 +134,7 @@ const TemplateCategory = ({user}) => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontSize={'xl'} fontWeight={'600'}>{edit ? "Update Category" : "Create Category" } </Box>
+            <Box fontSize={'xl'} fontWeight={'600'}>{edit ? "Update Category" : "Categories" } </Box>
           </HStack>
           <Flex alignItems={'center'}>
 			{add  ? <><Button
@@ -170,7 +177,6 @@ const TemplateCategory = ({user}) => {
 			size={'md'}
 			mr={4}
             onClick={(event) => handleEdit(e)}>
-            
 			Update
 			</Button>
 			</Box><Box display={'inline'}>	
@@ -182,12 +188,14 @@ const TemplateCategory = ({user}) => {
 			Delete
 			</Button>
 		</Box></Td>
+
 	</Tr>)) : ""
     }
       
     </Tbody>
    
   </Table>
+
 </TableContainer>) : (
   <>  
    {edit ?  <> <Input placeholder='Please type your Title ' mb={2} defaultValue={updateState.title} onChange={(e) => onChangeTitle(e)}/>

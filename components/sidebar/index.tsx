@@ -107,10 +107,9 @@ const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Blog Articles',
     icon: FiFileText,
-    id: 'BlogArticles',
+    id: 'addTemplate',
     subLinks: [
       { name: 'Add New', icon: FiPlus,  id: 'addnew' },
-	  { name: 'Add Template', icon: FiPlus,  id: 'addTemplate' },
 	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
   },
@@ -121,14 +120,8 @@ const LinkItems: Array<LinkItemProps> = [
     ], },
   { name: 'Media', icon: FiCamera,  id: 'imageUpload' },
   { name: 'Users', icon: FiUser,
-  id: 'users',
- subLinks: [
-      { name: 'Add New', icon: FiUsers, id: 'addNewUser' },
-    ],
-  },
-  { name: 'Settings', icon: FiSettings, id: 'settings',   subLinks: [
-	  { name: 'Profile Page', icon: FiUsers,  id: 'profile' },
-    ], }
+  id: 'addNewUser'},
+  { name: 'Settings', icon: FiSettings, id: 'profile' }
 ];
 
 
@@ -152,53 +145,106 @@ const MainLinkItems: Array<LinkItemProps> = [
 ];
 
 
-const SidebarContent = ({ onClose, user,  count, setNav, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, user, count, setNav, ...rest }: SidebarProps) => {
+  const [selectedId, setSelectedId] = useState('');
+
   return (
     <Box
       transition="3s ease"
-      bg={'#232536'}
+      bg="#232536"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
-      color={'white'}
- 	  display="flex"
+      color="white"
+      display="flex"
       flexDirection="column"
       {...rest}
     >
-
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <img src="logo.png" alt="logo" /> 
+        <img src="logo.png" alt="logo" />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {user && user.userType === "admin"?  LinkAdmin.map((link) => (<Box  key={link.name}> 
-   {user ? user.ids && link.id == "users"  ? "" :
-       <NavItem icon={link.icon} count={count} id={link.id} subLinks={link.subLinks} setNav={setNav}>
-          {link.name}
-        </NavItem> : ""
-   } </Box>)) :  LinkItems.map((link) => (<Box  key={link.name}> 
-   {user ? user.ids && link.id == "users"  ? "" :
-       <NavItem icon={link.icon} count={count} id={link.id} subLinks={link.subLinks} setNav={setNav}>
-          {link.name}
-        </NavItem> : "" } 
-        </Box>
-       ))} 
-
-	  <NavItem icon={FiPocket} count={count} setNav={setNav} id={''} position={'absolute'} bottom={'0'} marginBottom={'5'} mx={'5'} _hover={'none'}>
-         Send Feedback
+      {user && user.userType === 'admin'
+        ? LinkAdmin.map((link) => (
+            <Box key={link.name}>
+              {user && user.ids && link.id === 'users' ? null : (
+                <NavItem
+                  icon={link.icon}
+                  count={count}
+                  id={link.id}
+                  subLinks={link.subLinks}
+                  setNav={setNav}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                >
+                  {link.name}
+                </NavItem>
+              )}
+            </Box>
+          ))
+        : LinkItems.map((link) => (
+            <Box key={link.name}>
+              {user && user.ids && link.id === 'users' ? null : (
+                <NavItem
+                  icon={link.icon}
+                  count={count}
+                  id={link.id}
+                  subLinks={link.subLinks}
+                  setNav={setNav}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                >
+                  {link.name}
+                </NavItem>
+              )}
+            </Box>
+          ))}
+      <NavItem
+        icon={FiPocket}
+        count={count}
+        setNav={setNav}
+        id="123"
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        position="absolute"
+        bottom="0"
+        marginBottom="5"
+        mx="5"
+        _hover="none"
+      >
+        Send Feedback
       </NavItem>
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavItemProps) => {
+const NavItem = ({ 
+  icon, 
+  children, 
+  count, 
+  subLinks, 
+  id, 
+  setNav, 
+  selectedId, 
+  setSelectedId, 
+  ...rest 
+}: NavItemProps & { selectedId: string; setSelectedId: Function }) => {
   const [isOpen, setIsOpen] = useState(false);
-   
- 
-  const toggleSubLinks = (id :any) => {
-    setIsOpen(!isOpen);
-	setNav(id) 
+
+  // Handle toggling of sublinks
+  const toggleSubLinks = (linkId: string) => {
+    if (selectedId === linkId) {
+      // Close if the same link is clicked again
+      setSelectedId('');
+      setIsOpen(false);
+    } else {
+      setSelectedId(linkId); // Set the selected ID
+      setIsOpen(true);       // Open the clicked link's sublinks
+      setNav(linkId);        // Update navigation state
+    }
   };
+
   return (
     <Box>
       <Box
@@ -214,11 +260,13 @@ const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavI
           borderRadius="lg"
           role="group"
           cursor="pointer"
+          bg={selectedId === id ? '#FFD050' : undefined} // Highlight selected item
+          color={selectedId === id ? 'black' : undefined}
           _hover={{
             bg: '#FFD050',
-            color: 'white',
+            color: 'black',
           }}
-          onClick={(e) => toggleSubLinks(id)}
+          onClick={() => toggleSubLinks(id)}
           {...rest}
         >
           {icon && (
@@ -226,18 +274,45 @@ const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavI
               mr="4"
               fontSize="16"
               _groupHover={{
-                color: 'white',
+                color: 'black',
               }}
               as={icon}
             />
           )}
-          {children} {id == 'events' ? <Box ml={2} borderRadius={'100%'} background={'red'} color={'white'} w={'25px'} textAlign={'center'}> {count} </Box>  : ""} 
+          {children}
+          {id === 'events' && (
+            <Box
+              ml={2}
+              borderRadius="100%"
+              background="red"
+              color="white"
+              w="25px"
+              textAlign="center"
+            >
+              {count}
+            </Box>
+          )}
         </Flex>
       </Box>
+
+      {/* Render sublinks */}
       {subLinks && isOpen && (
         <Box pl={8}>
           {subLinks.map((subLink) => (
-            <Flex key={subLink.name} align="center" p="2" cursor="pointer" _hover={{ bg: '#FFD050' }} onClick={(e) => setNav(subLink.id)}>
+            <Flex
+              key={subLink.id}
+              align="center"
+              p="2"
+              cursor="pointer"
+              bg={selectedId === subLink.id ? '#FFD050' : undefined} // Highlight selected sublink
+              color={selectedId === subLink.id ? 'black' : undefined}
+              _hover={{ bg: '#FFD050', color: 'black' }}
+   borderRadius="8"
+              onClick={() => {
+                setNav(subLink.id);  // Navigate to the sublink
+                setSelectedId(subLink.id); // Highlight clicked sublink
+              }}
+            >
               <Icon as={subLink.icon} mr="4" />
               <Text>{subLink.name}</Text>
             </Flex>
@@ -247,6 +322,7 @@ const NavItem = ({ icon, children, count , subLinks, id, setNav, ...rest }: NavI
     </Box>
   );
 };
+
 
 const MobileNav = ({ user, onOpen, ...rest }: MobileProps) => {
 
@@ -305,7 +381,6 @@ const  handleLogout = async () => {
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem onClick={(e) => handleLogout()}>Sign out</MenuItem>
             </MenuList>

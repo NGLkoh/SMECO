@@ -63,7 +63,7 @@ const AddSubUser = ({user}) => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontSize={'xl'} fontWeight={'600'}>Create Sub User</Box>
+            <Box fontSize={'xl'} fontWeight={'600'}>View Accounts</Box>
           </HStack>
           <Flex alignItems={'center'}>
 			{add  ? <><Button

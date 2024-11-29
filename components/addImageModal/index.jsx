@@ -24,7 +24,8 @@ import axios from 'axios'
 const Links = ['Dashboard', 'Projects', 'Team']
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
-const AddNewImageSection = ({user}) => {
+
+const AddNewImageSection = ({user, image, setImage}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [media, setMedia ] = useState([])
   const [file, setFile ] = useState()
@@ -57,7 +58,38 @@ const AddNewImageSection = ({user}) => {
 		})
 	};
 
-  const 	uploadS3 = async () => {
+  const handleSelectImage = (key) => {
+		console.log(key)
+      let imageNew= []
+     if(image.length == 0) {
+     console.log("first")
+          imageNew.push(key)
+          setImage(imageNew)  
+    } else {
+     console.log('second')  
+
+		if(image.includes(key)) {
+          image.map((row) => {
+            if(row !== key)
+             imageNew.push(row)
+        })
+		} else {
+         imageNew.push(key)
+         image.map((row) => {
+          imageNew.push(row)
+        })
+
+     
+      }
+    setImage(imageNew)  
+		// setImage(oldState => [{...oldState, key }])
+ 
+    }
+ 
+  }
+    console.log(image)
+ 
+  const uploadS3 = async () => {
         const res = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
         const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
         toast({
@@ -109,9 +141,11 @@ const AddNewImageSection = ({user}) => {
      {
 		media ?  media.map((rows) =>  <Image
 			height="200px"
-             ml={2}
+            ml={2}
             display={'inline-block'}
-			key={rows.ids}
+			key={rows._id}
+           border={image.includes(rows.key)  ? '2px solid skyblue' : ""}
+            onClick={(e) => handleSelectImage(rows.key)}
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${rows.key}`}
 			/> ) : ""
 		}
