@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Box, Text, ChakraProvider, Grid, Textarea, Avatar, useColorModeValue, Input, Flex, CardBody, Spacer, Button, Stack, StackDivider, useToast, position } from '@chakra-ui/react'
+import { Box, Text, ChakraProvider, Image, Textarea, Avatar, useColorModeValue, Input, Flex, CardBody, Spacer, Button, Stack, StackDivider, useToast, position } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import { CSS } from './style'
 import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
-import { FaEye } from 'react-icons/fa'; 
+import { FaShare, FaComments, FaPodcast, FaEye, FaCreativeCommons, FaBook } from 'react-icons/fa'
 let socket;
 
 const BlogClient = () => {
@@ -95,7 +95,23 @@ const BlogClient = () => {
             </Box>
           </Box>
           <Box padding={20} position={'relative'} paddingLeft={'200px'} paddingRight={'200px'}>
+             <Box position={'relative'}>
+             <Image
+              alt={'Hero Image'}
+              fit={'cover'}
+              display={'inline-block'}
+              align={'center'}
+              w={'25px'}
+              mr={'20px'}
+              h={'25px'}
+              src={
+                '/like.png'
+              }
+            />
+           <FaShare  size={'25px'} display={'inline-block !important'}/>
 
+             </Box>
+             
             <Textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
