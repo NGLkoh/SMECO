@@ -12,7 +12,7 @@ import '../../../resources/css/style.css'
 let socket;
 
 const BlogClient = () => {
-  const [template, setTemplateState] = useState<any>([])
+  const [template, setTemplateState] = useState([])
   const [comment, setComment] = useState("")
   const [email, setEmail] = useState("")
   const [userId, setUserId] = useState()

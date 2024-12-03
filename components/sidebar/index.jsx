@@ -97,7 +97,7 @@ const LinkAdmin = [
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
 ];
 
-const SidebarContent = ({ onClose, user, count, setNav, ...rest }) => {
+const SidebarContent = ({ onClose, user, count, setNav }) => {
   const [selectedId, setSelectedId] = useState('');
 
   return (
@@ -111,7 +111,7 @@ const SidebarContent = ({ onClose, user, count, setNav, ...rest }) => {
       color="white"
       display="flex"
       flexDirection="column"
-      {...rest}
+
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <img src="logo.png" alt="logo" />
@@ -217,7 +217,7 @@ const NavItem = ({
             color: 'black',
           }}
           onClick={() => toggleSubLinks(id)}
-          {...rest}
+
         >
           {icon && (
             <Icon
@@ -274,7 +274,7 @@ const NavItem = ({
 };
 
 
-const MobileNav = ({ user, onOpen, ...rest }) => {
+const MobileNav = ({ user, onOpen }) => {
 
 const  handleLogout = async () => {
 	 await axios.post('/api/users/logout')
@@ -292,7 +292,6 @@ const  handleLogout = async () => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent={{ base: 'space-between', md: 'flex-end' }}
-      {...rest}
     >
       <IconButton
         display={{ base: 'flex', md: 'none' }}
