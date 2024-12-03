@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FileUploader } from "react-drag-drop-files";
 const fileTypes = ["JPG", "PNG", "GIF"];
 
+const UAT_URL = process.env.UAT_URL;
 const ProfileEdit = ({user}) => {
 	const [fileName, setFileName] = useState()
     const [bgFileName, setBgFileName] = useState()
@@ -21,19 +22,27 @@ const ProfileEdit = ({user}) => {
  
   }, []);
 
-   const handleChange = async (event, type)  => {
-    let r = (Math.random() + 1).toString(36).substring(7)
-        type == "pImage" ?  setFileName(`${r}-${event.name}`) : setBgFileName(`${r}-${event.name}`)
-        new Promise((resolve, reject) => {
-			const reader = new FileReader()
-			reader.readAsDataURL(event)
-			reader.onload = () => {
-             type == "pImage" ?  setFile(reader.result) : setBgFile(reader.result)
-			 resolve(reader.result)
-			}
-			reader.onerror = reject
-		})
-	};
+const handleChange = async (event, type) => {
+  let r = (Math.random() + 1).toString(36).substring(7);
+  if (type === "pImage") {
+    setFileName(`${r}-${event.name}`);
+  } else {
+    setBgFileName(`${r}-${event.name}`);
+  }
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(event);
+    reader.onload = () => {
+      if (type === "pImage") {
+        setFile(reader.result);
+      } else {
+        setBgFile(reader.result);
+      }
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+  });
+};
    
  const handleEditBtn = async () => {
       try{
@@ -70,7 +79,7 @@ const ProfileEdit = ({user}) => {
 
        <Box mt={2}>
        <Text> Profile Link:</Text> 
-       <Input value={`http://localhost:3000/blog-user/${user._id}`} disabled/>
+       <Input value={`${UAT_URL}/blog-user/${user._id}`} disabled/>
        </Box>
        <Box mt={2}>
                 <Text mb={2}>Blog Profile Image:</Text>
