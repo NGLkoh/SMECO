@@ -84,8 +84,6 @@ const TemplateCategory = ({user}) => {
 	}
 
 	const handleTemplateUpdate = async() => {
-		console.log(updateState.title, "TITLEEEEEEE")
-		console.log(updateState._id, "IDDDDDDDDDDDDD")
 	try {
 			const res = await axios.post('/api/category/update', {
 				"id": updateState._id,
