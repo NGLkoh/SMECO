@@ -5,6 +5,8 @@
     // as it can report incorrect errors
     "no-unused-vars": "off",
     "react/no-unescaped-entities": 0,
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-unused-vars": [
       "warn", // or "error"
       {
