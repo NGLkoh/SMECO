@@ -49,6 +49,7 @@ const Login = () => {
         });
 
       } else {
+
         toast({
           title: 'Please wait for email verification',
           status: 'warning',
