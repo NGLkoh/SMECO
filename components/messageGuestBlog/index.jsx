@@ -25,10 +25,6 @@ const GuestBlogMessage = ({userId }) => {
     }
   }, [isOpen]);
 
-	const callback = function (mutationsList, observer) {
-		window.scrollTo(0, document.body.scrollHeight);
-	};
-
   const getMessage = async (id) => {
 
     try {
@@ -48,10 +44,6 @@ const GuestBlogMessage = ({userId }) => {
         socket.on('connect', () => {
              console.log('connected')
         })
-
-	  const resfresh = () => {
-		getMessage(guestId)
-	  }
 
 	  socket.on("refresh-chat", payload => {
         console.log(payload)

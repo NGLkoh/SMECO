@@ -8,11 +8,9 @@ import {
   Flex,
   Text,
   Badge,
-  IconButton,
   Textarea,
   Button,
 } from '@chakra-ui/react';
-import { PhoneIcon, VideoIcon, AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import io from 'socket.io-client'
 
@@ -20,7 +18,6 @@ let socket;
 
 export const MessageGuest = ({ user}) => {
   const [selectedChat, setSelectedChat] = useState(null);
-  const [messages, setMessages] = useState([]);
    const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
@@ -57,7 +54,6 @@ export const MessageGuest = ({ user}) => {
 
   const openChat = (chat) => {
     setSelectedChat(chat);
-    setMessages(chat.convo); 
   };
 
   const sendMessage = async() => {

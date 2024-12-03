@@ -3,21 +3,11 @@
 import {
   Box,
   chakra,
-  Flex,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
   Text,
   GridItem,
  Grid,
 } from '@chakra-ui/react'
-import { ReactNode } from 'react'
-import { BsPerson } from 'react-icons/bs'
-import { FiServer } from 'react-icons/fi'
-import { GoLocation } from 'react-icons/go'
 import moment from 'moment'
-import { FaShare, FaComments, FaPodcast } from 'react-icons/fa'
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';

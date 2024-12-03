@@ -3,25 +3,17 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Image,
   IconButton,
   Button,
   useToast,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import { FaEye } from 'react-icons/fa'; 
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useState , useEffect} from 'react'
 import axios from 'axios'
-const Links = ['Dashboard', 'Projects', 'Team']
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 const AddNewImageSection = ({user}) => {

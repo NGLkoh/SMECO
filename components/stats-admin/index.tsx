@@ -12,11 +12,8 @@ import {
 } from '@chakra-ui/react'
 
 import { ReactNode, useState, useEffect } from 'react'
-import { BsPerson } from 'react-icons/bs'
-import { FiServer } from 'react-icons/fi'
-import { GoLocation } from 'react-icons/go'
 import axios from 'axios'
-import { FaShare, FaComments, FaPodcast, FaEye, FaCreativeCommons, FaBook } from 'react-icons/fa'
+import { FaShare, FaComments, FaPodcast, FaBook } from 'react-icons/fa'
 interface StatsCardProps {
   title: string
   stat: string

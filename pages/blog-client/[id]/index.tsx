@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Box, Text, ChakraProvider, Image, Textarea, Avatar, useColorModeValue, Input, Flex, CardBody, Spacer, Button, Stack, StackDivider, useToast, position } from '@chakra-ui/react'
+import { Box, Text, ChakraProvider, Image, Textarea, Avatar, Input, Button, useToast } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'

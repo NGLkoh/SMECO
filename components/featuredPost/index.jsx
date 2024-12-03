@@ -1,12 +1,11 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import {Box, Text,ChakraProvider, Grid, GridItem, Image, CardHeader, Heading, CardBody, Card, Button, Stack, StackDivider, Link } from '@chakra-ui/react'
+import {Box, Text,ChakraProvider, Grid, GridItem, Image, Heading, CardBody, Card, Button, Stack, Link } from '@chakra-ui/react'
 import axios from 'axios'
 import '../../resources/css/featured.css'
 const FeaturedPost = () => {
 const [template , setTemplateState] = useState([])
-const [seletedTemplate , setSelectedTemplateState] = useState()
 const [selectedKey , setSelectedKey] = useState(0)
  useEffect(() => {
     getTemplate()

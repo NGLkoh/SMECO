@@ -1,14 +1,13 @@
 
 
 import React, { useState , useEffect} from 'react'
-import {TableContainer , Table, Select,ModalOverlay, ModalContent,ModalHeader, ModalBody, ModalFooter, Lorem, ModalCloseButton, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
+import {TableContainer , Table, Select, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {EditorState, ContentState, convertFromHTML } from 'draft-js'
 import axios from "axios";
-import moment from 'moment' 
 import AddSubUserIndex from './add'
-import { FaPen, FaTrash, FaTexT, FaImage, HiBarsArrowDown, FaCode, FaEye  } from 'react-icons/fa'; 
+import { FaTrash, FaEye  } from 'react-icons/fa'; 
 import ModalImage from '../modal/viewModalImage'
 
 const AddSubUserAdmin = ({user}) => {
@@ -18,12 +17,7 @@ const AddSubUserAdmin = ({user}) => {
    const [ source, setSource] = useState('')
    const [ open, setOpen] = useState(false)
    const [ add, setAdd ] = useState(false)
-   const [ editorState, setEditorState] = useState(EditorState.createWithContent(
-        ContentState.createFromBlockArray(
-          convertFromHTML('<p>My initial content.</p>')
-        )
-      ))
-  
+   
     const [users, setUsers] = useState([])
 
 	useEffect(() => {
@@ -128,7 +122,7 @@ const AddSubUserAdmin = ({user}) => {
               bg={'black'} variant='solid'
 			  color={'#ffffff'}
 			  size={'md'}
-	          onClick={ (row)  => handleOpenModal('Business Permit', e.businessPermit)}
+	          onClick={ ()  => handleOpenModal('Business Permit', e.businessPermit)}
               mr={4}>
                <FaEye/>
             </Button></Td>
@@ -136,7 +130,7 @@ const AddSubUserAdmin = ({user}) => {
               bg={'black'} variant='solid'
 			  color={'#ffffff'}
 			  size={'md'}
-	          onClick={ (row)  => handleOpenModal('Barangay Clerance', e.barangayClearance)}
+	          onClick={ ()  => handleOpenModal('Barangay Clerance', e.barangayClearance)}
               mr={4}>
                <FaEye/>
             </Button></Td>

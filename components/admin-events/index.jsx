@@ -1,15 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { Text, Box, Textarea, Button, useToast, Input, Image, HStack, TableContainer, Thead, Tr, Th, Table, Tbody, Td  } from '@chakra-ui/react';
-import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
 import axios from 'axios';
-import io from 'socket.io-client'
 import { FileUploader } from "react-drag-drop-files";
 import moment from 'moment';
 import ModalImage from '../modal/viewModalImage'
-import { FaEye } from 'react-icons/fa';
 
-let socket;
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -56,8 +52,8 @@ const AdminEvents = ({user}) => {
 
   const handleAddEvent = async () => {
     try{ 
-      const image = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-       let res = await axios.post('/api/event/create', {
+        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+        await axios.post('/api/event/create', {
         id: user._id,
         title: title,
         fileName: fileName,

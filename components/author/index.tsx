@@ -4,7 +4,6 @@ import {
   Avatar,
   Box,
   chakra,
-  Container,
   Flex,
   Icon,
   Link,
@@ -40,7 +39,7 @@ interface TestimonialCardProps {
 }
 
 function TestimonialCard(props: TestimonialCardProps) {
-  const { name, role, content, avatar, index, profile } = props
+  const { index, profile } = props
   return (
     <Flex
       boxShadow={'lg'}
@@ -110,34 +109,6 @@ export default function GridBlurredBackdrop( { profile} :any) {
       width={'full'}
       overflow={'hidden'}>
       <Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
-        {/* <chakra.h3
-          fontFamily={'Work Sans'}
-          fontWeight={'bold'}
-          fontSize={20}
-          textTransform={'uppercase'}
-          color={'purple.400'}>
-          People love us
-        </chakra.h3>
-        <chakra.h1
-          py={5}
-          fontSize={48}
-          fontFamily={'Work Sans'}
-          fontWeight={'bold'}
-          color={useColorModeValue('gray.700', 'gray.50')}>
-          You&apos;re in good company
-        </chakra.h1> */}
-        {/* <chakra.h2
-          margin={'auto'}
-          width={'70%'}
-          fontFamily={'Inter'}
-          fontWeight={'medium'}
-          color={useColorModeValue('gray.500', 'gray.400')}>
-          See why over{' '}
-          <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-            150,000+
-          </chakra.strong>{' '}
-          influencers use EEZY to manage their social media content!
-        </chakra.h2> */}
       </Box>
       <SimpleGrid spacing={'20'} mt={16} mb={16} width={'100%'} mx={'auto'}>
         {testimonials.map((cardInfo, index) => (

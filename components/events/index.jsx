@@ -1,14 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { Text, Box, Image, Button, useToast, Input, Flex, HStack, TableContainer, Thead, Tr, Th, Table, Tbody, Td  } from '@chakra-ui/react';
-import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
+import {  Box, Image, Button, useToast, HStack, TableContainer, Thead, Tr, Th, Table, Tbody, Td  } from '@chakra-ui/react';
 import axios from 'axios';
-import io from 'socket.io-client'
-import { FileUploader } from "react-drag-drop-files";
-import { color } from 'framer-motion';
 import ModalImage from '../modal/viewModalImage'
 import moment from 'moment';
-let socket;
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -17,7 +12,6 @@ const AdminEvents = ({user}) => {
   const [event, setEvent] = useState([]);
   const [title, setTitle] = useState();
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState("");
 
   const [source, setSource] = useState("");
 	const toast = useToast()
@@ -26,7 +20,7 @@ const AdminEvents = ({user}) => {
   }, []);
 
 
-  const getEvent = async (id) => {
+  const getEvent = async () => {
 
     try {
       const res = await axios.post('/api/event/event');
@@ -42,7 +36,7 @@ const AdminEvents = ({user}) => {
 
    let checking = user.ids ? user.ids : user._id
       try {
-      let res = await axios.post('/api/event/addUser', 
+       await axios.post('/api/event/addUser', 
        {
 		"ids": id,
 		"userId":  checking

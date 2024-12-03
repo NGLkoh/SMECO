@@ -7,18 +7,12 @@ import {
   Image,
   Text,
   Link,
-  Divider,
   HStack,
   Tag,
-  Wrap,
-  WrapItem,
    ChakraProvider,
-  SpaceProps,
   useColorModeValue,
   Container,
-  VStack,
 } from '@chakra-ui/react'
-import { base } from 'framer-motion/client'
 
 const BlogTags = (props) => {
   const { marginTop = 0, tags } = props
@@ -32,22 +26,6 @@ const BlogTags = (props) => {
           </Tag>
         )
       })}
-    </HStack>
-  )
-}
-
-const BlogAuthor = (props) => {
-  return (
-    <HStack marginTop="2" spacing="2" display="flex" alignItems="center">
-      <Image
-        borderRadius="full"
-        boxSize="40px"
-        src="https://100k-faces.glitch.me/random-image"
-        alt={`Avatar of ${props.name}`}
-      />
-      <Text fontWeight="medium">{props.name}</Text>
-      <Text>—</Text>
-      <Text>{props.date.toLocaleDateString()}</Text>
     </HStack>
   )
 }
@@ -71,7 +49,7 @@ const FeaturedSecond = () => {
              }
          }) 
 	 }
- console.log(templateState)
+
   return (
  <ChakraProvider>
     <Container maxW={'7xl'} p="12">

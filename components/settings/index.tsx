@@ -1,18 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Text, Box, Textarea, Button, useToast, Input, Flex, HStack } from '@chakra-ui/react';
-import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
+import { Text, Box, Textarea, Button, useToast, Input, HStack } from '@chakra-ui/react';
 import axios from 'axios';
-import io from 'socket.io-client'
 import { FileUploader } from "react-drag-drop-files";
-let socket;
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const ProfileEdit = ({user}:any) => {
-  console.log(user, "USER ID")
-  const [message, setMessage] = useState([]);
-  const [name, setName] = useState();
 	const [fileName, setFileName] = useState<any>()
     const [bgFileName, setBgFileName] = useState<any>()
 	const [file, setFile] = useState<any>()
@@ -30,7 +24,7 @@ const ProfileEdit = ({user}:any) => {
    const handleChange = async (event:any, type: string)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
         type == "pImage" ?  setFileName(`${r}-${event.name}`) : setBgFileName(`${r}-${event.name}`)
-        const base64 = new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(event)
 			reader.onload = () => {
@@ -46,13 +40,14 @@ const ProfileEdit = ({user}:any) => {
         let data = { backgroundImage: bgFileName ? bgFileName : user.profile[0].backgroundImage  , facebook: facebook ? facebook : user.profile[0].facebook , twitter: twitter ? twitter : user.profile[0].twitter , linkIn: linkIn ? twitter : user.profile[0].twitter,  instagram: instagram ? twitter : user.profile[0].instagram,  fileName: fileName ? fileName : user.profile[0].fileName , description: description}
         
        if(bgFileName) {
-          const bg = await axios.post('/api/s3/upload', {filename: bgFileName, base64: bgFile})
+       	  await axios.post('/api/s3/upload', {filename: bgFileName, base64: bgFile})
         }
 
         if(fileName) {
-          const profileImage = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+        	 await axios.post('/api/s3/upload', {filename: fileName, base64: file})
          }
-        const res = await axios.post('/api/users/editProfile', { id: user._id, data: data})
+        
+        await axios.post('/api/users/editProfile', { id: user._id, data: data})
 		
          toast({
           title: 'Successfully Edit profile page ', 

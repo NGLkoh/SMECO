@@ -1,29 +1,12 @@
 
 
 import React, { useState , useEffect} from 'react'
-import {TableContainer , Table, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
-import Head from 'next/head'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import { FileUploader } from "react-drag-drop-files";
-import { FaTrash, faCode, FaTexT, FaImage, HiBarsArrowDown  } from 'react-icons/fa'; 
-const fileTypes = ["JPG", "PNG", "GIF"];
-import { GoRows } from "react-icons/go";
+import {TableContainer , Table, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Input  } from '@chakra-ui/react'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
- import dynamic from 'next/dynamic';
-import {EditorState, ContentState, convertFromHTML } from 'draft-js'
-import draftToHtml from 'draftjs-to-html';
-import { convertToHTML } from 'draft-convert';
-import SaveTemplate from '../modal/saveTemplate'
+import { ContentState, convertFromHTML } from 'draft-js'
 import axios from "axios";
 import moment from 'moment' 
-
-const Editor = dynamic(
-	async () => {
-	const mod = await import('react-draft-wysiwyg');
-	return { default: mod.Editor };
-	},
-	{ ssr: false }
-);
 
 const TemplateCategory = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()
@@ -32,13 +15,7 @@ const TemplateCategory = ({user}) => {
    const [ add, setAdd ] = useState(false)
    const [ edit, setEdit] = useState(false)
    const [ updateState, setUpdateState] = useState()
-   const [ editorState, setEditorState] = useState(EditorState.createWithContent(
-        ContentState.createFromBlockArray(
-          convertFromHTML('<p className="gago ka">My initial content.</p>')
-        )
-      ))
-  
-    const [templateState, setTemplateState] = useState()
+   const [templateState, setTemplateState] = useState()
 
 	useEffect(() => {
       getTemplate()
@@ -46,7 +23,7 @@ const TemplateCategory = ({user}) => {
 
    const handleTemplateSave = async () => {
      let checking = user.ids ? user.ids : user._id
-       const res = await axios.post('/api/category/create', {
+       await axios.post('/api/category/create', {
 			"id": checking,
 			"title": title
 		})
@@ -74,8 +51,7 @@ const TemplateCategory = ({user}) => {
     setEditingTemplate(template);  // Set the template that is being edited
     const content = convertFromHTML(template.content); // Assuming 'content' is HTML in the template object
     const contentState = ContentState.createFromBlockArray(content.contentBlocks);
-    const newEditorState = EditorState.createWithContent(contentState);
-    setEditorState(newEditorState);  // Set the editor state to the existing template content
+ // Set the editor state to the existing template content
   };
 
     const handleAdd = async () => {
@@ -113,14 +89,8 @@ const TemplateCategory = ({user}) => {
 
   const onChangeTitle = (event) => { 
      setUpdateState({...updateState, title: event.target.value})
-     
- const handleEditorStateChange = (newEditorState) => {
-    const htmlContent = draftToHtml(convertToRaw(newEditorState.getCurrentContent()));
-    setRawHtml(htmlContent);
-    setEditorState(newEditorState);
-  };
-
    }
+
    return (
 	<ChakraProvider>
    <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>

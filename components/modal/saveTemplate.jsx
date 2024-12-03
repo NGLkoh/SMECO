@@ -4,7 +4,6 @@
 
 import React, {useState} from 'react'
 import {Modal , ModalOverlay, Text, ModalContent, ModalHeader, ModalCloseButton,Input,Textarea,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
-import Head from 'next/head'
 import axios from "axios";
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
@@ -17,10 +16,8 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
 
    const handleSaveTemplate = async () => {
             let checking = user.ids ? user.ids : user._id
-	        console.log(html)
-
-            const upload = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-			const res = await axios.post('/api/template/create', { id: checking, data: html , title: title, fileName: fileName, description: description})
+	        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+			await axios.post('/api/template/create', { id: checking, data: html , title: title, fileName: fileName, description: description})
 			refresh()
             back(false)
             closeModal()

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {Box, Text,ChakraProvider,  Grid, GridItem, Image, CardHeader, Heading, CardBody, Card, Button, Stack, StackDivider } from '@chakra-ui/react'
+import {Box, ChakraProvider} from '@chakra-ui/react'
 import BasicStatistics from '../stats/index'
 import ContainerGraph from '../graph/index'
 const ClientDashboard = ({user}) => {

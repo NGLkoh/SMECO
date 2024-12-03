@@ -2,10 +2,8 @@
 
 'use client'
 
-import Head from 'next/head'
-
 import React, {useState} from 'react'
-import {Box, Text, ChakraProvider, PinInputField, Image,useColorModeValue, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
+import {Box, Button, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import InputCustom from '../../components/inputs/index'
 

@@ -43,10 +43,8 @@ import { IconType } from 'react-icons';
 import AddNewSection from '../addNew/index'
 import ClientDashboard from '../dashboard/index'
 import AdminDashboard from '../dashboard-admin/index'
-import AddNewCategory from '../addNewCategory/index'
 import Template from '../../components/templates'
 import  {getCookiesData} from '../../lib/getCookieData'
-import Editor from '../template-category/index'
 import axios from "axios";
 import TemplateCategory from '../template-category/index';
 import AddSubUser from '../addSubUser/index'
@@ -73,7 +71,7 @@ interface LinkItemProps {
 interface NavItemProps extends FlexProps {
   count: number;
   icon: IconType;
-  id?: string;
+  id?: any;
   children: React.ReactNode;
   setNav: Function;
   subLinks?: LinkItemProps[];

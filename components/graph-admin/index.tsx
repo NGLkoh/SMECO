@@ -4,27 +4,16 @@ import {
   Box,
   chakra,
   Link,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
   Text,
   GridItem,
  Grid,
 } from '@chakra-ui/react'
-import { ReactNode } from 'react'
-import { BsPerson } from 'react-icons/bs'
-import { FiServer } from 'react-icons/fi'
-import { GoLocation } from 'react-icons/go'
 import moment from 'moment'
-import { FaShare, FaComments, FaPodcast } from 'react-icons/fa'
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../resources/css/style.css'
 import axios from 'axios'
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function ContainerGraph({user} :any) {
   const [value, onChange] = useState<any>([]);
@@ -38,7 +27,6 @@ export default function ContainerGraph({user} :any) {
 
  const getCategory = async () => {
 	try {
-		let checking = user.ids ? user.ids : user._id
 		const res = await axios.post('/api/category/all')
 	   setCategoryState(res.data.result)
 		console.log(res.data.result, 'catergory')
@@ -46,7 +34,6 @@ export default function ContainerGraph({user} :any) {
     }
    const getTemplate = async () => {
    let dateArray:any = []
-   let checking = user.ids ? user.ids : user._id
        const res = await axios.post('/api/template/all')
        console.log(res.data.result)
       res.data.result.map((data:any) => dateArray.push(moment(data.date).format('L')))

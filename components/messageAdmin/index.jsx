@@ -22,10 +22,6 @@ const ContactAdmin = ({ user }) => {
     }
   }, [isOpen]);
 
-	const callback = function (mutationsList, observer) {
-		window.scrollTo(0, document.body.scrollHeight);
-	};
-
   const getMessage = async () => {
     try {
       const checking = user.ids ? user.ids : user._id;

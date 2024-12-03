@@ -2,10 +2,8 @@
 
 'use client'
 
-import React, {useState} from 'react'
+import React from 'react'
 import {Modal , ModalOverlay, ModalContent,Textarea, ModalHeader, ModalCloseButton,Input,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
-import Head from 'next/head'
-import axios from "axios";
 
 const HtmlModalTemplate = ({modalHtmlTemplate, setRawHtml, closeModalHtml, html, handleSaveHtml}) => {
   

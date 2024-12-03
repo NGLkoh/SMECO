@@ -7,9 +7,7 @@ import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
 import { CSS }  from './style'
-import io from 'socket.io-client'
 import BlogFeaturedProfile from '../../../components/blog-featured-profile/index'
-let socket;
 
 const BlogClient = () => {
 	const [templateState, setTemplateState] = useState<any>([]) 

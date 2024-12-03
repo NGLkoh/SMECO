@@ -2,11 +2,8 @@
 
 'use client'
 
-import React, {useState} from 'react'
+import React from 'react'
 import {Modal , ModalOverlay, ModalContent, ModalHeader, ModalCloseButton,Image,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
-import Head from 'next/head'
-import axios from "axios";
-
 const ModalImage = ({ title, source, open, onCloseModal}) => {
  
   return (

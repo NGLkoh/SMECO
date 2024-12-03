@@ -4,13 +4,12 @@
 
 import React, { useState } from 'react'
 import {TableContainer , Table, useDisclosure, Flex, Accordion, AccordionButton,AccordionItem , AccordionIcon , AccordionPanel, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
-import Head from 'next/head'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { FileUploader } from "react-drag-drop-files";
-import { FaCommentDots, FaEllipsisH, FaFile, FaPlus, FaTrash } from 'react-icons/fa'; 
+import { FaEllipsisH, FaPlus } from 'react-icons/fa'; 
 const fileTypes = ["JPG", "PNG", "GIF"];
  
- const featured_image = ({ name, hight, width, image, section_title, handleChangeStateTemplate }) => {
+ const featured_image = ({ hight, width, image, section_title }) => {
 	const [file, setFile] = useState(null);
 	const handleChange = (file) => {
 		 var reader = new FileReader();

@@ -2,9 +2,8 @@
 
 import React, { useState , useEffect} from 'react'
 import {TableContainer , Table, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {EditorState, ContentState, convertFromHTML } from 'draft-js'
 import axios from "axios";
 import moment from 'moment' 
 import AddSubUserIndex from './add'
@@ -13,16 +12,7 @@ import { FaTrash } from 'react-icons/fa';
 const AddSubUser = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()
    const toast = useToast()
-   const [ title, setTitle] = useState("")
    const [ add, setAdd ] = useState(false)
-   const [ html, setRawHtml] = useState('')
-
-   const [ editorState, setEditorState] = useState(EditorState.createWithContent(
-        ContentState.createFromBlockArray(
-          convertFromHTML('<p className="gago ka">My initial content.</p>')
-        )
-      ))
-  
     const [users, setUsers] = useState([])
 
 	useEffect(() => {

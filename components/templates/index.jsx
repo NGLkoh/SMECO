@@ -1,35 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import {
-  TableContainer, Table, Select, useDisclosure, Flex, ListItem, List, useToast,
-  AccordionIcon, AccordionPanel, Thead, IconButton, HStack, Box, Tr, Th, Button, 
-  ChakraProvider, Tbody, Td, Text, Input
+  TableContainer, Table, Select, useDisclosure, Flex, useToast,
+   Thead, IconButton, HStack, Box, Tr, Th, Button, 
+  ChakraProvider, Tbody, Td
 } from '@chakra-ui/react'
-import Head from 'next/head'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import { FileUploader } from "react-drag-drop-files";
-import { FaPen, FaTrash, FaText, FaImage, HiBarsArrowDown, FaCode, FaEye } from 'react-icons/fa';
-const fileTypes = ["JPG", "PNG", "GIF"];
-import { GoRows } from "react-icons/go";
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { FaPen, FaTrash, FaEye } from 'react-icons/fa';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import dynamic from 'next/dynamic';
-import { EditorState, ContentState, convertToRaw, convertFromHTML } from 'draft-js'
-import draftToHtml from 'draftjs-to-html';
-import { convertToHTML } from 'draft-convert';
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import SaveTemplate from '../modal/saveTemplate'
 import axios from "axios";
 import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
-import ImageInsertTemplate from '../modal/ImageTemplate'
 import { Editor } from '@tinymce/tinymce-react';
 
 const Template = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [category, setCategoryState] = useState([])
-  const [imagesUpload, setUploadedImagesData] = useState()
   const [modalTemplate, setModalTemplate] = useState(false)
   const [modalHtmlTemplate, setModalHtmlTemplate] = useState(false)
   const [edit, setEdit] = useState(false)
-  const [imageModal, setImageModal] = useState(false)
   const [html, setRawHtml] = useState('')
   const [templateId, setTemplateId] = useState('')
   const [editorState, setEditorState] = useState('<p>My initial content.</p>')
@@ -43,26 +33,6 @@ const Template = ({ user }) => {
 
   const [image, setImage ] = useState([]) 
   const toast = useToast()
-
-   const handleInset = () => {
-        //  let data = <img src="https://www.yttags.com/blog/wp-content/uploads/2023/02/image-urls-for-testing.webp" alt="" style="height: auto;width: auto"/>
-        let imageString = ''
-        image.map(row => {
-        imageString += `<img src="https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row}"  alt="test" style="height: 100%;width: 100%"/>`
-                
-       })
-        console.log(html)
-        let res =  imageString.concat(html);
-        console.log(res)
-        setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
-        convertFromHTML(res)
-      )))
-
-      setImage([])
-     setImageModal(false)
-        console.log(res, "insert")
-       console.log(image, "insert")
-   }
 
   const handleTemplateSave = () => {
     setModalTemplate(true)
@@ -109,14 +79,6 @@ const Template = ({ user }) => {
     console.log(value, id)
     const res = await axios.post('/api/template/update-template-category', { category_id: value, id: id })
     console.log(res)
-  }
-
-  const closeModalImage = () => {
-    setImageModal(false)
-  }
-
-  const openImageModal = () => {
-    setImageModal(true)
   }
 
   const [add, setAdd] = useState(false)

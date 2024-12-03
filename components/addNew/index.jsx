@@ -3,24 +3,17 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
-  Text,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react'
 
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { FaEye } from 'react-icons/fa'; 
-import React, { useState } from 'react'
+import React from 'react'
 const Links = ['Dashboard', 'Projects', 'Team']
 
 const NavLink = (props) => {
@@ -43,7 +36,6 @@ const NavLink = (props) => {
 
 const AddNewSection = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [sectionm, setSection ] = useState()
   return (	
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>

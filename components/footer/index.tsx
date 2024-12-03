@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Input, Button, SimpleGrid, Link, HStack, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Text, Input, Button, Link, HStack, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react'
 
