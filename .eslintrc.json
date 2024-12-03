@@ -4,6 +4,7 @@
     // note you must disable the base rule
     // as it can report incorrect errors
     "no-unused-vars": "off",
+    "react/no-unescaped-entities": 0,
     "@typescript-eslint/no-unused-vars": [
       "warn", // or "error"
       {
