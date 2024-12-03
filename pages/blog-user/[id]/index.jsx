@@ -6,7 +6,6 @@ import {Box, Text, ChakraProvider, Container, HStack, Heading,Tag,  Link, Image 
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
-import { CSS }  from './style'
 import BlogFeaturedProfile from '../../../components/blog-featured-profile/index'
 
 const BlogClient = () => {
@@ -59,7 +58,6 @@ const fetchIntialBlog = async() => {
   }
 
    return (<Box><ChakraProvider>
-    <CSS>
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
     
@@ -141,7 +139,6 @@ const fetchIntialBlog = async() => {
 
   </Box>
 
-</CSS>
 </ChakraProvider>	<Footer/>
 </Box>)
 

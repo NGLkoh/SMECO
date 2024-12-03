@@ -5,7 +5,6 @@ import { Box, Text, ChakraProvider, Image, Textarea, Avatar, Input, Button, useT
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
-import { CSS } from './style'
 import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
@@ -87,7 +86,6 @@ const BlogClient = () => {
     <Box className='client-blog'>
       <ChakraProvider>
         <GuestBlogMessage userId={userId} />
-        <CSS>
           <Navbar page='homepage' />
           <Box
             width={'100%'}
@@ -180,7 +178,6 @@ const BlogClient = () => {
             }
           </Box>
           
-        </CSS>
       </ChakraProvider><Footer />
     </Box>
   )
