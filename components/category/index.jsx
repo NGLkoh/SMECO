@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {Box, Text,ChakraProvider, Avatar, Card, SimpleGrid, CardHeader, Heading, CardBody, CardFooter, Button} from '@chakra-ui/react'
+import {Box, Text,ChakraProvider, Avatar, Card, SimpleGrid, Heading, CardBody} from '@chakra-ui/react'
 
  let CardJson = [
    {  title: "Food",

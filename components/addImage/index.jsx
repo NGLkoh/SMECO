@@ -9,7 +9,6 @@ import {
   Button,
   useToast,
   useDisclosure,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useState , useEffect} from 'react'
@@ -32,13 +31,12 @@ const AddNewImageSection = ({user}) => {
    let checking = user.ids ? user.ids : user._id
        const res = await axios.post('/api/s3/search', {id: checking})
 	   setMedia(res.data.result)
-		console.log(res)
    }
 
   const handleChange = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -50,7 +48,7 @@ const AddNewImageSection = ({user}) => {
 	};
 
   const 	uploadS3 = async () => {
-        const res = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
         const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
         toast({
           title: 'Upload Success',
@@ -65,7 +63,7 @@ const AddNewImageSection = ({user}) => {
 
   return (	
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={'gray.100'} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}

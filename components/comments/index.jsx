@@ -1,20 +1,18 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, useToast, HStack, TableContainer, Thead, Tr, Th, Table, Tbody, Td  } from '@chakra-ui/react';
+import { Box, HStack, TableContainer, Thead, Tr, Th, Table, Tbody, Td  } from '@chakra-ui/react';
 import axios from 'axios';
 import moment from 'moment';
-const fileTypes = ["JPG", "PNG", "GIF"];
 
 const Comments = ({user}) => {
   console.log(user, "USER ID")
   const [event, setComment] = useState([]);
-	const toast = useToast()
   useEffect(() => {
     getEvent()
   }, []);
 
 
-  const getEvent = async (id) => {
+  const getEvent = async () => {
 
     try {
       let checking = user.ids ? user.ids : user._id
@@ -31,29 +29,6 @@ const Comments = ({user}) => {
       console.error('Error fetching messages:', error);
     }
   };
-
-  const handleAddUserEvent = async (id) => {
-
-   let checking = user.ids ? user.ids : user._id
-      try {
-       await axios.post('/api/event/addUser', 
-       {
-		"ids": id,
-		"userId":  checking
-	   });
-          toast({
-          title: 'Success Full Joined', 
-          status: 'success',
-	      position: 'top-right',
-          duration: 9000,
-          isClosable: true,
-        })
-        getEvent();
-       }catch(e) {
-       }
-  };
-   
-
 
   return (
     <Box >
@@ -75,7 +50,7 @@ const Comments = ({user}) => {
 			<Tbody border={'2px solid #dddddd'}>
 
           {
-          event ?  event.map(e => e.message ? <Tr>
+          event ?  event.map(e => e.message ? <Tr key={e._id}>
                 <Td border={'2px solid #dddddd'}>{e.title}</Td>
                 	<Td border={'2px solid #dddddd'}>{e.email}</Td>
 				<Td border={'2px solid #dddddd'}>{e.message}</Td>

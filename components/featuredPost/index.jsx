@@ -35,7 +35,7 @@ const selectedTemplate = (key) => {
 
 		<GridItem colSpan={3} bg='white' > 
 			<Text fontSize='2xl' fontFamily="sans-serif" mb={6} fontWeight={600}>Featured Post</Text>
-			  {template.map((row, key) => ( key == selectedKey ? <Box margin={"auto"} p={2} >  
+			  {template.map((row, key) => ( key == selectedKey ? <Box key={key} margin={"auto"} p={2} >  
 				<Image src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`}/>
 				{/* <Text fontSize={9} mt={4}>  By Juan Dela Cruz   l   May 23, 2024 </Text> */}
 				<Text fontWeight={600} mt={4}> 	{row.title} </Text>
@@ -51,7 +51,7 @@ const selectedTemplate = (key) => {
 			<Card boxShadow={'unset'} >
 			<CardBody pt={'0px'} border={'unset'}>
 				<Stack  spacing='4' className='feature-scroll'>
-                {template.map((row, key) => (<Box cursor={'pointer'} p={4} background={ key == selectedKey ? '#eee' : ""} key={row._id} onClick={(e) => selectedTemplate(key)}>
+                {template.map((row, key) => (<Box cursor={'pointer'} p={4} background={ key == selectedKey ? '#eee' : ""} key={row._id} onClick={() => selectedTemplate(key)}>
 					<Text size='sm' fontSize={9} textTransform='uppercase'>
 					{row.title}
 					</Text>

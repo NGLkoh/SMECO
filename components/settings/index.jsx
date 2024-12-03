@@ -6,22 +6,22 @@ import axios from 'axios';
 import { FileUploader } from "react-drag-drop-files";
 const fileTypes = ["JPG", "PNG", "GIF"];
 
-const ProfileEdit = ({user}:any) => {
-	const [fileName, setFileName] = useState<any>()
-    const [bgFileName, setBgFileName] = useState<any>()
-	const [file, setFile] = useState<any>()
-    const [bgFile, setBgFile] = useState<any>()
-	const [description, setDescription] = useState<any>()
-	const [facebook, setFacebook] = useState<any>()
-	const [twitter, setTwitter] = useState<any>()
-	const [instagram, setInstagram] = useState<any>()
-	const [linkIn, setLinkIn] = useState<any>()
+const ProfileEdit = ({user}) => {
+	const [fileName, setFileName] = useState()
+    const [bgFileName, setBgFileName] = useState()
+	const [file, setFile] = useState()
+    const [bgFile, setBgFile] = useState()
+	const [description, setDescription] = useState()
+	const [facebook, setFacebook] = useState()
+	const [twitter, setTwitter] = useState()
+	const [instagram, setInstagram] = useState()
+	const [linkIn, setLinkIn] = useState()
    const toast = useToast()
   useEffect(() => {
  
   }, []);
 
-   const handleChange = async (event:any, type: string)  => {
+   const handleChange = async (event, type)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
         type == "pImage" ?  setFileName(`${r}-${event.name}`) : setBgFileName(`${r}-${event.name}`)
         new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ const ProfileEdit = ({user}:any) => {
           isClosable: true,
         })
 
-      } catch(e){}
+      } catch(e){console.log(e)}
 	
  }
 
@@ -74,21 +74,21 @@ const ProfileEdit = ({user}:any) => {
        </Box>
        <Box mt={2}>
                 <Text mb={2}>Blog Profile Image:</Text>
-				<FileUploader name="file" handleChange={(e:any) => handleChange(e, "pImage")} types={fileTypes} />
+				<FileUploader name="file" handleChange={(e) => handleChange(e, "pImage")} types={fileTypes} />
 				<Text mb={2}>Background Image:</Text>
-				<FileUploader name="file" handleChange={(e:any) => handleChange(e, "bg")} types={fileTypes} />
+				<FileUploader name="file" handleChange={(e) => handleChange(e, "bg")} types={fileTypes} />
                 <Text mt={2} mb={2}>Blog Profile Description:</Text>
-                <Textarea  onChange={(e:any) => setDescription(e.target.value)}  defaultValue={user? user.profile[0].description : ""}/>
+                <Textarea  onChange={(e) => setDescription(e.target.value)}  defaultValue={user? user.profile[0].description : ""}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
-                <Input onChange={(e:any) => setFacebook(e.target.value)}  defaultValue={user? user.profile[0].facebook : ""}/>
+                <Input onChange={(e) => setFacebook(e.target.value)}  defaultValue={user? user.profile[0].facebook : ""}/>
                 <Text mt={2} mb={2}>Twitter:</Text>
-                <Input onChange={(e:any) => setTwitter(e.target.value)} defaultValue={ user? user.profile[0].twitter : ""}/>
+                <Input onChange={(e) => setTwitter(e.target.value)} defaultValue={ user? user.profile[0].twitter : ""}/>
                 <Text mt={2} mb={2}>Instagram:</Text>
-                <Input onChange={(e:any) => setInstagram(e.target.value)} defaultValue={ user? user.profile[0].instagram : ""}/>
+                <Input onChange={(e) => setInstagram(e.target.value)} defaultValue={ user? user.profile[0].instagram : ""}/>
                 <Text mt={2} mb={2}>LinkIn:</Text>
-                <Input onChange={(e:any) => setLinkIn(e.target.value)} defaultValue={user? user.profile[0].linkIn : ""}/>
+                <Input onChange={(e) => setLinkIn(e.target.value)} defaultValue={user? user.profile[0].linkIn : ""}/>
          
-         <Button backgroundColor="#ffb509" mt={2} onClick={(e) =>handleEditBtn()} color={'white'}>Submit</Button>
+         <Button backgroundColor="#ffb509" mt={2} onClick={() =>handleEditBtn()} color={'white'}>Submit</Button>
       </Box>
      </Box> :  <Box textAlign={'center'} fontSize={18} marginTop={20}> Please logout and login again! Thanks</Box>
   );

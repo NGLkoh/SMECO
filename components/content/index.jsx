@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Text, ChakraProvider, Grid, GridItem, Image, Button, Stack, StackDivider, Heading } from '@chakra-ui/react';
-import { BsJustify } from 'react-icons/bs';
+import { Box, Text, ChakraProvider, Grid, Image } from '@chakra-ui/react';
 
 const Content = () => {
    return (

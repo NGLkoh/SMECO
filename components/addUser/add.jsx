@@ -2,8 +2,6 @@
 
 'use client'
 
-import Head from 'next/head'
-
 import React, {useState} from 'react'
 import {Box,  Button, useToast } from '@chakra-ui/react'
 import axios from 'axios'
@@ -74,7 +72,7 @@ const AddSubUserIndex = ({user, getTemplate, setAdd}) => {
 					bg={'#FFD050'} 
 					w={'100%'}
 					color={'white'}
-					onClick={(e) => handleVerify(e)}
+					onClick={() => handleVerify()}
 					_hover={{
 					bg: '#232536',
 					}}>

@@ -25,12 +25,12 @@ const AdminEvents = ({user}) => {
   }, []);
 
 
-  const getEvent = async (id) => {
+  const getEvent = async () => {
 
     try {
       const res = await axios.post('/api/event/event');
       setEvent(res.data.result);
-
+ console.log(res)
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -39,7 +39,7 @@ const AdminEvents = ({user}) => {
   const handleChange = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+           new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -72,7 +72,7 @@ const AdminEvents = ({user}) => {
       getEvent();
      } catch(e){
          toast({
-          title: 'Error Created Event', 
+          title: 'Error Created Event' + e, 
           status: 'warning',
 	      position: 'top-right',
           duration: 9000,
@@ -105,7 +105,7 @@ const AdminEvents = ({user}) => {
         <Text mt={2}>Description</Text>
        <Textarea mt={2} border={'2px solid #dddddd'} onChange={(e) => setDescription(e.target.value)} />
 
-       <Button mt={2} color={'#ffffff'} background={'#ffb509'} onClick={(e) => handleAddEvent()}> Add </Button>
+       <Button mt={2} color={'#ffffff'} background={'#ffb509'} onClick={() => handleAddEvent()}> Add </Button>
      </Box> 
     <TableContainer mt={6}>
      	<Table variant='simple' border={'2px solid #dddddd'}>
@@ -121,12 +121,12 @@ const AdminEvents = ({user}) => {
 			<Tbody border={'2px solid #dddddd'}>
 
           {
-          event ?  event.map(e => <Tr>
+          event ?  event.map(e => <Tr key={e._id}>
 				<Td border={'2px solid #dddddd'}>{e.title}</Td>
 				<Td > <Image
 			height="60px"
              ml={2}
-			onClick={ (row)  => handleOpenModal('Banner', e.fileName)}
+			onClick={ ()  => handleOpenModal('Banner', e.fileName)}
 			cursor={'pointer'}
             display={'inline-block'}
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${e.fileName}`}

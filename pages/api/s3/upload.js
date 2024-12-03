@@ -1,5 +1,3 @@
-import { Server } from 'socket.io'
-import AWS from 'aws-sdk';
 import S3Client  from 'aws-sdk/clients/s3';
 
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;

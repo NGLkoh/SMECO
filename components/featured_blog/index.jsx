@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import {Box, Avatar, Flex, CardHeader,Card, Text, Heading, Image, CardBody, CardFooter, ChakraProvider} from '@chakra-ui/react'
-import Head from 'next/head'
+import {Box, Avatar, Flex, CardHeader,Card, Text, Heading, CardBody, ChakraProvider} from '@chakra-ui/react'
 
 const FeaturedBlog = () => {
    return (

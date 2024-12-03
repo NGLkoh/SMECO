@@ -13,8 +13,6 @@ import {
   Drawer,
   DrawerContent,
   useDisclosure,
-  BoxProps,
-  FlexProps,
   Menu,
   MenuButton,
   MenuDivider,
@@ -39,11 +37,10 @@ import {
   FiPlus,
   FiLayers,
 } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 import AddNewSection from '../addNew/index'
 import ClientDashboard from '../dashboard/index'
 import AdminDashboard from '../dashboard-admin/index'
-import Template from '../../components/templates'
+import Template from '../templates'
 import  {getCookiesData} from '../../lib/getCookieData'
 import axios from "axios";
 import TemplateCategory from '../template-category/index';
@@ -61,35 +58,9 @@ import { FileUploader } from "react-drag-drop-files";
 import { BsFillCalendarEventFill } from 'react-icons/bs';
 import { FiPocket } from 'react-icons/fi'
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  subLinks?: LinkItemProps[];
-  id?: string;
-}
 
-interface NavItemProps extends FlexProps {
-  count: number;
-  icon: IconType;
-  id?: any;
-  children: React.ReactNode;
-  setNav: Function;
-  subLinks?: LinkItemProps[];
-}
 
-interface MobileProps extends FlexProps {
-  onOpen: () => void;
-  user: any;
-}
-
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-  setNav: Function;
-   user: any;
-  count: number;
-}
-
-const LinkItems: Array<LinkItemProps> = [
+const LinkItems = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard' },
   {
     name: 'Blog Articles',
@@ -112,7 +83,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 
-const LinkAdmin: Array<LinkItemProps> = [
+const LinkAdmin = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard-admin' },
   { name: 'Users', icon: FiUser,
   id: 'users',
@@ -126,13 +97,7 @@ const LinkAdmin: Array<LinkItemProps> = [
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
 ];
 
-
-const MainLinkItems: Array<LinkItemProps> = [
-  { name: 'Settings', icon: FiSettings, id: 'sample'},
-];
-
-
-const SidebarContent = ({ onClose, user, count, setNav, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, user, count, setNav, ...rest }) => {
   const [selectedId, setSelectedId] = useState('');
 
   return (
@@ -214,13 +179,11 @@ const NavItem = ({
   id, 
   setNav, 
   selectedId, 
-  setSelectedId, 
-  ...rest 
-}: NavItemProps & { selectedId: string; setSelectedId: Function }) => {
+  setSelectedId}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Handle toggling of sublinks
-  const toggleSubLinks = (linkId: string) => {
+  const toggleSubLinks = (linkId) => {
     if (selectedId === linkId) {
       // Close if the same link is clicked again
       setSelectedId('');
@@ -311,10 +274,10 @@ const NavItem = ({
 };
 
 
-const MobileNav = ({ user, onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ user, onOpen, ...rest }) => {
 
 const  handleLogout = async () => {
-	const res = await axios.post('/api/users/logout')
+	 await axios.post('/api/users/logout')
 	 let origin = window.location.origin
      window.location.href = `${origin}/login`
 }
@@ -369,7 +332,7 @@ const  handleLogout = async () => {
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={(e) => handleLogout()}>Sign out</MenuItem>
+              <MenuItem onClick={() => handleLogout()}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -381,15 +344,15 @@ const  handleLogout = async () => {
 export const SidebarWithHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [nav, setNav] = useState('');
- 	const [user, setUser] = useState<any>()
- 	const [fileName, setFileName] = useState<any>()
-    const [file, setFile] = useState<any>()
-    const [description, setDescription] = useState<any>()
-    const [facebook, setFacebook] = useState<any>()
-    const [twitter, setTwitter] = useState<any>()
-    const [instagram, setInstagram] = useState<any>()
-    const [linkIn, setLinkIn] = useState<any>()
-    const [count, setCount] = useState<any>(0)
+ 	const [user, setUser] = useState()
+ 	const [fileName, setFileName] = useState()
+    const [file, setFile] = useState()
+    const [description, setDescription] = useState()
+    const [facebook, setFacebook] = useState()
+    const [twitter, setTwitter] = useState()
+    const [instagram, setInstagram] = useState()
+    const [linkIn, setLinkIn] = useState()
+    const [count, setCount] = useState(0)
  	const toast = useToast()
    
 	useEffect(() => {
@@ -397,14 +360,14 @@ export const SidebarWithHeader = () => {
 	}, [])
 
 
-	const getEvent = async (userId:any) => {
+	const getEvent = async (userId) => {
       setCount(0); 
 		try {
         let number = []
 		const res = await axios.post('/api/event/event');
 		  
         let data = res.data.result
-		data.map((row:any) => {
+		data.map((row) => {
         let add = 1
         
 			if(row.users.indexOf(userId) > -1) {
@@ -418,10 +381,10 @@ export const SidebarWithHeader = () => {
 		}
 	};
 
-   const handleChange = async (event:any)  => {
+   const handleChange = async (event)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${event.name}`)
-        const base64 = new Promise((resolve, reject) => {
+           new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(event)
 			reader.onload = () => {
@@ -443,14 +406,14 @@ export const SidebarWithHeader = () => {
 
    const handleSaveProfile = async () => {
             // let checking = user.ids ? user.ids : user._id
-		let newUsers:any = user;
+		let newUsers = user;
 		delete newUsers.profileSet;
 		newUsers["profileSet"] = 1; 
 		console.log(newUsers)
-		const cookie: any = await axios.post('/api/users/getUpdateCookies', { user: newUsers})
+		await axios.post('/api/users/getUpdateCookies', { user: newUsers})
 		let data = { facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
-		const upload = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-		const res = await axios.post('/api/users/profile', { id: user._id, data: data})
+		 await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+	     await axios.post('/api/users/profile', { id: user._id, data: data})
 
 		 toast({
           title: 'Save Profile Success',
@@ -470,17 +433,17 @@ export const SidebarWithHeader = () => {
             <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
 			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
                 <Text mb={2}>Blog Profile Image:</Text>
-				<FileUploader name="file" handleChange={(e:any) => handleChange(e)} types={fileTypes} />
+				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
-                <Textarea  onChange={(e:any) => setDescription(e.target.value)}/>
+                <Textarea  onChange={(e) => setDescription(e.target.value)}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
-                <Input onChange={(e:any) => setFacebook(e.target.value)}/>
+                <Input onChange={(e) => setFacebook(e.target.value)}/>
                 <Text mt={2} mb={2}>Twitter:</Text>
-                <Input onChange={(e:any) => setTwitter(e.target.value)}/>
+                <Input onChange={(e) => setTwitter(e.target.value)}/>
                 <Text mt={2} mb={2}>Instagram:</Text>
-                <Input onChange={(e:any) => setInstagram(e.target.value)}/>
+                <Input onChange={(e) => setInstagram(e.target.value)}/>
                 <Text mt={2} mb={2}>LinkIn:</Text>
-                <Input onChange={(e:any) => setLinkIn(e.target.value)}/>
+                <Input onChange={(e) => setLinkIn(e.target.value)}/>
 
                  <Button colorScheme='blue' onClick={(e => handleSaveProfile())} mt={2} mr={3} w={'100%'}>
 				Save

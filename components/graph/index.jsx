@@ -3,7 +3,6 @@
 import {
   Box,
   chakra,
-  Link,
   Text,
   GridItem,
  Grid,
@@ -15,10 +14,10 @@ import 'react-calendar/dist/Calendar.css';
 import '../../resources/css/style.css'
 import axios from 'axios'
 
-export default function ContainerGraph({user} :any) {
-  const [value, onChange] = useState<any>([]);
-  const [templateState, setTemplateState] = useState<any>([])
-  const [ category, setCategoryState] = useState<any>([])
+export default function ContainerGraph({user}) {
+  const [value, onChange] = useState([]);
+  const [templateState, setTemplateState] = useState([])
+  const [ category, setCategoryState] = useState([])
 
 	useEffect(() => {
       getTemplate()
@@ -27,16 +26,18 @@ export default function ContainerGraph({user} :any) {
 
  const getCategory = async () => {
 	try {
-		const res = await axios.post('/api/category/all')
+		const checking = user.ids ? user.ids : user._id
+		const res = await axios.post('/api/category/search', {id: checking})
 	   setCategoryState(res.data.result)
 		console.log(res.data.result, 'catergory')
-	} catch (e) { }
+	} catch (e) { console.log(e) }
     }
    const getTemplate = async () => {
-   let dateArray:any = []
-       const res = await axios.post('/api/template/all')
+   const dateArray = []
+   const checking = user.ids ? user.ids : user._id
+       const res = await axios.post('/api/template/search', {id: checking})
        console.log(res.data.result)
-      res.data.result.map((data:any) => dateArray.push(moment(data.date).format('L')))
+      res.data.result.map((data) => dateArray.push(moment(data.date).format('L')))
 	   setTemplateState(res.data.result)
        onChange(dateArray)
 		console.log(res)
@@ -62,18 +63,18 @@ export default function ContainerGraph({user} :any) {
         <Calendar onChange={onChange} value={value}  />
       </GridItem>
         <GridItem  w='100%'>
-			<Box width={'100%'}  overflow={'scroll'} height={'400px'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
-			{templateState.map((data:any) => (<Link href={`http://localhost:3000/blog-client/${data._id}`} key={data._id}><Box   width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
+			<Box width={'100%'} overflow={'hidden'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
+			{templateState.map((data) => (<Box  key={data._id} width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
 				<Box position={'absolute'}> 
                  <Box fontWeight={600}>{moment(data.date).format("Do")}</Box>	   
 				 <Box  opacity={0.8}>{moment(data.date).format("MMM")}</Box>	 
                 </Box>
              <Box ml={10}> 
                 <Text textOverflow={'ellipsis'} fontWeight={600} overflow={'hidden'} whiteSpace={'nowrap'}>{data.description}</Text>
-				<Text position={'relative'} opacity={0.8}><Text display={'inline'} >Category</Text><Text display={'inline'} > : {category.map((cat:any) => { return <Text display={'inline'}> {cat._id == data.category_id ? <>{cat.title}</> : ""} </Text> })}</Text></Text>
+				<Text position={'relative'} opacity={0.8}><Text display={'inline'} >Category</Text><Text display={'inline'} > : {category.map((cat) => { return <Text key={cat._id} display={'inline'}> {cat._id == data.category_id ? <>{cat.title}</> : ""} </Text> })}</Text></Text>
                 </Box>
 
-             </Box></Link>))}
+             </Box>))}
 			   
              </Box>
          </GridItem>

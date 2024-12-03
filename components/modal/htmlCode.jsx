@@ -3,13 +3,13 @@
 'use client'
 
 import React from 'react'
-import {Modal , ModalOverlay, ModalContent,Textarea, ModalHeader, ModalCloseButton,Input,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
+import {Modal , ModalOverlay, ModalContent,Textarea, ModalHeader, ModalCloseButton,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
 
 const HtmlModalTemplate = ({modalHtmlTemplate, setRawHtml, closeModalHtml, html, handleSaveHtml}) => {
   
   return (
     <>
-      <Modal isOpen={modalHtmlTemplate} size={'full'} onClose={(e) => closeModalHtml()}>
+      <Modal isOpen={modalHtmlTemplate} size={'full'} onClose={() => closeModalHtml()}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>HTML</ModalHeader>
@@ -25,10 +25,10 @@ const HtmlModalTemplate = ({modalHtmlTemplate, setRawHtml, closeModalHtml, html,
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={(e) => handleSaveHtml()}>
+			 <Button colorScheme='blue' mr={3} onClick={() => handleSaveHtml()}>
               Save
             </Button>
-            <Button variant='ghost' mr={3} onClick={(e) => closeModalHtml()}>
+            <Button variant='ghost' mr={3} onClick={() => closeModalHtml()}>
               Close
             </Button>
           </ModalFooter>

@@ -29,16 +29,7 @@ const backgrounds = [
   `url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='185' viewBox='0 0 560 185' fill='none'%3E%3Cellipse cx='457.367' cy='123.926' rx='102.633' ry='61.0737' transform='rotate(-180 457.367 123.926)' fill='%23ECC94B'/%3E%3Cellipse cx='160.427' cy='61.0737' rx='102.633' ry='61.0737' transform='rotate(-180 160.427 61.0737)' fill='%239F7AEA'/%3E%3Cellipse cx='193.808' cy='111.771' rx='193.808' ry='73.2292' transform='rotate(-180 193.808 111.771)' fill='%234299E1'/%3E%3Cellipse cx='337.295' cy='74.415' rx='193.808' ry='73.2292' transform='rotate(-180 337.295 74.415)' fill='%2348BB78'/%3E%3C/svg%3E")`,
 ]
 
-interface TestimonialCardProps {
-  name: string
-  role: string
-  content: string
-  avatar: string
-  index: number,
-  profile: any
-}
-
-function TestimonialCard(props: TestimonialCardProps) {
+function TestimonialCard(props) {
   const { index, profile } = props
   return (
     <Flex
@@ -99,7 +90,7 @@ function TestimonialCard(props: TestimonialCardProps) {
   )
 }
 
-export default function GridBlurredBackdrop( { profile} :any) {
+export default function GridBlurredBackdrop( { profile}) {
   return (
     <Flex
       textAlign={'center'}
@@ -112,7 +103,7 @@ export default function GridBlurredBackdrop( { profile} :any) {
       </Box>
       <SimpleGrid spacing={'20'} mt={16} mb={16} width={'100%'} mx={'auto'}>
         {testimonials.map((cardInfo, index) => (
-          <Link href={`/blog-user/${profile.id}`}> <TestimonialCard key={index} profile={profile} {...cardInfo} index={index} /></Link>
+          <Link key={index} href={`/blog-user/${profile.id}`}> <TestimonialCard key={index} profile={profile} {...cardInfo} index={index} /></Link>
          
         ))}
       </SimpleGrid>

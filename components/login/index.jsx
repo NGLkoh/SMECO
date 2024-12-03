@@ -3,8 +3,7 @@
 'use client'
 
 import React from 'react'
-import {Image , Box, Flex, Center, Square, Text} from '@chakra-ui/react'
-import Head from 'next/head'
+import {Box, Flex, Center, Square, Text} from '@chakra-ui/react'
 
 const Login = () => {
    return (

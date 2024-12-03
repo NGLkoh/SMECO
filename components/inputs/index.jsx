@@ -4,9 +4,8 @@
 
 import React from 'react'
 import {Text , Box, Input} from '@chakra-ui/react'
-import Head from 'next/head'
 
-const InputCustom = (props: any) => {
+const InputCustom = (props) => {
    console.log(props)
    return (<Box margin={"auto"} p={2}>  
 			<Box mt={2} >

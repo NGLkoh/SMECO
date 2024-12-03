@@ -1,7 +1,7 @@
 
 
 import React, { useState , useEffect} from 'react'
-import {TableContainer , Table, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td, Text, Input  } from '@chakra-ui/react'
+import {TableContainer , Table, useDisclosure, Flex, useToast, Thead,IconButton, HStack, Box,  Tr, Th, Button,  ChakraProvider, Tbody, Td  } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
@@ -25,11 +25,11 @@ const AddSubUser = ({user}) => {
 		const res = await axios.post('/api/users/subUser', {ids: user._id})
 	   setUsers(res.data.result)
 		console.log(res)
-	} catch (e) { }
+	} catch (e) { console.log(e) }
     }
 	
 	const handleDelete = async (data) => {
-		const res = await axios.post('/api/users/remove', {id: data})
+	      await axios.post('/api/users/remove', {id: data})
 		
           toast({
           title: 'Successfully Delete',
@@ -61,14 +61,14 @@ const AddSubUser = ({user}) => {
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => setAdd(false)}>
+			 onClick={() => setAdd(false)}>
               Back
             </Button> </> : <><Button
               bg={'#232536'} variant='solid'
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => setAdd(true)}>
+			 onClick={() => setAdd(true)}>
               Add
             </Button></> }
            
@@ -97,7 +97,7 @@ const AddSubUser = ({user}) => {
 			</Box><Box display={'inline'}>	
 			<Button
 			bg={'black'} variant='solid'
-			onClick={(event) => handleDelete(e._id)}
+			onClick={() => handleDelete(e._id)}
 			color={'#ffffff'}
 			size={'md'}
 			mr={4}>

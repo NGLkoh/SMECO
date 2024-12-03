@@ -2,10 +2,9 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Box, Text, ChakraProvider, PinInputField, Image,useColorModeValue, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
+import {Box, Text, ChakraProvider, PinInputField, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
 import { FaGoogle} from 'react-icons/fa'; 
-import CaptionCarousel from '../../components/carousel'; 
 import axios from "axios";
 import Navbar from '../../components/nabvar';
 import InputCustom from '../../components/inputs/index'
@@ -22,7 +21,6 @@ const Register = () => {
  	const [password, setPassword] = useState(String)
     const [next, setNext] = useState(1)
 	const router = useRouter()
-	const [file, setFile] = useState(null);
     const [code1, setCode1] = useState(Number)
 	const [code2, setCode2] = useState(Number)  
 	const [code3, setCode3] = useState(Number)  
@@ -71,7 +69,7 @@ const Register = () => {
   const handleChangeBusinessPermit = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFilenameBP(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+       new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -84,7 +82,7 @@ const Register = () => {
 	const handleChangeBarangayClearance = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFilenameBC(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -99,9 +97,9 @@ const Register = () => {
 		let val = Math.floor(1000 + Math.random() * 9000);
 		console.log(val);
          try{ await axios.post('/api/s3/upload', {filename: filenameBP, base64: businessPermit})}
-         catch(e) {}
+         catch(e) { console.log(e)}
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
-         catch(row) { }
+         catch(row) {console.log(row) }
 
 		 const res = await axios.post('/api/users/create', 
 		{   username: email,
@@ -113,7 +111,7 @@ const Register = () => {
             businessPermit: filenameBP, 
             barangayClearance: filenameBC  })
 		if(res.data.message === 'true') {
-		 const emailRes = await axios.post('/api/email/sendEmail', { email:  email, code: val})
+		 await axios.post('/api/email/sendEmail', { email:  email, code: val})
           toast({
           title: 'Successfully Email Send',
           status: 'success',
@@ -161,13 +159,13 @@ const Register = () => {
 		<Box  height={'100%'}>
 		<Box width={'100%'} height={"100%"} minHeight="100vh" margin={'auto'}>
 		<Box w={'100%'} height={"100%"} minHeight="100vh">
-		<Box colSpan={3} bg={useColorModeValue('#232536', 'gray.800')} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
+		<Box colSpan={3} bg={'#232536'} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
 		   
 			    { next == 1  ? (  <Box pl={'25%'} pr={'25%'}>  <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
 				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
 			  
                 <Box textAlign={'center'} mt={4} >
-				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={(e) =>  setNext(2)}>
+				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  setNext(2)}>
 						Next
 				</Button>
 				<Box textAlign={'center'}  padding={2}>
@@ -195,12 +193,12 @@ const Register = () => {
 					<Text mt={4} opacity={0.7} fontSize={{ base: '10px', md: 'xsm', lg: 'xsm' }} className='req-text'> Formats accepted are .pdf, .jpg, and .png </Text>
 					<Text mt={4} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}> If you do not have a file you can use the sample below: </Text>
 					<Box mt={2}mr={'20%' }> 
-						<Image onClick={(e) => handleOpenModal('Business Permit','document/business-permit.png')} src="first.png" className="logo" w="150px" mb={2}/>
-						<Image onClick={(e) =>  handleOpenModal('Barangay Clearance','document/business-clearance-sample.png')} src="second.png" className="logo" w="150px"/>
+						<Image onClick={() => handleOpenModal('Business Permit','document/business-permit.png')} src="first.png" className="logo" w="150px" mb={2}/>
+						<Image onClick={() =>  handleOpenModal('Barangay Clearance','document/business-clearance-sample.png')} src="second.png" className="logo" w="150px"/>
 					</Box>
 
 					<Box  mt={6}> 
-					<Button   onClick={(e) => setNext(1)}  margin={2} colorScheme='teal' mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
+					<Button   onClick={() => setNext(1)}  margin={2} colorScheme='teal' mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
 					</Button> 
 					<Button margin={2} disabled={ businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
@@ -215,13 +213,13 @@ const Register = () => {
 			minH={'90vh'}
 			align={'center'}
 			justify={'center'}
-			bg={useColorModeValue('#232536', 'gray.800')}>
+			bg={'#232536'}>
 			<Stack
 				spacing={4}
 				w={'100%'}
 				h={'xl'}
 				maxW={'xl'}
-				bg={useColorModeValue('white', 'gray.700')}
+				bg={'white'}
 				rounded={'xl'}
 				boxShadow={'lg'}
 				p={10}
@@ -234,7 +232,7 @@ const Register = () => {
 				</Center>
 				<Center
 				fontSize={{ base: 'sm', sm: 'md' }}
-				color={useColorModeValue('gray.800', 'gray.400')}>
+				color={'gray.800'}>
 					Please check your email
 				</Center>
 				{/* <Center

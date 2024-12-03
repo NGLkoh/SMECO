@@ -22,13 +22,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
-interface StatsCardProps {
-  title: string
-  stat: string
-  icon: ReactNode
-}
-
-function StatsCard(props: StatsCardProps) {
+function StatsCard(props) {
   const { title, stat, icon } = props
   return (
     <Stat
@@ -58,12 +52,12 @@ function StatsCard(props: StatsCardProps) {
   )
 }
 
-export default function BasicStatistics({ user }: any) {
-  const [templateState, setTemplateState] = useState<any>([])
-  const [post, setPost] = useState<any>(0)
-  const [comment, setComment] = useState<any>(0)
-  const [views, setViews] = useState<any>(4) // Example static view count, update based on actual data
-  const [chartData, setChartData] = useState<any>({
+export default function BasicStatistics({ user }) {
+  const [templateState, setTemplateState] = useState([])
+  const [post, setPost] = useState(0)
+  const [comment, setComment] = useState(0)
+  const [views, setViews] = useState(4) // Example static view count, update based on actual data
+  const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
       {
@@ -102,7 +96,7 @@ export default function BasicStatistics({ user }: any) {
     setTemplateState(res.data.result)
 
     // Update chart data
-    setChartData((prevData:any) => {
+    setChartData((prevData) => {
       const newLabels = [...prevData.labels, new Date().toLocaleTimeString()]
       const newCommentData = [...prevData.datasets[0].data, commentCount]
       const newPostData = [...prevData.datasets[1].data, posts]

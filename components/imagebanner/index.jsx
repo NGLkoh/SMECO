@@ -2,7 +2,6 @@
 
 import React from 'react'
 import {Image , Box} from '@chakra-ui/react'
-import Head from 'next/head'
 
 const ImageBanner = () => {
    return (

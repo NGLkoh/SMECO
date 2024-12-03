@@ -41,7 +41,7 @@ const BlogClient = () => {
   }
 
   const fetchIntialBlog = async () => {
-    let params = window.location.href.split('/')
+    const params = window.location.href.split('/')
     const res = await axios.post('/api/template/template', { id: params[4] })
     console.log(res.data.result[0].ids, "userId")
     const prof = await axios.post('/api/users/usersById', { id: res.data.result[0].ids })
@@ -107,8 +107,8 @@ const BlogClient = () => {
                 paddingY={20} // Top and bottom padding
                 paddingX={8}  // Left and right padding
               >
-                {template.map((row: any) => (
-                  <Box paddingLeft={'200px'} paddingRight={'200px'}> <div key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
+                {template.map((row, key) => (
+                  <Box paddingLeft={'200px'}key={key} paddingRight={'200px'}> <div key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
                 ))}
               </Box>
             </Box>
@@ -146,7 +146,7 @@ const BlogClient = () => {
             />
      
              </Box>
-            <Input  value={email} onChange={(e:any) => setEmail(e.target.value)}  placeholder='Enter a email' border={'2px solid #000000'} mb={6}/>
+            <Input  value={email} onChange={(e) => setEmail(e.target.value)}  placeholder='Enter a email' border={'2px solid #000000'} mb={6}/>
 
             <Textarea
               value={comment}
@@ -158,7 +158,7 @@ const BlogClient = () => {
             />
             <Button
               cursor={'pointer'}
-              onClick={(e) => handleSaveComment()}
+              onClick={() => handleSaveComment()}
               mt={2}
               top={'-54px'}
               position={'relative'}
@@ -171,8 +171,8 @@ const BlogClient = () => {
             </Button>
             <GridBlurredBackdrop profile={profile} />
             {
-              comments.map((e: any) => (
-                <Box mb={2} key={e._id} border={'2px solid #e0e0e0'} p={4}>
+              comments.map((e, key) => (
+                <Box mb={2} key={key} border={'2px solid #e0e0e0'} p={4}>
                   <Avatar name={e.email} /> {e.email}
                   <Text pl={14} position={'relative'} bottom={'26px'} left={'-3px'}> {e.message} </Text>
                 </Box>

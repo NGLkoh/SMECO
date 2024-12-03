@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Center, Box } from '@chakra-ui/react'
-import Navbar from '../../components/nabvar'
+import { Box } from '@chakra-ui/react'
 
 const LandingPage = () =>  {
   return (<Box className="tite">

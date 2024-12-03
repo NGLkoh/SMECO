@@ -9,9 +9,8 @@ import {
   Button,
   useToast,
   useDisclosure,
-  useColorModeValue,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useState , useEffect} from 'react'
 import axios from 'axios'
 const fileTypes = ["JPG", "PNG", "GIF"];
@@ -39,7 +38,7 @@ const AddNewImageSection = ({user, image, setImage}) => {
   const handleChange = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -82,7 +81,7 @@ const AddNewImageSection = ({user, image, setImage}) => {
     console.log(image)
  
   const uploadS3 = async () => {
-        const res = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
         const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
         toast({
           title: 'Upload Success',
@@ -97,7 +96,7 @@ const AddNewImageSection = ({user, image, setImage}) => {
 
   return (	
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={'gray.100'} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -137,7 +136,7 @@ const AddNewImageSection = ({user, image, setImage}) => {
             display={'inline-block'}
 			key={rows._id}
            border={image.includes(rows.key)  ? '2px solid skyblue' : ""}
-            onClick={(e) => handleSelectImage(rows.key)}
+            onClick={() => handleSelectImage(rows.key)}
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${rows.key}`}
 			/> ) : ""
 		}

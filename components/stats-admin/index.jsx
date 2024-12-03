@@ -11,16 +11,11 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 
-import { ReactNode, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FaShare, FaComments, FaPodcast, FaBook } from 'react-icons/fa'
-interface StatsCardProps {
-  title: string
-  stat: string
-  icon: ReactNode
-}
+import { FaComments, FaPodcast, FaBook } from 'react-icons/fa'
 
-function StatsCard(props: StatsCardProps) {
+function StatsCard(props) {
   const { title, stat, icon } = props
   return (
     <Stat
@@ -50,11 +45,11 @@ function StatsCard(props: StatsCardProps) {
   )
 }
 
-export default function BasicStatistics({user} :any) {
-  const [templateState, setTemplateState] = useState<any>([])
+export default function BasicStatistics({}) {
+  const [templateState, setTemplateState] = useState([])
   const [post, setPost] = useState<any>(0)
-  const [comment, setComment] = useState<any>(0)
-  const [usersCount, setUsers] = useState<any>(0)
+  const [comment, setComment] = useState(0)
+  const [usersCount, setUsers] = useState(0)
    useEffect(() => {
       getTemplate()
       getUsers()
@@ -62,7 +57,7 @@ export default function BasicStatistics({user} :any) {
 
    const getTemplate = async () => {
        const res = await axios.post('/api/template/all')
-        res.data.result.map(async (row:any) => {
+        res.data.result.map(async (row) => {
             const commentRes =await axios.post('/api/comment/all')
               setComment(comment + commentRes.data.result.length)
          })

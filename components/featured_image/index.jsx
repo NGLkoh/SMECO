@@ -2,7 +2,6 @@
 
 import React from 'react'
 import {Box, ChakraProvider, Image} from '@chakra-ui/react'
-import Head from 'next/head'
 
 const FeaturedImage = () => {
    return ( <Box marginLeft={'auto'} marginRight={'auto'} marginBottom={16}  marginTop={16} >

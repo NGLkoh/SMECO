@@ -129,7 +129,7 @@ const Template = ({ user }) => {
 
   const handleSaveEdit = async ()  => {
   try{
-     const res = await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState })
+         await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState })
 		toast({
 		title: "Post Deleted",
 		description: "Successfully edited",
@@ -171,7 +171,7 @@ const Template = ({ user }) => {
                 color={'#ffffff'}
                 size={'md'}
                 mr={4}
-                onClick={(e) => setEdit(false)}>
+                onClick={() => setEdit(false)}>
                 Back
               </Button>
               <Button
@@ -179,7 +179,7 @@ const Template = ({ user }) => {
               color={'#ffffff'}
               size={'md'}
               mr={4}
-	          onClick={(e) => handleSaveEdit()}
+	          onClick={() => handleSaveEdit()}
               >
               Save Edit
             </Button> 
@@ -190,7 +190,7 @@ const Template = ({ user }) => {
                 color={'#ffffff'}
                 size={'md'}
                 mr={4}
-                onClick={(e) => setAdd(false)}>
+                onClick={() => setAdd(false)}>
                 Back
               </Button>
               <Button
@@ -208,7 +208,7 @@ const Template = ({ user }) => {
               color={'#ffffff'}
               size={'md'}
               mr={4}
-              onClick={(e) => setAdd(true)}>
+              onClick={() => setAdd(true)}>
               Add
             </Button>
           )}

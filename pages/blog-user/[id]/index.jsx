@@ -2,7 +2,7 @@
 'use client'
 
 import React, {useState, useEffect} from 'react'
-import {Box, Text, ChakraProvider, Container, HStack, Heading,Tag,  Link,useColorModeValue, Image, Flex, CardBody, Spacer , Button, Stack, StackDivider , useToast, position } from '@chakra-ui/react'
+import {Box, Text, ChakraProvider, Container, HStack, Heading,Tag,  Link, Image } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
@@ -10,33 +10,30 @@ import { CSS }  from './style'
 import BlogFeaturedProfile from '../../../components/blog-featured-profile/index'
 
 const BlogClient = () => {
-	const [templateState, setTemplateState] = useState<any>([]) 
+	const [templateState, setTemplateState] = useState([]) 
     const [name, setName] = useState("")
-    const [comments, setComments] = useState([])
-    const [profile, setProfile] = useState<any>()
-    const [profileList, setProfileList] = useState<any>()
+    const [profile, setProfile] = useState()
+    const [profileList, setProfileList] = useState()
 useEffect(() => {
       fetchIntialBlog()
       fetchProfile()
 }, [])
 
 const fetchProfile = async () => {
-        let params = window.location.href.split('/')
-        let data = { id: params[4]}
+         const params = window.location.href.split('/')
          const res = await axios.post('/api/users/usersById', {id: params[4]})
-         console.log(res.data.result[0].profile, "user details")
          setProfile(res.data.result[0].profile[0])
          setProfileList(res.data.result[0].profile)
          setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName}`)
 }
 
 
-const BlogTags = (props :any) => {
+const BlogTags = (props) => {
   const { marginTop = 0, tags } = props
 
   return (
     <HStack spacing={2} marginTop={marginTop}>
-      {tags.map((tag:any) => {
+      {tags.map((tag) => {
         return (
           <Tag size={'md'} variant="solid" colorScheme="orange" key={tag}>
             {tag}
@@ -51,11 +48,11 @@ const fetchIntialBlog = async() => {
     console.log(params[4], "USER ID")
    setTemplateState([])
     const res = await axios.post('/api/template/search', {id: params[4]})
-   res.data.result.map(async (tem :any) => {
-             let categoryRes :any
+   res.data.result.map(async (tem) => {
+             let categoryRes 
 	         if(tem.category_id){
                  categoryRes  = await axios.post('/api/category/searchById', {id: tem.category_id})
-                 setTemplateState((prevState:any) => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
+                 setTemplateState((prevState) => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
              }
          }) 
 		console.log(res.data.result, "template")
@@ -66,7 +63,7 @@ const fetchIntialBlog = async() => {
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
     
-        { profileList ? profileList.map((row:any, key:any) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'} backgroundImage={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage}`} >
+        { profileList ? profileList.map((row, key) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'} backgroundImage={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage}`} >
 
 <BlogFeaturedProfile profile={profile} name={name}/>
 		</Box>)) : ""}
@@ -75,8 +72,8 @@ const fetchIntialBlog = async() => {
 		<Box width={'100%'} height={"100%"} className='client' minHeight="100vh" margin={'auto'} padding={20}>
        <Container maxW={'7xl'} p="12">
        <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>My Posts</Heading>
-       {templateState ?   templateState.map((row:any) => (
-      <Link color='teal.500' href={`/blog-client/${row._id}`}>  
+       {templateState ?   templateState.map((row, key) => (
+      <Link key={key} color='teal.500' href={`/blog-client/${row._id}`}>  
       <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
@@ -128,7 +125,7 @@ const fetchIntialBlog = async() => {
           <Text
             as="p"
             marginTop="2"
-            color={useColorModeValue('gray.700', 'gray.200')}
+            color={'gray.700'}
             fontSize="lg">
             {row.description}
           </Text>

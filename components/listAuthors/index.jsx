@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {Box, Text,ChakraProvider, Avatar, Card, SimpleGrid, Heading, CardBody} from '@chakra-ui/react'
-import { FaFacebook, FaInstagram , FaTwitter, FaLinkedin, FaPersonBooth} from 'react-icons/fa'; 
+import { FaFacebook, FaInstagram , FaTwitter, FaLinkedin} from 'react-icons/fa'; 
 
  let CardJson = [
    {  title: "Juan Dela Cruz",

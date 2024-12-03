@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useEffect, useState} from 'react'
-import { Flex, Box, useColorModeValue, Image, ChakraProvider, Stack, Text, InputRightElement, InputLeftElement, Input, InputGroup} from '@chakra-ui/react'
+import React from 'react'
+import { Flex, Box, useColorModeValue, Image, ChakraProvider, Stack, Text, InputRightElement, Input, InputGroup} from '@chakra-ui/react'
 import Header  from '../header/index'
 import { Search2Icon } from '@chakra-ui/icons'
 
-const Navbar = (data:any) => {
+const Navbar = (data) => {
 
    return (<ChakraProvider>
   <Header/>
@@ -45,7 +45,7 @@ const Navbar = (data:any) => {
 		 spacing={4}>
 
 			{
-           data.page != "register" ? (<Box align="right" flex="1">
+           data.page != "register" ? (<Box textAlign="right" flex="1">
 				<Text display="inline" color="white" p={4}><a href='/../homepage'>Home</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../blog'>Blog</a></Text>
 			    <Text display="inline" color="white" p={4}><a href='/../about-us'>About Us</a></Text>

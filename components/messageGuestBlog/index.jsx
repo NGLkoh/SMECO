@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Text, Box, Textarea, Button, IconButton, Input, Flex  } from '@chakra-ui/react';
+import { Text, Box, Textarea, Button, IconButton, Input  } from '@chakra-ui/react';
 import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import io from 'socket.io-client'
@@ -159,7 +159,7 @@ const GuestBlogMessage = ({userId }) => {
 				resize="none"
 				h="100px"
 			/>
-          <Button color="white" bg="#232536" onClick={(e) => sendMessage()} w="100%">
+          <Button color="white" bg="#232536" onClick={() => sendMessage()} w="100%">
             Send
           </Button></> : <> <Text fontSize={'18px'}> Hi Guest, Welcome to SMECO! </Text>
             <Text fontSize={'14px'}> Please fill up information to indetify yourself. </Text>

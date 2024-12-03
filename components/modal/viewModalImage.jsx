@@ -8,7 +8,7 @@ const ModalImage = ({ title, source, open, onCloseModal}) => {
  
   return (
     <>
-      <Modal isOpen={open} onClose={(e) => onCloseModal()}>
+      <Modal isOpen={open} onClose={() => onCloseModal()}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
@@ -22,7 +22,7 @@ const ModalImage = ({ title, source, open, onCloseModal}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={(e) => onCloseModal()}>
+            <Button colorScheme='blue' mr={3} onClick={() => onCloseModal()}>
               Close
             </Button>
           </ModalFooter>

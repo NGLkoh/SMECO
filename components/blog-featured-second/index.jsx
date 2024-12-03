@@ -10,7 +10,6 @@ import {
   HStack,
   Tag,
    ChakraProvider,
-  useColorModeValue,
   Container,
 } from '@chakra-ui/react'
 
@@ -57,7 +56,7 @@ const FeaturedSecond = () => {
       <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts</Heading>
        {
              templateState ?   templateState.map(row => (
-      <Link color='teal.500' href={`/blog-client/${row._id}`}>  
+      <Link color='teal.500' key={row._id} href={`/blog-client/${row._id}`}>  
       <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
@@ -109,7 +108,7 @@ const FeaturedSecond = () => {
           <Text
             as="p"
             marginTop="2"
-            color={useColorModeValue('gray.700', 'gray.200')}
+            color={'gray.700'}
             fontSize="lg">
             {row.description}
           </Text>

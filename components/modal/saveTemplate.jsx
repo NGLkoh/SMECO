@@ -26,7 +26,7 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
    const handleChange = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFileName(`${r}-${file.name}`)
-        const base64 = new Promise((resolve, reject) => {
+            new Promise((resolve, reject) => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => {
@@ -39,7 +39,7 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
 
   return (
     <>
-      <Modal isOpen={modalTemplate} onClose={(e) => closeModal()}>
+      <Modal isOpen={modalTemplate} onClose={() => closeModal()}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Publish Post</ModalHeader>
@@ -56,10 +56,10 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={(e) => handleSaveTemplate()}>
+			 <Button colorScheme='blue' mr={3} onClick={() => handleSaveTemplate()}>
               Save
             </Button>
-            <Button variant='ghost' mr={3} onClick={(e) => closeModal()}>
+            <Button variant='ghost' mr={3} onClick={() => closeModal()}>
               Close
             </Button>
           </ModalFooter>

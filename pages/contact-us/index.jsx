@@ -21,7 +21,6 @@ import Navbar from '../../components/nabvar';
 import Footer from '../../components/footer';
 import { BsPerson } from 'react-icons/bs';
 import { MdOutlineEmail } from 'react-icons/md';
-import { FaFacebook } from 'react-icons/fa';
 
 const ContactPage = () => {
   return (

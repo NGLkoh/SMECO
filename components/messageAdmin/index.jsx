@@ -30,7 +30,7 @@ const ContactAdmin = ({ user }) => {
       });
       setMessageId(res.data.result[0]._id)
       setMessage(res.data.result);
-	
+	 console.log(res)
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -69,7 +69,7 @@ const socketInitialize = async () => {
 
   } else {
   const checking = user.ids ? user.ids : user._id;
-        let res = await axios.post('/api/message/create', {
+         await axios.post('/api/message/create', {
         userId: "672ff29e19abf9597c2544f6",
         message: "Hi",
         name: `${user.firstName} ${user.lastName}`,
@@ -156,7 +156,7 @@ const socketInitialize = async () => {
             resize="none"
             h="100px"
           />
-          <Button color="white" bg="#232536" onClick={(e) => sendMessage()} w="100%">
+          <Button color="white" bg="#232536" onClick={() => sendMessage()} w="100%">
             Send
           </Button>
         </Box>

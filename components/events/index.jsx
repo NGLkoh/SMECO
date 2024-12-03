@@ -5,8 +5,6 @@ import axios from 'axios';
 import ModalImage from '../modal/viewModalImage'
 import moment from 'moment';
 
-const fileTypes = ["JPG", "PNG", "GIF"];
-
 const AdminEvents = ({user}) => {
   console.log(user, "USER ID")
   const [event, setEvent] = useState([]);
@@ -51,6 +49,7 @@ const AdminEvents = ({user}) => {
         setTitle("")
         getEvent();
        }catch(e) {
+        console.log(e)
        }
   };
    
@@ -85,19 +84,19 @@ const AdminEvents = ({user}) => {
 			<Tbody border={'2px solid #dddddd'}>
 
           {
-          event ?  event.map(e => <Tr>
+          event ?  event.map(e => <Tr key={e._id}>
 				<Td border={'2px solid #dddddd'}>{e.title}</Td>
                	<Td > <Image
 					height="60px"
 					ml={2}
-					onClick={ (row)  => handleOpenModal('Banner', e.fileName)}
+					onClick={ ()  => handleOpenModal('Banner', e.fileName)}
 					cursor={'pointer'}
 					display={'inline-block'}
 					src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${e.fileName}`}
 					/>   </Td>
                 <Td border={'2px solid #dddddd'}>{e.description}</Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
-                <Td border={'2px solid #dddddd'}> { e.users.indexOf(user._id) > -1 ?  "Joined": <Button  background={'#232536'} color={'white'} onClick={(ed) => handleAddUserEvent(e._id)}>Join</Button>}</Td>
+                <Td border={'2px solid #dddddd'}> { e.users.indexOf(user._id) > -1 ?  "Joined": <Button  background={'#232536'} color={'white'} onClick={() => handleAddUserEvent(e._id)}>Join</Button>}</Td>
 			</Tr> ) : ""
           }
 			

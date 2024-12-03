@@ -7,7 +7,6 @@ import {
   IconButton,
   Button,
   useDisclosure,
-  useColorModeValue,
   Stack,
 } from '@chakra-ui/react'
 
@@ -26,7 +25,7 @@ const NavLink = (props) => {
       rounded={'md'}
       _hover={{
         textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
+        bg: 'gray.200',
       }}
       href={'#'}>
       {children}

@@ -61,7 +61,7 @@ const TemplateCategory = ({user}) => {
 
 	const handleTemplateUpdate = async() => {
 	try {
-			const res = await axios.post('/api/category/update', {
+		   await axios.post('/api/category/update', {
 				"id": updateState._id,
 				"title": updateState.title
 			})
@@ -110,14 +110,14 @@ const TemplateCategory = ({user}) => {
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => setAdd(false)}>
+			 onClick={() => setAdd(false)}>
               Back
             </Button> </> : <><Button
               bg={'#232536'} variant='solid'
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => handleAdd()}>
+			 onClick={() => handleAdd()}>
               Add
             </Button></> }
            
@@ -172,7 +172,7 @@ const TemplateCategory = ({user}) => {
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => handleTemplateUpdate()}>
+			 onClick={() => handleTemplateUpdate()}>
               Update Category
         </Button></> : <Box position={'relative'}  height={'auto'} padding={2}>
 		<Input placeholder='Please type your Title ' mb={2}  onChange={(e) => setTitle(e.target.value)}/>
@@ -181,7 +181,7 @@ const TemplateCategory = ({user}) => {
 			  color={'#ffffff'}
 			  size={'md'}
               mr={4}
-			 onClick={(e) => handleTemplateSave()}>
+			 onClick={() => handleTemplateSave()}>
               Save Category
         </Button>
    </Box>}

@@ -19,7 +19,7 @@ App.prototype = {
   pageProps: PropTypes.any
 }
 
-function App({ component, pageProps}) {
+function App({pageProps}) {
   const Layout = Component.Layout || EmptyLayout
  return (<ChakraProvider theme={theme}> <Box><Layout> <Header/><Component {...pageProps} /> </Layout> </Box></ChakraProvider>)
 }
