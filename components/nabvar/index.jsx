@@ -32,7 +32,7 @@ const Navbar = (data) => {
 		flex={{base:1}}
 		justify={{base:'center', md: 'start'}}>
 			<Box>
-				<Image src="http://localhost:3000/logo.png" className="logo" w="150px"/>
+				<Image src="/logo.png" className="logo" w="150px"/>
 			</Box>
 		</Flex>
 

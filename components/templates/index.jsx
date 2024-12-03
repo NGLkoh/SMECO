@@ -72,7 +72,7 @@ const Template = ({ user }) => {
   }
 
   const handleView = (data) => {
-    window.open(`http://localhost:3000/blog-client/${data._id}`);
+    window.open(`/blog-client/${data._id}`);
   }
 
   const handleChangeCategory = async (value, id) => {
