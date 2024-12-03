@@ -368,7 +368,6 @@ export const SidebarWithHeader = () => {
 		  
         let data = res.data.result
 		data.map((row) => {
-        let add = 1
         
 			if(row.users.indexOf(userId) > -1) {
             } else { 
