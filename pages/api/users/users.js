@@ -2,8 +2,9 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
      try {
-       const response = await axios.get('http://localhost:3001/user/Users');
+       const response = await axios.get(`${UAT_URL}/user/Users`);
        console.log(response.data);
        res.status(200).json(response.data);
      } catch (error) {

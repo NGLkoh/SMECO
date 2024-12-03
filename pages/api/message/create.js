@@ -2,10 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { message, id, userId,name } = req.body;
     const currentTime = new Date(); 
      try {
-       const response = await axios.post('http://localhost:3001/message/create', {
+       const response = await axios.post(`${UAT_URL}/message/create`, {
 		"convo": [
 			{message: message, id:  id, name : name}
 		],

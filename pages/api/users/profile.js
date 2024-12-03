@@ -1,9 +1,10 @@
    
 import axios from "axios";
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id, data} = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/user/add-profile-blog', {
+       const response = await axios.post(`${UAT_URL}/user/add-profile-blog`, {
          id: id,
          data: data
        });

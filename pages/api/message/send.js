@@ -2,9 +2,10 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { message, messageId , userId } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/message/update', {
+       const response = await axios.post(`${UAT_URL}/message/update`, {
          message: message,
          messageId: messageId,
          userId: userId

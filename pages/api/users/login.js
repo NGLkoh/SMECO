@@ -3,10 +3,11 @@ import axios from "axios";
 import Cookies from "cookies";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { username, password } = req.body;
      console.log(username , " test")
      try {
-       const response = await axios.post('http://localhost:3001/user/search', {
+       const response = await axios.post(`${UAT_URL}/user/search`, {
          username: username,
          password: password,
          // add more data if needed

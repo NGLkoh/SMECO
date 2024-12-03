@@ -2,9 +2,10 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { ids } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/user/searchSub', {
+       const response = await axios.post(`${UAT_URL}/user/searchSub`, {
          ids: ids
        });
        console.log(response.data);

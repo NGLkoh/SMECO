@@ -2,10 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id, data, title, fileName, description } = req.body;
     const currentTime = new Date(); 
      try {
-       const response = await axios.post('http://localhost:3001/template/create', {
+       const response = await axios.post(`${UAT_URL}/template/create`, {
          ids: id,
          title: title,
          data: data,

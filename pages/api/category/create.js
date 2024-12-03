@@ -4,9 +4,9 @@ import axios from "axios";
 export default async function handler(req, res) {
 	let { id, title } = req.body;
     const currentTime = new Date(); 
-
+const UAT_URL = process.env.UAT_URL;
      try {
-       const response = await axios.post('http://localhost:3001/category/create', {
+       const response = await axios.post(`${UAT_URL}/category/create`, {
          ids: id,
          title: title,
 		 date: currentTime

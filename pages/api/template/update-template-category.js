@@ -2,10 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id, category_id } = req.body;
     const currentTime = new Date(); 
      try {
-       const response = await axios.post('http://localhost:3001/template/update-catergory', {
+       const response = await axios.post(`${UAT_URL}/template/update-catergory`, {
          id: id,
          category_id: category_id
          // add more data if needed

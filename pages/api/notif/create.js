@@ -2,11 +2,12 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id, title } = req.body;
     const currentTime = new Date(); 
 
      try {
-       const response = await axios.post('http://localhost:3001/event/create', {
+       const response = await axios.post(`${UAT_URL}/event/create`, {
          ids: id,
          title: title,
 		 date: currentTime, 

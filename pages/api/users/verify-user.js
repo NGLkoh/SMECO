@@ -1,10 +1,11 @@
    
 import axios from "axios";
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id, value } = req.body;
      console.log(id , " test")
      try {
-       const response = await axios.post('http://localhost:3001/user/confirm-verify', {
+       const response = await axios.post(`${UAT_URL}/user/confirm-verify`, {
          id: id,  
          value: value
          // add more data if needed
