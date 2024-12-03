@@ -47,6 +47,7 @@ const Login = () => {
           duration: 9000,
           isClosable: true,
         });
+
       } else {
         toast({
           title: 'Please wait for email verification',
