@@ -102,7 +102,7 @@ export default function BasicStatistics({ user }: any) {
     setTemplateState(res.data.result)
 
     // Update chart data
-    setChartData(prevData => {
+    setChartData((prevData:any) => {
       const newLabels = [...prevData.labels, new Date().toLocaleTimeString()]
       const newCommentData = [...prevData.datasets[0].data, commentCount]
       const newPostData = [...prevData.datasets[1].data, posts]
@@ -137,6 +137,7 @@ export default function BasicStatistics({ user }: any) {
         <chakra.h4 fontSize={'sm'} py={2}>
           Activity Graph (Real-time)
         </chakra.h4>
+
         <Line data={chartData} options={{ responsive: true }} />
 
       </Box>

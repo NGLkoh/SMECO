@@ -8,6 +8,7 @@ import io from 'socket.io-client'
 import { FileUploader } from "react-drag-drop-files";
 let socket;
 const fileTypes = ["JPG", "PNG", "GIF"];
+
 const ProfileEdit = ({user}:any) => {
   console.log(user, "USER ID")
   const [message, setMessage] = useState([]);
@@ -39,58 +40,20 @@ const ProfileEdit = ({user}:any) => {
 			reader.onerror = reject
 		})
 	};
-
-//   const getMessage = async (id) => {
-
-//     try {
-//       const res = await axios.post('/api/message/search', {
-//         id: id,
-//       });
-//       setMessage(res.data.result);
-
-//     } catch (error) {
-//       console.error('Error fetching messages:', error);
-//     }
-//   };
-
-//    const socketInitialize = async () => {
-//         socket = io()
-
-//         socket.on('connect', () => {
-//              console.log('connected')
-//         })
-
-// 	  const resfresh = () => {
-// 		getMessage(guestId)
-// 	  }
-
-// 	  socket.on("refresh-chat", payload => {
-//         console.log(payload)
-//       });
-// }
-//   const sendMessage = async () => {
-// 	socket = io()
-
-//       let res = await axios.post('/api/message/send', {
-//         userId: guestId,
-//         message: newMessage,
-//         messageId: messageId,
-//         name: name,
-//       });
-
-//       setNewMessage('');
-//       getMessage(guestId)
-//       socket.emit('add-chat', {result: res.result})
-
-//   };
    
  const handleEditBtn = async () => {
       try{
-        let data = { backgroundImage: bgFileName, facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
-        const profileImage = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-        const bg = await axios.post('/api/s3/upload', {filename: bgFileName, base64: bgFile})
-		const res = await axios.post('/api/users/editProfile', { id: user._id, data: data})
+        let data = { backgroundImage: bgFileName ? bgFileName : user.profile[0].backgroundImage  , facebook: facebook ? facebook : user.profile[0].facebook , twitter: twitter ? twitter : user.profile[0].twitter , linkIn: linkIn ? twitter : user.profile[0].twitter,  instagram: instagram ? twitter : user.profile[0].instagram,  fileName: fileName ? fileName : user.profile[0].fileName , description: description}
+        
+       if(bgFileName) {
+          const bg = await axios.post('/api/s3/upload', {filename: bgFileName, base64: bgFile})
+        }
 
+        if(fileName) {
+          const profileImage = await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+         }
+        const res = await axios.post('/api/users/editProfile', { id: user._id, data: data})
+		
          toast({
           title: 'Successfully Edit profile page ', 
           status: 'success',

@@ -3,7 +3,7 @@
 import {
   Box,
   chakra,
-  Flex,
+  Link,
   SimpleGrid,
   Stat,
   StatLabel,
@@ -76,7 +76,7 @@ export default function ContainerGraph({user} :any) {
       </GridItem>
         <GridItem  w='100%'>
 			<Box width={'100%'}  overflow={'scroll'} height={'400px'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
-			{templateState.map((data:any) => (<Box  key={data._id} width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
+			{templateState.map((data:any) => (<Link href={`http://localhost:3000/blog-client/${data._id}`} key={data._id}><Box   width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
 				<Box position={'absolute'}> 
                  <Box fontWeight={600}>{moment(data.date).format("Do")}</Box>	   
 				 <Box  opacity={0.8}>{moment(data.date).format("MMM")}</Box>	 
@@ -86,7 +86,7 @@ export default function ContainerGraph({user} :any) {
 				<Text position={'relative'} opacity={0.8}><Text display={'inline'} >Category</Text><Text display={'inline'} > : {category.map((cat:any) => { return <Text display={'inline'}> {cat._id == data.category_id ? <>{cat.title}</> : ""} </Text> })}</Text></Text>
                 </Box>
 
-             </Box>))}
+             </Box></Link>))}
 			   
              </Box>
          </GridItem>

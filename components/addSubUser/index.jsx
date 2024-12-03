@@ -8,7 +8,7 @@ import {EditorState, ContentState, convertFromHTML } from 'draft-js'
 import axios from "axios";
 import moment from 'moment' 
 import AddSubUserIndex from './add'
-import { FaPen, FaTrash, FaTexT, FaImage, HiBarsArrowDown, FaCode, FaEye  } from 'react-icons/fa'; 
+import { FaTrash } from 'react-icons/fa'; 
 
 const AddSubUser = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()

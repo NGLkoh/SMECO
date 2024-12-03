@@ -90,6 +90,7 @@ const Comments = ({user}) => {
 			<Thead border={'2px solid #dddddd'}>
 			<Tr border={'2px solid #dddddd'}>
                  <Th border={'2px solid #dddddd'}>Title</Th>
+                <Th border={'2px solid #dddddd'}>Email</Th>
 				<Th border={'2px solid #dddddd'}>Message</Th>
 				<Th border={'2px solid #dddddd'}>Date</Th>
 			</Tr >
@@ -99,6 +100,7 @@ const Comments = ({user}) => {
           {
           event ?  event.map(e => e.message ? <Tr>
                 <Td border={'2px solid #dddddd'}>{e.title}</Td>
+                	<Td border={'2px solid #dddddd'}>{e.email}</Td>
 				<Td border={'2px solid #dddddd'}>{e.message}</Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
       	</Tr> : "") : ""

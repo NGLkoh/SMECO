@@ -16,7 +16,7 @@ const BlogClient = () => {
     const [name, setName] = useState("")
     const [comments, setComments] = useState([])
     const [profile, setProfile] = useState<any>()
-
+    const [profileList, setProfileList] = useState<any>()
 useEffect(() => {
       fetchIntialBlog()
       fetchProfile()
@@ -28,6 +28,7 @@ const fetchProfile = async () => {
          const res = await axios.post('/api/users/usersById', {id: params[4]})
          console.log(res.data.result[0].profile, "user details")
          setProfile(res.data.result[0].profile[0])
+         setProfileList(res.data.result[0].profile)
          setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName}`)
 }
 
@@ -66,9 +67,12 @@ const fetchIntialBlog = async() => {
     <CSS>
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
-     <Box width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'}  backgroundImage={  profile  ? profile.backgroundImage ? `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${profile.backgroundImage}` : "" : ""}>
-         <BlogFeaturedProfile profile={profile} name={name}/>
-      </Box>
+    
+        { profileList ? profileList.map((row:any, key:any) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'} backgroundImage={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage}`} >
+
+<BlogFeaturedProfile profile={profile} name={name}/>
+		</Box>)) : ""}
+     
 		<Box  height={'100%'}>
 		<Box width={'100%'} height={"100%"} className='client' minHeight="100vh" margin={'auto'} padding={20}>
        <Container maxW={'7xl'} p="12">
@@ -139,10 +143,11 @@ const fetchIntialBlog = async() => {
     </Container>
       </Box>
     </Box>
+
   </Box>
-  	<Footer/>
+
 </CSS>
-</ChakraProvider>
+</ChakraProvider>	<Footer/>
 </Box>)
 
 }

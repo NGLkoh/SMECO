@@ -9,16 +9,17 @@ import { CSS } from './style'
 import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
-import { FaShare, FaComments, FaPodcast, FaEye, FaCreativeCommons, FaBook } from 'react-icons/fa'
+import '../../../resources/css/style.css'
 let socket;
 
 const BlogClient = () => {
   const [template, setTemplateState] = useState<any>([])
   const [comment, setComment] = useState("")
+  const [email, setEmail] = useState("")
   const [userId, setUserId] = useState()
   const [comments, setComments] = useState([])
   const [profile, setProfile] = useState([])
-
+  const toast = useToast()
   useEffect(() => {
     fetchIntialBlog()
     socketInitialize()
@@ -58,14 +59,32 @@ const BlogClient = () => {
   }
 
   const handleSaveComment = async () => {
-    socket = io()
-    const res = await axios.post('/api/comment/create', { id: template[0]._id, message: comment })
-    socket.emit('add-comment', { result: res })
-    setComment('')
+    if(email !== "" && comment !== "" ) {
+	    socket = io()
+		const res = await axios.post('/api/comment/create', { id: template[0]._id, message: comment, email:email })
+		socket.emit('add-comment', { result: res })
+		setComment('')
+        toast({
+		title: "Successfully Add Comment",
+		description: "Success",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
+    } else {
+       toast({
+		title: "Fill up all",
+		description: "Incomplete",
+		status: "warning",
+		duration: 2000,
+		isClosable: true,
+		});
+    }
+ 
   }
 
   return (
-    <Box>
+    <Box className='client-blog'>
       <ChakraProvider>
         <GuestBlogMessage userId={userId} />
         <CSS>
@@ -96,7 +115,9 @@ const BlogClient = () => {
           </Box>
           <Box padding={20} position={'relative'} paddingLeft={'200px'} paddingRight={'200px'}>
              <Box position={'relative'}>
-             <Image
+           <Text float={'left'}   fontSize={18} mb={2}> Comment </Text> 
+           <Image
+             float={'right'}
               alt={'Hero Image'}
               fit={'cover'}
               display={'inline-block'}
@@ -108,10 +129,25 @@ const BlogClient = () => {
                 '/like.png'
               }
             />
-           <FaShare  size={'25px'} display={'inline-block !important'}/>
 
+
+            <Image
+              alt={'Hero Image'}
+              fit={'cover'}
+              float={'right'}
+              display={'inline-block'}
+              align={'center'}
+              w={'25px'}
+              mr={'20px'}
+              h={'25px'}
+              src={
+                '/share.png'
+              }
+            />
+     
              </Box>
-             
+            <Input  value={email} onChange={(e:any) => setEmail(e.target.value)}  placeholder='Enter a email' border={'2px solid #000000'} mb={6}/>
+
             <Textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
@@ -137,15 +173,15 @@ const BlogClient = () => {
             {
               comments.map((e: any) => (
                 <Box mb={2} key={e._id} border={'2px solid #e0e0e0'} p={4}>
-                  <Avatar name={`Anonymuse`} /> Anonymous
+                  <Avatar name={e.email} /> {e.email}
                   <Text pl={14} position={'relative'} bottom={'26px'} left={'-3px'}> {e.message} </Text>
                 </Box>
               ))
             }
           </Box>
-          <Footer />
+          
         </CSS>
-      </ChakraProvider>
+      </ChakraProvider><Footer />
     </Box>
   )
 }

@@ -20,7 +20,7 @@ const AddSubUserAdmin = ({user}) => {
    const [ add, setAdd ] = useState(false)
    const [ editorState, setEditorState] = useState(EditorState.createWithContent(
         ContentState.createFromBlockArray(
-          convertFromHTML('<p className="gago ka">My initial content.</p>')
+          convertFromHTML('<p>My initial content.</p>')
         )
       ))
   

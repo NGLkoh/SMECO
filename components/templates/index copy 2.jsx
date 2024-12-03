@@ -20,7 +20,20 @@ import axios from "axios";
 import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
 import ImageInsertTemplate from '../modal/ImageTemplate'
-import { Editor } from '@tinymce/tinymce-react';
+
+const Editor = dynamic(
+  async () => {
+    const mod = await import('react-draft-wysiwyg');
+    return { default: mod.Editor };
+  },
+  { ssr: false }
+);
+
+const styleMap = {
+  'STRIKETHROUGH': {
+    textDecoration: 'line-through',
+  },
+};
 
 const Template = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -31,8 +44,11 @@ const Template = ({ user }) => {
   const [edit, setEdit] = useState(false)
   const [imageModal, setImageModal] = useState(false)
   const [html, setRawHtml] = useState('')
-  const [templateId, setTemplateId] = useState('')
-  const [editorState, setEditorState] = useState('<p>My initial content.</p>')
+  const [editorState, setEditorState] = useState(EditorState.createWithContent(
+    ContentState.createFromBlockArray(
+      convertFromHTML('<p>My initial content.</p>')
+    )
+  ))
 
   const [templateState, setTemplateState] = useState()
 
@@ -43,7 +59,6 @@ const Template = ({ user }) => {
 
   const [image, setImage ] = useState([]) 
   const toast = useToast()
-
    const handleInset = () => {
         //  let data = <img src="https://www.yttags.com/blog/wp-content/uploads/2023/02/image-urls-for-testing.webp" alt="" style="height: auto;width: auto"/>
         let imageString = ''
@@ -84,10 +99,11 @@ const Template = ({ user }) => {
     console.log(res)
   }
 
-  const onEditorStateChange = (e) => {
-   console.log(e.target.getContent())
-    setRawHtml(e.target.getContent());
-    setEditorState(e.target.getContent())
+  const onEditorStateChange = (editorState) => {
+    let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    console.log(html)
+    setRawHtml(html);
+    setEditorState(editorState)
   }
 
   const openHtmlModal = () => { setModalHtmlTemplate(true) }
@@ -99,6 +115,24 @@ const Template = ({ user }) => {
     setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
       convertFromHTML(html)
     )))
+  }
+
+  const uploadImageCallBack = (file) => {
+    let uploadedImages = []
+    const imageObject = {
+      file: file,
+      localSrc: URL.createObjectURL(file),
+    }
+    console.log(imageObject)
+    uploadedImages.push(imageObject);
+
+    setUploadedImagesData(file)
+
+    return new Promise(
+      (resolve, reject) => {
+        resolve({ data: { link: imageObject.localSrc } });
+      }
+    );
   }
 
   const handleView = (data) => {
@@ -155,40 +189,13 @@ const Template = ({ user }) => {
   };
 
   // Handle edit action (e.g., navigate to the editor)
-  const handleEdit = (data) => {
+  const handleEdit = (postId) => {
     // Navigate to the editor or open a modal with the existing post data
-    console.log('Editing post with ID:', data); 
+    console.log('Editing post with ID:', postId); 
     setEdit(true)
-    setTemplateId(data._id)
-    setEditorState(data.data)
     // Example: Navigate to an editor page with the post ID
     // history.push(`/editor/${postId}`);
   };
-
-  const handleSaveEdit = async ()  => {
-  try{
-     const res = await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState })
-		toast({
-		title: "Post Deleted",
-		description: "Successfully edited",
-		status: "success",
-		duration: 2000,
-		isClosable: true,
-		});
-        setEdit(false)
-        getTemplate()
-        getCategory()
-  }catch(e) {
-        toast({
-		title: "Warning error system",
-		description: "Warning",
-		status: "warning",
-		duration: 2000,
-		isClosable: true,
-		});
-  }
- 
-  }
 
   return (
     <ChakraProvider>
@@ -217,7 +224,6 @@ const Template = ({ user }) => {
               color={'#ffffff'}
               size={'md'}
               mr={4}
-	          onClick={(e) => handleSaveEdit()}
               >
               Save Edit
             </Button> 
@@ -236,7 +242,7 @@ const Template = ({ user }) => {
                 color={'#ffffff'}
                 size={'md'}
                 mr={4}
-                onClick={(e) => handleTemplateSave(e)}>
+                onClick={(e) => handleTemplateSave()}>
                 Publish Post
               </Button>
             </>
@@ -253,18 +259,7 @@ const Template = ({ user }) => {
         </Flex>
       </Flex>
 
-      {edit ?  <Box position={'relative'} border={'2px solid #000000'} height={'auto'} padding={2}>
-		<Editor
-			apiKey='o5zjdgzwmjb9rdi6r4md7rq26kq13c55p55vrwubsaz8k75a'
-			initialValue={editorState}
-			init={{
-				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-			}}
-			onChange={(e) => onEditorStateChange(e)}
-			/>
-        
-        </Box> : add === false ? (
+      {add === false ? (
         <TableContainer>
           <Table variant='striped' colorScheme='$F7FAFC'>
             <Thead>
@@ -287,7 +282,7 @@ const Template = ({ user }) => {
                   <Td>{moment(e.date).calendar()}</Td>
                   <Td position={'relative'}>
                     <Box display={'inline'}>
-                <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e)}>
+                <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e._id)}>
                   <FaPen />
                 </Button>
 				</Box>
@@ -307,20 +302,47 @@ const Template = ({ user }) => {
         </TableContainer>
       ) : (
         <Box position={'relative'} border={'2px solid #000000'} height={'auto'} padding={2}>
-		<Editor
-			apiKey='o5zjdgzwmjb9rdi6r4md7rq26kq13c55p55vrwubsaz8k75a'
-			initialValue={editorState}
-			init={{
-				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-			}}
-			onChange={(e) => onEditorStateChange(e)}
-			/>
-        
+          <Button
+            leftIcon={<FaCode />}
+            mb={2}
+            onClick={(e) => openHtmlModal()}
+            bg={'gray'} variant='solid'
+            color={'#ffffff'}
+            size={'md'}
+            mr={4}>
+            Html Code
+          </Button>
+          <Button
+            leftIcon={<FaImage />}
+            mb={2}
+            onClick={(e) => openImageModal()}
+            bg={'gray'} variant='solid'
+            color={'#ffffff'}
+            size={'md'}
+            mr={4}>
+            Insert Image
+          </Button>
+          <Editor
+            editorState={editorState}
+            editorStyle={{ padding: 50 }}
+            customStyleMap={styleMap}
+            toolbar={{
+              image: {
+                uploadCallback: uploadImageCallBack,
+                previewImage: true,
+                alt: { present: true, mandatory: false },
+                inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+              }
+            }}
+            wrapperClassName="demo-wrapper"
+            editorClassName="demo-editor"
+            onEditorStateChange={(e) => onEditorStateChange(e)}
+          />
         </Box>
       )}
 
       <HtmlModalTemplate modalHtmlTemplate={modalHtmlTemplate} setRawHtml={setRawHtml} html={html} handleSaveHtml={handleSaveHtml} closeModalHtml={closeModalHtml} />
+      <ImageInsertTemplate imageModal={imageModal} closeModalImage={closeModalImage} user={user} image={image} setImage={setImage} handleInset={handleInset} />
       <SaveTemplate closeModal={closeModal} refresh={getTemplate} back={setAdd} html={html} user={user} modalTemplate={modalTemplate} />
     </ChakraProvider>
   )

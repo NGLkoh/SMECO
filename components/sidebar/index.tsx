@@ -26,25 +26,13 @@ Input,
 Button
 } from '@chakra-ui/react';
 import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
   FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
   FiUsers,
   FiUser,
-  FiArchive,
-  FiBook,
-  FiBookOpen,
-  FiFile,
-  FiBookmark,
   FiCamera,
-  FiCheck,
-  FiPocket,
-  FiMessageCircle,
   FiFileText,
   FiLayout,
   FiMessageSquare,
@@ -73,6 +61,7 @@ import AdminEvents from '../admin-events/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 import { BsFillCalendarEventFill } from 'react-icons/bs';
+import { FiPocket } from 'react-icons/fi'
 
 interface LinkItemProps {
   name: string;

@@ -60,7 +60,7 @@ const DetailFooter = () => {
       {/* Footer Information */}
       <Box maxW="1200px" mx="auto" px={4} mt={10}>
           <Box>
-            <Text>Finstreet 118 2561 Fintown</Text>
+            <Text>InBox FoodHub, Bayan Luma 8, Emilio Aguinaldo Hi-way, City of Imus</Text>
           </Box>
           
        
@@ -68,7 +68,7 @@ const DetailFooter = () => {
 
         {/* Social Media Icons */}
         <Flex justify={["center", "space-between"]} align="center" mt={8}>
-          <Text fontSize="sm" textAlign="left">© 2024 My Company. All rights reserved.</Text>
+          <Text fontSize="sm" textAlign="left">© 2024 Cavite Association of Producers & Entrepreneurs - CAPE. All rights reserved.</Text>
           <HStack spacing={4}>
             <IconButton
               as="a"

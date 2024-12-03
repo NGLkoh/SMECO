@@ -45,8 +45,19 @@ const AddSubUserIndex = ({user, getTemplate, setAdd}) => {
 	]
 
  const handleVerify = async () => {
-		 const res = await axios.post('/api/users/create', {ids: user, username: email, password: password, email: email, firstName: firstName, lastName: lastName  })
-		if(res.data.message === 'true') {
+		 const res = await axios.post('/api/users/add-subUser', 
+		{   
+            ids: user,
+            username: email,
+            password: password,
+            email: email, 
+            firstName: firstName, 
+            lastName: lastName, 
+			code: 1234, 
+            businessPermit: user.businessPermit, 
+            barangayClearance: user.barangayClearance  })
+
+	if(res.data.message === 'true') {
           toast({
           title: 'Successfully Email Send',
           status: 'success',

@@ -2,17 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-	let { id, title, description, fileName } = req.body;
-    const currentTime = new Date(); 
-
+	let { id, data } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/event/create', {
-         ids: id,
-         title: title,
-		 date: currentTime,
-         description: description, 
-         fileName: fileName, 
-         users: []
+       const response = await axios.post('http://localhost:3001/template/update-data', {
+         id: id,
+         data: data
          // add more data if needed
        });
        console.log(response.data);

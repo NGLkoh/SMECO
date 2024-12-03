@@ -111,9 +111,6 @@ export const MessageGuest = ({ user}) => {
                 <Avatar src={selectedChat.avatar} mr={4} />
                 <Text fontWeight="bold">{selectedChat.convo[0].name ? selectedChat.convo[0].name : "Admin"}</Text>
               </Flex>
-              <Flex>
-                <IconButton icon={<PhoneIcon />} bg="transparent" mr={2} />
-              </Flex>
             </Flex>
             <Box h="calc(100% - 120px)" overflowY="auto" p={4}>
               {message? (message.find(o => o._id ===  selectedChat._id).convo).map((msg, index) => (
