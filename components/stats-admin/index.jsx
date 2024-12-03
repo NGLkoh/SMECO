@@ -47,7 +47,7 @@ function StatsCard(props) {
 
 export default function BasicStatistics({}) {
   const [templateState, setTemplateState] = useState([])
-  const [post, setPost] = useState<any>(0)
+  const [post, setPost] = useState(0)
   const [comment, setComment] = useState(0)
   const [usersCount, setUsers] = useState(0)
    useEffect(() => {
