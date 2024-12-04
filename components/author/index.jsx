@@ -9,6 +9,7 @@ import {
   Link,
   SimpleGrid,
   useColorModeValue,
+  useMediaQuery
 } from '@chakra-ui/react'
 
 const testimonials = [
@@ -91,13 +92,15 @@ function TestimonialCard(props) {
 }
 
 export default function GridBlurredBackdrop( { profile}) {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   return (
     <Flex
       textAlign={'center'}
-      pt={10}
+      pt={isLargerThan980 ? 10 : 0}
       justifyContent={'center'}
       direction={'column'}
       width={'full'}
+      height={isLargerThan980 ? "" : '400px'}
       overflow={'hidden'}>
       <Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
       </Box>

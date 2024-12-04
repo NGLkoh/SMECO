@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Box, Text, ChakraProvider, Image, Textarea, Avatar, Input, Button, useToast } from '@chakra-ui/react'
+import { Box, Text, ChakraProvider, Image, Textarea, Avatar, Input, Button, useToast, useMediaQuery } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
@@ -12,6 +12,7 @@ import '../../../resources/css/style.css'
 let socket;
 
 const BlogClient = () => {
+ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   const [template, setTemplateState] = useState([])
   const [comment, setComment] = useState("")
   const [email, setEmail] = useState("")
@@ -106,12 +107,12 @@ const BlogClient = () => {
                 paddingX={8}  // Left and right padding
               >
                 {template.map((row, key) => (
-                  <Box paddingLeft={'200px'}key={key} paddingRight={'200px'}> <div key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
+                  <Box paddingLeft={isLargerThan980? '200px': ""}key={key} paddingRight={isLargerThan980 ? '200px' : ""}> <div key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
                 ))}
               </Box>
             </Box>
           </Box>
-          <Box padding={20} position={'relative'} paddingLeft={'200px'} paddingRight={'200px'}>
+          <Box padding={ isLargerThan980 ? 20 : 5} position={'relative'} paddingLeft={isLargerThan980? '200px': ""} paddingRight={isLargerThan980? '200px': ""}>
              <Box position={'relative'}>
            <Text float={'left'}   fontSize={18} mb={2}> Comment </Text> 
            <Image

@@ -22,7 +22,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
           </Flex>
 </Box>
       {/* Subscribe Section */}
-      <Box bg="#2e303f" py={isLargerThan980 ? 100 : 20} height={'200px'} px={isLargerThan980 ? 100 : 20} maxW="1200px" mx="auto" mb='80px'>
+      <Box bg="#2e303f" py={isLargerThan980 ? 100 : 20} height={isLargerThan980 ? 'auto' : '200px'} px={isLargerThan980 ? 100 : 20} maxW="1200px" mx="auto" mb='80px'>
        <Box className='continer-footer'>
 		<Grid
 		h='70px'
@@ -30,6 +30,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		gap={4}
         display={isLargerThan980 ? 'flex' : 'block !important'}
         textAlign={'center'}
+         
 		>
 	    <GridItem colSpan={3} display={isLargerThan980 ? 'flex' : 'block !important'}>
 			<Flex direction="column" align="center" maxW="1200px" mx="auto" display={isLargerThan980 ? 'flex' : 'block !important'}>
@@ -40,7 +41,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 				</Flex>
 		</GridItem>
   
-		<GridItem colSpan={2} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
+		<GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 60} mt={10} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
 				<InputGroup>
 					<Input
 					placeholder="Enter Your Email"
@@ -54,7 +55,10 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 					/>
 				
 					<Button  ml={2} backgroundColor={'#ffcf4f'} color="black" size={'lg'}
-                    p={10}>Subscribe</Button>
+                    p={10}  onClick={(e) => {
+			window.location.href = "mailto:bdmpkitsolution24@gmail.com";
+			e.preventDefault();
+		}}>Subscribe</Button>
 				
 				</InputGroup>
 			</GridItem>
