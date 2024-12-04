@@ -11,8 +11,8 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 
    {/* Right Section - Links */}
 <Box maxW="1200px" mx="auto" px={4} paddingBottom={20}>
-          <Flex justify={["center", "flex-end"]} align="center" paddingRight={0} >
-            <HStack spacing={20}>
+          <Flex justify={["center", "flex-end"]} align="center" paddingRight={isLargerThan980 ? 0 : 5} >
+            <HStack spacing={20} fontSize={ isLargerThan980  ? "" : "13px"}>
               <Link href="/../homepage">Home</Link>
               <Link href="/../blog">Blog</Link>
               <Link href="/../about-us">About us</Link>
@@ -34,14 +34,14 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		>
 	    <GridItem colSpan={3} display={isLargerThan980 ? 'flex' : 'block !important'}>
 			<Flex direction="column" align="center" maxW="1200px" mx="auto" display={isLargerThan980 ? 'flex' : 'block !important'}>
-				<Text fontSize={isLargerThan980 ? '2em' : '24px' } fontWeight="bold" textAlign="left" mb={4} paddingLeft={40}>
+				<Text fontSize={isLargerThan980 ? '2em' : '15px' } fontWeight="bold" textAlign="center" mb={4} paddingLeft={20}>
 					Subscribe to our newsletter to get latest updates and news
 				</Text>
 				
 				</Flex>
 		</GridItem>
   
-		<GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 60} mt={10} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
+		<GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 20} mt={10} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
 				<InputGroup>
 					<Input
 					placeholder="Enter Your Email"
@@ -66,18 +66,16 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
         </Box>
       </Box>
       {/* Footer Information */}
-      <Box maxW="1200px" mx="auto" px={4} mt={10}>
+      <Box maxW="1200px" mx="auto"  textAlign={isLargerThan980 ? 'left' : 'center'} px={isLargerThan980 ? 4 : 2} mt={isLargerThan980  ? 10 : "-50"}>
           <Box>
             <Text>InBox FoodHub, Bayan Luma 8, Emilio Aguinaldo Hi-way, City of Imus</Text>
           </Box>
           
-       
-       
 
         {/* Social Media Icons */}
-        <Flex justify={["center", "space-between"]} align="center" mt={8}>
-          <Text fontSize="sm" textAlign="left">© 2024 Cavite Association of Producers & Entrepreneurs - CAPE. All rights reserved.</Text>
-          <HStack spacing={4}>
+        <Flex justify={["center", "space-between"]} align="center" mt={8} display={isLargerThan980 ? 'flex' : 'block'}>
+          <Text fontSize="sm" textAlign={isLargerThan980 ? 'left' : 'center'}>© 2024 Cavite Association of Producers & Entrepreneurs - CAPE. All rights reserved.</Text>
+          <HStack spacing={4} paddingTop={isLargerThan980 ? '' : '20px'} paddingLeft={isLargerThan980 ? '' : '40%'}>
             <IconButton
               as="a"
               href="#"

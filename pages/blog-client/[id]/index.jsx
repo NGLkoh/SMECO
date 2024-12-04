@@ -211,9 +211,9 @@ const BlogClient = () => {
               cursor={'pointer'}
               onClick={() => handleSaveComment()}
               mt={2}
-              top={'-54px'}
+              top={isLargerThan980 ? '-54px' : '-65px'}
               position={'relative'}
-              left={'89%'}
+              left={isLargerThan980 ? '89%' : '85%'}
               background={'#232436'}
               color={'white'}
               width={'10%'}
