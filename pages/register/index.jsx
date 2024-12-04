@@ -9,6 +9,7 @@ import Navbar from '../../components/nabvar';
 import InputCustom from '../../components/inputs/index'
 import  { useRouter} from 'next/router'
 import { FileUploader } from "react-drag-drop-files";
+import '../../resources/css/register.css'
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const Register = () => {
@@ -180,9 +181,9 @@ const Register = () => {
 				   
 				   <Box pl={'15%'} pr={'15%'} pb={'15%'} mt={4}> 
 					<Text mb={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Business Permit</Text>
-				      <FileUploader handleChange={(e) => handleChangeBusinessPermit(e)} name="file" types={fileTypes} />
+				      <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeBusinessPermit(e)} name="file" types={fileTypes} />
 					  <Text mb={2} mt={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Barangay Clearance</Text>
-                      <FileUploader handleChange={(e) => handleChangeBarangayClearance(e)} name="file" types={fileTypes} />
+                      <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeBarangayClearance(e)} name="file" types={fileTypes} />
                      
 					<Text mt={4} opacity={0.7} fontSize={{ base: '10px', md: 'xsm', lg: 'xsm' }} className='req-text'> Formats accepted are .pdf, .jpg, and .png </Text>
 					<Text mt={4} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}> If you do not have a file you can use the sample below: </Text>
@@ -239,10 +240,10 @@ const Register = () => {
 				<Center>
 					<HStack my={ isLargerThan980 ? '20' : 10}>
 					<PinInput>
-						<PinInputField  height={'20'} width={'20'} fontSize={'50'} color={'#000000'} onChange={(e) => setCode1(e.target.value)}/>
-						<PinInputField  height={'20'} width={'20'} fontSize={'50'}  color={'#000000'} onChange={(e) => setCode2(e.target.value)}/>
-						<PinInputField  height={'20'} width={'20'} fontSize={'50'}  color={'#000000'} onChange={(e) => setCode3(e.target.value)}/>
-						<PinInputField  height={'20'} width={'20'} fontSize={'50'}  color={'#000000'}onChange={(e) => setCode4(e.target.value)}/>
+						<PinInputField  height={isLargerThan980 ? '20' : '10'} width={isLargerThan980 ? '20' : '10'} fontSize={isLargerThan980 ? '50' : '25'} color={'#000000'} onChange={(e) => setCode1(e.target.value)}/>
+						<PinInputField  height={isLargerThan980 ? '20' : '10'} width={isLargerThan980 ? '20' : '10'} fontSize={isLargerThan980 ? '50' : '25'} color={'#000000'} onChange={(e) => setCode2(e.target.value)}/>
+						<PinInputField   height={isLargerThan980 ? '20' : '10'} width={isLargerThan980 ? '20' : '10'} fontSize={isLargerThan980 ? '50' : '25'}  color={'#000000'} onChange={(e) => setCode3(e.target.value)}/>
+						<PinInputField   height={isLargerThan980 ? '20' : '10'} width={isLargerThan980 ? '20' : '10'} fontSize={isLargerThan980 ? '50' : '25'} color={'#000000'}onChange={(e) => setCode4(e.target.value)}/>
 					</PinInput>
 					</HStack>
 				</Center>
