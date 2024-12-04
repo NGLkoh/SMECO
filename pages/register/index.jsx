@@ -4,7 +4,6 @@
 import React, {useState} from 'react'
 import {Box, Text, ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
-import { FaGoogle} from 'react-icons/fa'; 
 import axios from "axios";
 import Navbar from '../../components/nabvar';
 import InputCustom from '../../components/inputs/index'

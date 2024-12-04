@@ -37,8 +37,8 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		<div className="slider-container">
 		<Slider {...settings}>
         
-		  { category.map(e => e.title ? <div>
-             <Card textAlign={'center'} w={'100%'} key={e._id} display={'inline-block'}>
+		  { category.map(e => e.title ? <div key={e._id}>
+             <Card textAlign={'center'} w={'100%'}  display={'inline-block'}>
 				<CardBody>
                 <Avatar mb={2} name='Segun Adebayo' src={'1.png'} />
 				<Heading mb={2} fontSize={'25px'} size='lg' fontWeight={600}> {e.title}</Heading>
