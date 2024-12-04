@@ -8,6 +8,7 @@ import {
   Button,
   useDisclosure,
   Stack,
+useColorModeValue ,
 } from '@chakra-ui/react'
 
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'

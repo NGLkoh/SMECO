@@ -1,50 +1,59 @@
-'use client'
-
-import React from 'react'
-import {Box, Text,ChakraProvider, Avatar, Card, SimpleGrid, Heading, CardBody} from '@chakra-ui/react'
-
- let CardJson = [
-   {  title: "Food",
-	  sub: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
-      image: "1.png"
-	},
- { title: "Technology",
-	  sub: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
-      image: "1.png"
-	},
- { title: "Clothing",
-	  sub: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
-      image: "1.png"
-	},
- { title: "Agriculture",
-	  sub: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
-      image: "1.png"
-	}
- ]
-
+import React, {useState, useEffect} from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import {Box, Text, Avatar, Card, ChakraProvider, Heading, CardBody, useMediaQuery} from '@chakra-ui/react'
+import axios from "axios";
 const Category = () => {
-   return (<ChakraProvider>
-      <Box width={'100%'} height={"523px"} w={'100%'} >
-       <Box m={'10%'}>  
-    <Box width={'80%'}  margin={'auto'} >
-		<Text align="center" fontSize='30px' fontFamily="sans-serif" fontWeight={600} marginBottom={10}>Choose A Category</Text>
-		<Box w={'100%'} padding={"10px"}>
-         <SimpleGrid display="inline-flex" spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-			{
-              CardJson.map(((e,index) => (<Card key={index} w={'100%'} display={'inline-block'}>
-				<CardBody key={e.title}>
-                <Avatar mb={2} name='Segun Adebayo' src={e.image} />
-				<Heading mb={2} size='md' fontWeight={600}> {e.title}</Heading>
-				<Text>{e.sub}</Text>
+
+const [category, setCategoryState] = useState([])
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
+    useEffect(() => {
+      getCategory()
+	}, [])
+
+ const getCategory = async () => {
+	try {
+		const res = await axios.post('/api/category/all')
+	   setCategoryState(res.data.result)
+		console.log(res.data.result, 'catergory')
+	} catch (e) { console.log(e) }
+  }
+
+  const settings = {
+    infinite: true,
+    speed: 200,
+    slidesToShow: isLargerThan980 ? 4 : 1,
+    slidesToScroll: isLargerThan980 ? 4 : 1,  
+    autoplay:true
+  };
+
+  return (
+    <ChakraProvider>
+	<Box width={'100%'} height={isLargerThan980 ? "523px" : 'auto'} w={'100%'} >
+		<Box m={'10%'}>  
+		<Box width={'80%'}  margin={'auto'} >
+	    <Text align="center" fontSize='30px' fontFamily="sans-serif" fontWeight={600} marginBottom={10}>List of Categorys</Text>
+		<div className="slider-container">
+		<Slider {...settings}>
+        
+		  { category.map(e => e.title ? <div>
+             <Card textAlign={'center'} w={'100%'} key={e._id} display={'inline-block'}>
+				<CardBody>
+                <Avatar mb={2} name='Segun Adebayo' src={'1.png'} />
+				<Heading mb={2} fontSize={'25px'} size='lg' fontWeight={600}> {e.title}</Heading>
+				{/* <Text fontSize={'20px'}>test</Text> */}
 				</CardBody>
-			</Card>)))
-	       }  
-       </SimpleGrid>
+			</Card>
+        </div> : "")} 
+		
+		</Slider>
+		</div>
 	  </Box>
-      </Box>
-    </Box>
-  </Box>
-</ChakraProvider>)
+	  </Box>
+	</Box>
+</ChakraProvider>
+  );
 }
 
 export default Category

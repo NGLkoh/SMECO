@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import {Box, Text,ChakraProvider, Grid, GridItem, Image, Heading, CardBody, Card, Button, Stack, Link } from '@chakra-ui/react'
+import {Box, Text,ChakraProvider, Grid, useMediaQuery, GridItem, Image, Heading, CardBody, Card, Button, Stack, Link } from '@chakra-ui/react'
 import axios from 'axios'
 import '../../resources/css/featured.css'
+import TemplateMobile from './featured/index'
 const FeaturedPost = () => {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 const [template , setTemplateState] = useState([])
 const [selectedKey , setSelectedKey] = useState(0)
  useEffect(() => {
@@ -22,8 +24,9 @@ const selectedTemplate = (key) => {
 }
 
    return (<ChakraProvider>
+ { isLargerThan980 ? 
       <Box width={'100%'} height={'auto'} w={'100%'} position={'relative'} >
-		<Box m={'10%'}>
+		<Box m={isLargerThan980 ? '10%' : ""}>  
 		<Box width={'80%'} height={"723"}  margin={'auto'} >
 		<Box w={'100%'} padding={"10px"}>
         <Grid
@@ -69,6 +72,7 @@ const selectedTemplate = (key) => {
       </Box>
     </Box>
   </Box>
+: <TemplateMobile/> }
 </ChakraProvider>)
 }
 

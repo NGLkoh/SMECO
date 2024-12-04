@@ -3,6 +3,7 @@
 import {
   Container,
   Stack,
+ useMediaQuery,
   Flex,
   Box,
   ChakraProvider,
@@ -14,6 +15,7 @@ import {
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin  } from 'react-icons/fa'; 
 
 export default function BlogFeaturedProfile({profile, name}) {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   return (
 <ChakraProvider>
     <Container maxW={'7xl'}>
@@ -51,8 +53,9 @@ export default function BlogFeaturedProfile({profile, name}) {
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
           <Heading
             lineHeight={1.1}
+            color={'white'}
             fontWeight={600}
-            fontSize={{ base: '1xl', sm: '2xl', lg: '4xl' }}>
+            fontSize={{ base:  '2xl'  , sm: '2xl', lg: '4xl' }}>
             <Text
               as={'span'}
               position={'relative'}
@@ -64,18 +67,26 @@ export default function BlogFeaturedProfile({profile, name}) {
                
                 zIndex: -1,
               }}>
-               Hey there, I’m {name} and welcome to my Blog
+              Hey there, I’m {name} and welcome to my Blog
             </Text>
           </Heading>
-          <Text color={'gray.500'}>
+          <Text  color={'white'}>
           {profile? profile.description: ""}   
         </Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
+  { isLargerThan980 ? 
+          <Stack color={'white'} spacing={{ base: 4, sm: 6 }} position={'relative'} direction={{ base: 'column', sm: 'row' }}>
 				<Link href={profile ? profile.facebook : ""}><FaFacebook/></Link>
                 <Link href={profile  ? profile.twitter : ""}><FaTwitter/></Link>
                 <Link href={profile  ? profile.instagram : "" }><FaInstagram/></Link>
                 <Link href={profile  ? profile.linkIn : ""}><FaLinkedin/></Link>
           </Stack>
+  : 
+         <Box textAlign={'center'} position={'relative'} mt={2} w={'100%'} color={'white'}>
+						<Text display={'inline-block'} m={1}> <FaFacebook fontSize={25}/></Text>  
+						<Text display={'inline-block'} m={1}> <FaTwitter fontSize={25}/></Text>
+						<Text display={'inline-block'} m={1}> <FaInstagram  fontSize={25}/></Text>
+						<Text display={'inline-block'} m={1}> <FaLinkedin fontSize={25}/></Text>
+                </Box> }
         </Stack>
       </Stack>
     </Container>

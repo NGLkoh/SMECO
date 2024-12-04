@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Box, Text, ChakraProvider, Grid, Image } from '@chakra-ui/react';
+import { Box, Text, ChakraProvider, Grid, Image, useMediaQuery } from '@chakra-ui/react';
 
 const Content = () => {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
    return (
       <ChakraProvider>
 
@@ -11,10 +12,10 @@ const Content = () => {
             {/* Top Banner Section */}
 
 		<Box margin={"auto"} p={4}>
-			<Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}  paddingLeft={20}  paddingRight={20}  paddingTop={10} >
+			<Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}  paddingLeft={ isLargerThan980 ? 20 : ""}  paddingRight={isLargerThan980 ? 20 : ""}  paddingTop={isLargerThan980 ? 20 : ""} >
 				<Box>
-					<Text fontSize='50px' mb={2}>Who Are We?</Text>
-					<Text size="50px" fontSize='35px' fontWeight={600} text-align="justify" >
+					<Text fontSize={isLargerThan980 ? '50px' : '30px'} mb={2}>Who Are We?</Text>
+					<Text size="50px" fontSize={isLargerThan980 ? '50px' : '25px'} fontWeight={600} text-align="justify" >
 						Our Member Network is Committed to Learning and Helping Each Other Succeed
 					</Text>
 				</Box>
@@ -27,7 +28,7 @@ const Content = () => {
 			</Grid>
 		</Box>
 
-		<Box width="100%" height="450px" margin="auto">
+		<Box mt={4} width="100%" height={ isLargerThan980  ? "auto" : ""} margin="auto">
                <Image
                   src="about-us-banner.png"  // Make sure the image path is correct for your setup
                   alt="About Us Banner"
@@ -36,11 +37,9 @@ const Content = () => {
                   width="100%"
                />
          </Box>
-
-						
-			<br></br>	<br></br>	
-    <Box>
-		<Text  mt={4} fontSize={22} textAlign= 'center'>
+	
+    <Box mt={6}>
+		<Text  mt={isLargerThan980  ? 4 : 0} fontSize={22} textAlign= 'center'>
 		Gain access to the country's top experts in social entrepreneurship. Grow beyond our personal limits. Make breakthroughs as redefine and realize your goals in life and in business. To help entrepreneurs achieve their full potential. Enable transformational growth in our members' lives.
       </Text>
     </Box>
@@ -48,9 +47,9 @@ const Content = () => {
 	<br></br>
 
 	<Box margin={"auto"} p={4}>
-		<Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}  paddingLeft={20}  paddingRight={20}  paddingTop={10} paddingBottom={10}>
+		<Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}  paddingLeft={ isLargerThan980 ? 20 : ""}  paddingRight={isLargerThan980 ? 20 : ""}  paddingTop={isLargerThan980 ? 20 : ""}>
 			<Box>
-				<Text fontSize='50px' mb={2}>Our Ambition</Text>
+				<Text  fontSize={isLargerThan980 ? '50px' : '30px'}  mb={2}>Our Ambition</Text>
 					<Text  mt={4} fontSize={20} textAlign= 'justify'>
 					We are connected and we are better for knowing one another. Our members thrive and grow during pandemic because of the connections we make and the relationships we develop.
 					CAPE creates a space where members can have real conversations and learn from one another by sharing their experiences, successes and failures. As individuals, as members, we are invested in one another’s growth and success. 
@@ -61,7 +60,7 @@ const Content = () => {
 			</Box>
     
 		<Box>
-			<Text fontSize='50px' mb={2}>Our Core Values
+			<Text  fontSize={isLargerThan980 ? '50px' : '30px'}  mb={2}>Our Core Values
 			</Text>
 				<Text  mt={4} fontSize={20} textAlign= 'justify'>
 				C - Committed to delivering our best in all we do, maintaining honesty, integrity, and quality in products, services, and community involvement. <br></br><br></br>

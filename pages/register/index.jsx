@@ -2,7 +2,7 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Box, Text, ChakraProvider, PinInputField, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
+import {Box, Text, ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
 import { FaGoogle} from 'react-icons/fa'; 
 import axios from "axios";
@@ -13,6 +13,7 @@ import { FileUploader } from "react-drag-drop-files";
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const Register = () => {
+ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	const [firstName, setFirstname] = useState(String)
 	const [lastName, setlastName] = useState(String)
     const [businessPermit, setBusinessPermit] = useState(String)
@@ -142,7 +143,7 @@ const Register = () => {
 			isClosable: true,
 			})
 
-	      router.push('/dashboard')
+	      isLargerThan980 ? router.push('/dashboard') :  router.push('/homepage')
          } else {
   			toast({
 			title: 'Incorrect Code!',
@@ -161,7 +162,7 @@ const Register = () => {
 		<Box w={'100%'} height={"100%"} minHeight="100vh">
 		<Box colSpan={3} bg={'#232536'} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
 		   
-			    { next == 1  ? (  <Box pl={'25%'} pr={'25%'}>  <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
+			    { next == 1  ? (  <Box pl={isLargerThan980 ? '25%' : 5} pr={ isLargerThan980 ? '25%' : 5}>  <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
 				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
 			  
                 <Box textAlign={'center'} mt={4} >
@@ -169,16 +170,10 @@ const Register = () => {
 						Next
 				</Button>
 				<Box textAlign={'center'}  padding={2}>
-				<Box className="at-sep custom-cursor-default-hover"><Text className="devider custom-cursor-default-hover">OR</Text></Box>
-				   <Button leftIcon={<FaGoogle />} width={'100%'} color={'#000000'} bg='#ffffff' >
-					Continue with Google
-				   </Button>
-					<Box textAlign={'center'} mt={4} position={'relative'}>
-				     	<Text  mt={2} mb={'8px'} display={'inline'}>Alreay have an account? </Text><Text ml={2} color={'#FFD050'} display={'inline'}>Sign in now</Text>
-				  </Box>
+			
 				</Box>
                </Box></Box>) : next == 2 ?  (
-			     <Box pl={'30%'} pr={'30%'}  color={'#000000'}> 
+			     <Box pl={isLargerThan980 ? '30%': 5} pt={isLargerThan980 ? 0 : 5} pr={isLargerThan980 ? '30%': 5}  color={'#000000'}> 
                  <Box bg={'#ffff'} borderRadius={6}> 
 				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }} fontWeight={600} pt={4} mb={1} textAlign={'center'}>Upload the following documents</Text>	     
 				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>1. Updated Business Permit </Text>	     
@@ -210,14 +205,14 @@ const Register = () => {
 	`			</Box>
 					) : (<>
                    <Flex
-			minH={'90vh'}
-			align={'center'}
-			justify={'center'}
-			bg={'#232536'}>
+				minH={'90vh'}
+				align={'center'}
+				justify={'center'}
+				bg={'#232536'}>
 			<Stack
 				spacing={4}
-				w={'100%'}
-				h={'xl'}
+				w={isLargerThan980 ? '100%' : '85%'}
+				h={ isLargerThan980 ? 'xl' : "sm"}
 				maxW={'xl'}
 				bg={'white'}
 				rounded={'xl'}
@@ -243,7 +238,7 @@ const Register = () => {
 				</Center> */}
 				<FormControl>
 				<Center>
-					<HStack my={'20'}>
+					<HStack my={ isLargerThan980 ? '20' : 10}>
 					<PinInput>
 						<PinInputField  height={'20'} width={'20'} fontSize={'50'} color={'#000000'} onChange={(e) => setCode1(e.target.value)}/>
 						<PinInputField  height={'20'} width={'20'} fontSize={'50'}  color={'#000000'} onChange={(e) => setCode2(e.target.value)}/>
@@ -253,10 +248,10 @@ const Register = () => {
 					</HStack>
 				</Center>
 				</FormControl>
-					<Stack spacing={6}>
+					<Stack spacing={isLargerThan980 ? 6 : 2}>
 						<Button
 							bg={'#FFD050'} 
-							mx={'30'}
+							mx={isLargerThan980  ? '30' : '10'}
 							color={'white'}
 							onClick={(e) => handleVerify(e)}
 							_hover={{

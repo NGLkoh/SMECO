@@ -67,15 +67,12 @@ const LinkItems = [
     icon: FiFileText,
     id: 'addTemplate',
     subLinks: [
-      { name: 'Add New', icon: FiPlus,  id: 'addnew' },
 	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
   },
   { name: 'Comments', icon: FiMessageSquare,  id: 'comment' },
   { name: 'Anouncement', icon: BsFillCalendarEventFill,  id: 'events' },
-  { name: 'Message', icon: FiMessageSquare,  id: 'message',   subLinks: [
-	  { name: 'Guest Message', icon: FiMessageSquare,  id: 'guestMessage' },
-    ], },
+  { name: 'Message', icon: FiMessageSquare,  id: 'guestMessage' },
   { name: 'Media', icon: FiCamera,  id: 'imageUpload' },
   { name: 'Users', icon: FiUser,
   id: 'addNewUser'},
@@ -135,7 +132,7 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
               )}
             </Box>
           ))
-        : LinkItems.map((link) => (
+        : <>{LinkItems.map((link) => (
             <Box key={link.name}>
               {user && user.ids && link.id === 'users' ? null : (
                 <NavItem
@@ -152,7 +149,11 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
               )}
             </Box>
           ))}
-      <NavItem
+          <Box onClick={(e) => {
+			window.location.href = "mailto:bdmpkitsolution24@gmail.com";
+			e.preventDefault();
+		}}> 
+        <NavItem
         icon={FiPocket}
         count={count}
         setNav={setNav}
@@ -161,12 +162,17 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
         setSelectedId={setSelectedId}
         position="absolute"
         bottom="0"
+        to='bdmpkitsolution24@gmail.com'
+		
         marginBottom="5"
         mx="5"
         _hover="none"
       >
         Send Feedback
-      </NavItem>
+      </NavItem></Box></>}
+
+      
+  
     </Box>
   );
 };
@@ -199,7 +205,7 @@ const NavItem = ({
     <Box>
       <Box
         as="a"
-        href="#"
+
         style={{ textDecoration: 'none' }}
         _focus={{ boxShadow: 'none' }}
       >
@@ -210,8 +216,6 @@ const NavItem = ({
           borderRadius="lg"
           role="group"
           cursor="pointer"
-          bg={selectedId === id ? '#FFD050' : undefined} // Highlight selected item
-          color={selectedId === id ? 'black' : undefined}
           _hover={{
             bg: '#FFD050',
             color: 'black',

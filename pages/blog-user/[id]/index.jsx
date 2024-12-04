@@ -2,13 +2,14 @@
 'use client'
 
 import React, {useState, useEffect} from 'react'
-import {Box, Text, ChakraProvider, Container, HStack, Heading,Tag,  Link, Image } from '@chakra-ui/react'
+import {Box, Text, ChakraProvider, Container, HStack, Heading,Tag, useMediaQuery, Link, Image } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
 import BlogFeaturedProfile from '../../../components/blog-featured-profile/index'
 
 const BlogClient = () => {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	const [templateState, setTemplateState] = useState([]) 
     const [name, setName] = useState("")
     const [profile, setProfile] = useState()
@@ -59,15 +60,15 @@ const fetchIntialBlog = async() => {
 
    return (<Box><ChakraProvider>
      <Navbar page='homepage' />
-      <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
+      <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh" p={isLargerThan980 ? 20 : 0}>
     
-        { profileList ? profileList.map((row, key) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'} className='tangina' position={'relative'} backgroundSize={'cover'} backgroundImage={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage}`} >
+        { profileList ? profileList.map((row, key) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'}  position={'relative'} backgroundSize={'cover'} backgroundImage={`linear-gradient(rgb(0 0 0 / 46%), rgb(0 0 0 / 35%)), url(https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage})`} >
 
-<BlogFeaturedProfile profile={profile} name={name}/>
+     <BlogFeaturedProfile profile={profile} name={name}/>
 		</Box>)) : ""}
      
 		<Box  height={'100%'}>
-		<Box width={'100%'} height={"100%"} className='client' minHeight="100vh" margin={'auto'} padding={20}>
+		<Box width={'100%'} height={"100%"} className='client' minHeight="100vh" margin={'auto'} >
        <Container maxW={'7xl'} p="12">
        <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>My Posts</Heading>
        {templateState ?   templateState.map((row, key) => (

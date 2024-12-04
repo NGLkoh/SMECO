@@ -30,7 +30,7 @@ const ContactPage = () => {
         <Container
           maxW="full"
           height="auto"
-          mt={0}
+          mt={20}
           centerContent
           overflow="hidden"
           mb={10}
@@ -69,33 +69,12 @@ const ContactPage = () => {
               {/* Form */}
               <Box mt={8} ml={8} mr={8} color="#0B0E3F">
                 <VStack spacing={5}>
-                  <FormControl id="name">
-                    <FormLabel>Your Name</FormLabel>
-                    <InputGroup borderColor="#E0E1E7">
-                      <InputLeftElement pointerEvents="none">
-                        <BsPerson color="gray.800" />
-                      </InputLeftElement>
-                      <Input type="text" size="md" placeholder="Enter your name" />
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl id="email">
-                    <FormLabel>Email</FormLabel>
-                    <InputGroup borderColor="#E0E1E7">
-                      <InputLeftElement pointerEvents="none">
-                        <MdOutlineEmail color="gray.800" />
-                      </InputLeftElement>
-                      <Input type="email" size="md" placeholder="Enter your email" />
-                    </InputGroup>
-                  </FormControl>
-                  <FormControl id="message">
-                    <FormLabel>Message</FormLabel>
-                    <Textarea
-                      borderColor="gray.300"
-                      _hover={{ borderColor: 'gray.400' }}
-                      placeholder="Your message here"
-                    />
-                  </FormControl>
                   <Button
+                     to='bdmpkitsolution24@gmail.com'
+					onClick={(e) => {
+						window.location.href = "mailto:bdmpkitsolution24@gmail.com";
+						e.preventDefault();
+					}}
                     variant="solid"
                     width="100%"
                     bg="#ffb509"

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Flex, Text, Input, Button, Link, HStack, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Text, Input, Button, Link, HStack, useMediaQuery, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react'
 
 const DetailFooter = () => {
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   return (
 
     <Box as="footer" backgroundColor={'#232436'} color="white" py={30}>
@@ -21,24 +22,26 @@ const DetailFooter = () => {
           </Flex>
 </Box>
       {/* Subscribe Section */}
-      <Box bg="#2e303f" py={100} maxW="1200px" mx="auto" px={4} mt={10}>
-
+      <Box bg="#2e303f" py={isLargerThan980 ? 100 : 20} height={'200px'} px={isLargerThan980 ? 100 : 20} maxW="1200px" mx="auto" mb='80px'>
+       <Box className='continer-footer'>
 		<Grid
 		h='70px'
 		templateColumns='repeat(5, 2fr)'
 		gap={4}
+        display={isLargerThan980 ? 'flex' : 'block !important'}
+        textAlign={'center'}
 		>
-	    <GridItem colSpan={3}>
-			<Flex direction="column" align="center" maxW="1200px" mx="auto">
-				<Text fontSize="2em" fontWeight="bold" textAlign="left" mb={4} paddingLeft={40}>
+	    <GridItem colSpan={3} display={isLargerThan980 ? 'flex' : 'block !important'}>
+			<Flex direction="column" align="center" maxW="1200px" mx="auto" display={isLargerThan980 ? 'flex' : 'block !important'}>
+				<Text fontSize={isLargerThan980 ? '2em' : '24px' } fontWeight="bold" textAlign="left" mb={4} paddingLeft={40}>
 					Subscribe to our newsletter to get latest updates and news
 				</Text>
 				
 				</Flex>
 		</GridItem>
-
-		<GridItem colSpan={2} paddingRight={50}>
-				<InputGroup maxW="600px">
+  
+		<GridItem colSpan={2} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
+				<InputGroup>
 					<Input
 					placeholder="Enter Your Email"
 					bg="white"
@@ -46,16 +49,17 @@ const DetailFooter = () => {
 					_placeholder={{ color: 'gray.400' }}
 					color="white"
 					_hover={{ borderColor: 'gray.500' }}
-					size="lg"
-					py={15}
-					px={35}
+					size={'sm'}
+                    p={10}
 					/>
-					<InputRightElement width="auto">
-					<Button backgroundColor={'#ffcf4f'} color="black" px={50} py={15} size="lg">Subscribe</Button>
-					</InputRightElement>
+				
+					<Button  ml={2} backgroundColor={'#ffcf4f'} color="black" size={'lg'}
+                    p={10}>Subscribe</Button>
+				
 				</InputGroup>
 			</GridItem>
 		</Grid>
+        </Box>
       </Box>
       {/* Footer Information */}
       <Box maxW="1200px" mx="auto" px={4} mt={10}>
