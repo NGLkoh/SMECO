@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pages/homepage/page.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pages/homepage/page.js", "components/nabvar/index.jsx", "components/inputs/index.jsx", "components/graph-admin/index.jsx", "components/graph/index.jsx", "components/author/index.jsx", "components/stats/index.jsx", "components/sidebar/index.jsx", "components/stats-admin/index.jsx", "components/settings/index.jsx", "pages/blog-user/[id]/index.jsx", "components/author/index.jsx"],
   "exclude": ["node_modules"]
 }

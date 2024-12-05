@@ -38,7 +38,7 @@ const AddSubUserAdmin = ({user}) => {
 	      await axios.post('/api/users/remove', {id: data})
 		
           toast({
-          title: 'Successfully Delete',
+          title: 'Successfully Deleted ',
           status: 'success',
 	      position: 'top-right',
           duration: 9000,
@@ -57,7 +57,7 @@ const AddSubUserAdmin = ({user}) => {
     console.log(id, value)
      const res = await axios.post('/api/users/verify-user', {id: id, value: value})
        toast({
-          title: `Successfully Update Status` + name,
+          title: `Successfully Update Status for: ` + name,
           status: 'success',
 	      position: 'top-right',
           duration: 9000,

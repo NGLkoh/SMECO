@@ -59,7 +59,7 @@ const handleChange = async (event, type) => {
         await axios.post('/api/users/editProfile', { id: user._id, data: data})
 		
          toast({
-          title: 'Successfully Edit profile page ', 
+          title: 'Successfully Edit your Profile ', 
           status: 'success',
 	      position: 'top-right',
           duration: 9000,

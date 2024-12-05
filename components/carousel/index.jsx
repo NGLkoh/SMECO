@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
+import { useRouter } from 'next/router'; // Import Next.js router for navigation
 
 // Settings for the slider
 const settings = {
@@ -29,6 +30,7 @@ const settings = {
 
 export default function CaptionCarousel() {
   const [slider, setSlider] = useState();
+  const router = useRouter(); // Use Next.js router for programmatic navigation
 
   const top = useBreakpointValue({ base: '90%', md: '50%' });
   const side = useBreakpointValue({ base: '30%', md: '40px' });
@@ -39,23 +41,31 @@ export default function CaptionCarousel() {
       text: "SMECO respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information in compliance with the Philippine Data Privacy Act of 2012",
       image:
         'https://www.freepik.com/free-photos-vectors/pastel-yellow-background',
+      link: '/privacy-policy', // Define the link here
     },
     {
       title: 'Who Are We?',
       text: "Cavite Association of Producers and Entrepreneurs is a high-quality support network of entrepreneurs with like-minded leaders from different municipalities of Cavite.",
       image:
         'https://www.freepik.com/free-photos-vectors/pastel-yellow-background',
+      link: '/about-us', // Define the link here
     },
     {
       title: 'Our Ambition',
-      text: " CAPE creates a space where members can have real conversations and learn from one another by sharing their experiences, successes and failures.",
+      text: " CAPE creates a space where members can have real conversations and learn from one another by sharing their experiences, successes, and failures.",
       image:
         'https://www.freepik.com/free-photos-vectors/pastel-yellow-background',
+      link: '/homepage', // Define the link here
     },
   ];
 
+  // Function to handle button click and redirect
+  const handleButtonClick = (link) => {
+    router.push(link); // Use Next.js router to navigate to the specified link
+  };
+
   return (
-    <Box position="relative" height="600px" width="full" overflow="hidden" borderLeft={0}  borderRadius="16px">
+    <Box position="relative" height="600px" width="full" overflow="hidden" borderLeft={0} borderRadius="16px">
       {/* CSS files for react-slick */}
       <link
         rel="stylesheet"
@@ -107,14 +117,14 @@ export default function CaptionCarousel() {
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
             backgroundImage={`url(${card.image})`}
-            borderRadius="16px"  // This applies rounded corners to the image container
-           borderLeft="0px"
+            borderRadius="16px"
+            borderLeft="0px"
           >
             <Container
               size="container.lg"
               height="600px"
-              position="relative" // Ensures inner container also has rounded corners
-              overflow="hidden"     // Prevents the text from overflowing out of rounded corners
+              position="relative"
+              overflow="hidden"
             >
               <Stack
                 spacing={6}
@@ -128,7 +138,7 @@ export default function CaptionCarousel() {
                   bg="white"
                   p={12}
                   marginLeft={8}
-                  maxWidth= "80%"
+                  maxWidth="80%"
                   borderRadius={12}
                   boxShadow="lg"
                   borderLeft="0"
@@ -141,7 +151,7 @@ export default function CaptionCarousel() {
                   >
                     {card.title}
                   </Heading>
-                  <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600"  textAlign="justify" >
+                  <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="justify">
                     {card.text}
                   </Text>
                   <Box mt={4} textAlign="justify">
@@ -152,6 +162,7 @@ export default function CaptionCarousel() {
                       _hover={{ bg: 'gray.700' }}
                       borderRadius={12}
                       borderLeft="0"
+                      onClick={() => handleButtonClick(card.link)} // Use the dynamic link
                     >
                       Learn More
                     </Button>

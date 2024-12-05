@@ -78,7 +78,7 @@ const BlogClient = () => {
 		socket.emit('add-comment', { result: res })
 		setComment('')
         toast({
-		title: "Successfully Add Comment",
+		title: "Successfully Added a Comment",
 		description: "Success",
 		status: "success",
 		duration: 2000,

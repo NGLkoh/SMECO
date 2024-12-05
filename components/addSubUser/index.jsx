@@ -32,7 +32,7 @@ const AddSubUser = ({user}) => {
 	      await axios.post('/api/users/remove', {id: data})
 		
           toast({
-          title: 'Successfully Delete',
+          title: 'Successfully Deleted ',
           status: 'success',
 	      position: 'top-right',
           duration: 9000,

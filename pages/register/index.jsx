@@ -114,7 +114,7 @@ const Register = () => {
 		if(res.data.message === 'true') {
 		 await axios.post('/api/email/sendEmail', { email:  email, code: val})
           toast({
-          title: 'Successfully Email Send',
+          title: 'Code has been sent to your Email Successfullly',
           status: 'success',
 	      position: 'top-right',
           duration: 9000,
@@ -136,7 +136,7 @@ const Register = () => {
 		if(res.data.message === 'true') {
         
           toast({
-			title: 'Successfully Verfiy',
+			title: 'Successfully Verfied',
 			status: 'success',
 			position: 'top-right',
 			duration: 9000,

@@ -9,7 +9,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
  <Flex
 	  
       w={'full'}
-      h={ isLargerThan980 ? '100vh' : "70vh"}
+      h={ isLargerThan980 ? '100vh' : "50vh"}
       backgroundImage={
         'url("bg1.jpg")'
       }

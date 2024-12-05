@@ -33,7 +33,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	<Box width={'100%'} height={isLargerThan980 ? "523px" : 'auto'} w={'100%'} >
 		<Box m={'10%'}>  
 		<Box width={'80%'}  margin={'auto'} >
-	    <Text align="center" fontSize='30px' fontFamily="sans-serif" fontWeight={600} marginBottom={10}>List of Categories</Text>
+	    <Text align="center" fontSize='30px' fontFamily="sans-serif" fontWeight={600} marginBottom={10}>List ofs Categories</Text>
 		<div className="slider-container">
 		<Slider {...settings}>
         

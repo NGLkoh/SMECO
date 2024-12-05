@@ -39,25 +39,18 @@ export default function CallToActionWithVideo() {
                
                 zIndex: -1,
               }}>
-                Step-by-step guide to choosing great font pairs
+                Discover the Beauty and Craftsmanship of Filipino Market through Markadong Pinoy!
             </Text>
           </Heading>
-          <Text color={'gray.500'}>
-           Featured Post
-Step-by-step guide to choosing great font pairs
-By Juan Dela Cruz  l   May 23, 2024 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+          <Text color={'gray.500'} align={'justify'}>
+            Here, we share stories about the rich cultural heritage and artistry of the Philippines, featuring everything from handcrafted products to locally made goods that reflect the heart and soul of our islands.
+
+At Markadong Pinoy, we are passionate about supporting Filipino creators and showcasing their work to the world. Whether you're a connoisseur of Filipino craftsmanship or simply love unique, locally made products, our blog will inspire you to appreciate the artistry that is woven into each creation.
+
+Dive into our posts to explore the artistry behind Filipino goods, the people who create them, and how you can bring these beautiful products into your life.
           </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-            <Button
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              colorScheme={'red'}
-              bg={'#ffb509'}
-              _hover={{ bg: 'red.500' }}>
-              Read More 
-            </Button>
+         
     
           </Stack>
         </Stack>

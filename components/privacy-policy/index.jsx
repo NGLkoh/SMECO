@@ -109,16 +109,16 @@ const PrivacyPolicy = () => {
               If you have questions or concerns about this Privacy Policy,
               please contact us at:
             </Text>
-            <Text fontSize="sm" color="teal.500">
+            <Text fontSize="sm" >
               Email:{' '}
-              <Link href="mailto:cape@example.com" fontWeight="bold">
-                cape@example.com
+              <Link href="mailto:Capeest.2021@gmail.com" fontWeight="bold">
+                Capeest.2021@gmail.com
               </Link>
             </Text>
-            <Text fontSize="sm" color="teal.500">
+            <Text fontSize="sm">
               Phone:{' '}
-              <Link href="tel:+1234567890" fontWeight="bold">
-                +1 (234) 567-890
+              <Link href="tel:+639369940234" fontWeight="bold">
+                +63 9369 940 234
               </Link>
             </Text>
           </Box>

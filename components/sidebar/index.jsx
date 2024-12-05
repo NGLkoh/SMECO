@@ -83,14 +83,9 @@ const LinkItems = [
 const LinkAdmin = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard-admin' },
   { name: 'Users', icon: FiUser,
-  id: 'users',
- subLinks: [
-      { name: 'Add New', icon: FiUsers, id: 'addNewUser-admin' },
-    ],
+  id: 'addNewUser-admin'
   },
-  { name: 'Message', icon: FiMessageSquare, id: 'message',   subLinks: [
-	  { name: 'User Message', icon: FiMessageSquare,  id: 'guestMessage' },
-    ], },
+  { name: 'Message', icon: FiMessageSquare, id: 'guestMessage'},
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
 ];
 
@@ -312,7 +307,11 @@ const  handleLogout = async () => {
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
               <HStack>
-               	<Avatar name={`${user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} ${user ? user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}`} />
+               	<Avatar  src={user && user.profile && user.profile[0]?.fileName 
+            ? `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${user.profile[0].fileName}` 
+            : "" // No avatar image, use default
+        } 
+			 name={`${user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} ${user ? user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}`} />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
@@ -329,14 +328,25 @@ const  handleLogout = async () => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue('white', 'gray.900')}
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
-            >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={() => handleLogout()}>Sign out</MenuItem>
-            </MenuList>
+  bg={useColorModeValue('white', 'gray.900')}
+  borderColor={useColorModeValue('gray.200', 'gray.700')}
+>
+  {user?._id ? (
+    <MenuItem
+      as="a"
+      href={`/blog-user/${user._id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Profile
+    </MenuItem>
+  ) : (
+    <MenuItem isDisabled>Profile</MenuItem> // Optional fallback if user._id is not available
+  )}
+  <MenuItem>Settings</MenuItem>
+  <MenuDivider />
+  <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+</MenuList>
           </Menu>
         </Flex>
       </HStack>

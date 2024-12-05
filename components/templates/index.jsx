@@ -31,6 +31,7 @@ const Template = ({ user }) => {
     getCategory()
   }, [])
 
+
   const [image, setImage ] = useState([]) 
   const toast = useToast()
 
@@ -131,8 +132,8 @@ const Template = ({ user }) => {
   try{
          await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState })
 		toast({
-		title: "Post Deleted",
-		description: "Successfully edited",
+		title: "Post Edited",
+		description: "Successfully Edited",
 		status: "success",
 		duration: 2000,
 		isClosable: true,
@@ -208,7 +209,7 @@ const Template = ({ user }) => {
               color={'#ffffff'}
               size={'md'}
               mr={4}
-              onClick={() => setAdd(true)}>
+              onClick={() => { setAdd(true), setEditorState("")}}>
               Add
             </Button>
           )}
@@ -220,8 +221,9 @@ const Template = ({ user }) => {
 			apiKey='o5zjdgzwmjb9rdi6r4md7rq26kq13c55p55vrwubsaz8k75a'
 			initialValue={editorState}
 			init={{
-				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+				plugins: 'anchor autolink charmap codesample image link lists media searchreplace visualblocks wordcount',
+				height: 680, // Set the height to 700px
+				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
 			}}
 			onChange={(e) => onEditorStateChange(e)}
 			/>
@@ -272,10 +274,14 @@ const Template = ({ user }) => {
 		<Editor
 			apiKey='o5zjdgzwmjb9rdi6r4md7rq26kq13c55p55vrwubsaz8k75a'
 			initialValue={editorState}
+
 			init={{
-				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-			}}
+
+
+				height: 680, // Set the height to 700px
+				plugins: 'anchor autolink charmap codesample emoticons image code link lists media searchreplace table visualblocks wordcount',
+				toolbar: 'code | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image |  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+}}
 			onChange={(e) => onEditorStateChange(e)}
 			/>
         
