@@ -187,12 +187,12 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                 <Text className="devider custom-cursor-default-hover">OR</Text>
               </Box>
              <Box  className="google-container"
-  mb={4}
-  sx={{
-    display: 'flex',
-    justifyContent: 'center', // Centers horizontally
-    alignItems: 'center',      // Centers vertically           // Make the Box take full height of its parent (if needed)
-  }}>
+				mb={4}
+				sx={{
+					display: 'flex',
+					justifyContent: 'center', // Centers horizontally
+					alignItems: 'center',      // Centers vertically           // Make the Box take full height of its parent (if needed)
+				}}>
               <GoogleLogin width={'100% !important'} marginBottom={6} onSuccess={(credentialRes) => handleLoginGoogle(credentialRes)} onError={() => console.log('login error')}/>
              </Box>
              <Box textAlign="center">

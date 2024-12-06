@@ -1,7 +1,7 @@
 
 'use client'
 
-import React, {useState} from 'react'
+import React, {StrictMode, useState} from 'react'
 import {Box, Text, ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
 import axios from "axios";
@@ -10,7 +10,12 @@ import InputCustom from '../../components/inputs/index'
 import  { useRouter} from 'next/router'
 import { FileUploader } from "react-drag-drop-files";
 import '../../resources/css/register.css'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import SaveGoolgeLogin  from '../../components/modal/register'
 const fileTypes = ["JPG", "PNG", "GIF"];
+const CLIENT_ID = "512275838388-jal64cg1khdpl58kt7ba9c1k2ge0u041.apps.googleusercontent.com"
 
 const Register = () => {
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
@@ -31,7 +36,8 @@ const Register = () => {
 	const [ title, setTitle] = useState("")
 	const [ source, setSource] = useState('')
 	const [ open, setOpen] = useState(false)
-
+    const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
+  const [decodeCredentials, setDecodeCredentials] = useState({});
 	let fields = [
 		{
 			function: setFirstname,
@@ -58,6 +64,9 @@ const Register = () => {
 			value: password
 		}
 	]
+  const closeModalRegisterLogin = () =>  {
+      setModalRegisterLogin(false )
+  }
 	const toast = useToast()
   const handleOpenModal = (title, source) => {
       setOpen(true)
@@ -132,6 +141,36 @@ const Register = () => {
 		}
 		 setNext(3)
     }
+   const handleLoginGoogle = async (credentialRes) => {
+    const creds = jwtDecode(credentialRes.credential)
+   console.log(creds, "email")
+    const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
+
+    if (res.data.message === 'false') {
+    setModalRegisterLogin(true)
+    setDecodeCredentials(jwtDecode(credentialRes.credential)) 
+    } else if (res.data.message === 'true') {
+      if (res.data.result[0].active) {
+         toast({
+          title: `You can't sign in using mobile`,
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+
+      } else {
+
+        toast({
+          title: 'Please wait for admin verification',
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+	}
+  }
 	const handleVerify = async () => {
 		 const res = await axios.post('/api/users/verify', {code: parseFloat(`${code1}${code2}${code3}${code4}`)})
 		if(res.data.message === 'true') {
@@ -156,7 +195,7 @@ const Register = () => {
 		 }
 	}
 
-   return (<Box><ChakraProvider>
+   return (<StrictMode> <GoogleOAuthProvider clientId={CLIENT_ID}> <Box><ChakraProvider>
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
 	   <Navbar page='register'/>
 		<Box  height={'100%'}>
@@ -173,6 +212,16 @@ const Register = () => {
 				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  setNext(2)}>
 						Next
 				</Button>
+             <Box  className="google-container"
+				mb={4}
+                mt={4}
+				sx={{
+					display: 'flex',
+					justifyContent: 'center', // Centers horizontally
+					alignItems: 'center',      // Centers vertically           // Make the Box take full height of its parent (if needed)
+				}}>
+               <GoogleLogin width={'100% !important'} marginBottom={6} onSuccess={(credentialRes) => handleLoginGoogle(credentialRes)} onError={() => console.log('login error')}/>
+           </Box>
 				<Box textAlign={'center'}  padding={2}>
 			
 				</Box>
@@ -263,19 +312,24 @@ const Register = () => {
 							}}>
 							Verify
 						</Button>
+                      
 						</Stack>
+                        
 					</Stack>
 					</Flex>
 					</>)
 					}
+                    
 				</Box>
 			</Box>
 			</Box>
 			</Box>
 		</Box>
  <ModalImage open={open} onCloseModal={onCloseModal} source={source} title={title}/>
+   <SaveGoolgeLogin modalRegisterLogin={modalRegisterLogin} closeModalRegisterLogin={closeModalRegisterLogin} decodeCredentials={decodeCredentials}/>
+  
 </ChakraProvider>
-</Box>)
+</Box></GoogleOAuthProvider></StrictMode>)
 
 }
 
