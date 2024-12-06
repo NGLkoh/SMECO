@@ -154,6 +154,7 @@ const Register = () => {
            })
 		 }
 	}
+
    return (<Box><ChakraProvider>
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
 	   <Navbar page='register'/>
@@ -162,7 +163,9 @@ const Register = () => {
 		<Box w={'100%'} height={"100%"} minHeight="100vh">
 		<Box colSpan={3} bg={'#232536'} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
 		   
-			    { next == 1  ? (  <Box pl={isLargerThan980 ? '25%' : 5} pr={ isLargerThan980 ? '25%' : 5}>  <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
+			    { next == 1  ? (  
+            <Box pl={isLargerThan980 ? '25%' : 5} pr={ isLargerThan980 ? '25%' : 5}> 
+              <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
 				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
 			  
                 <Box textAlign={'center'} mt={4} >

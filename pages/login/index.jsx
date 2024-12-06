@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, StrictMode } from 'react';
 import {
   Box,
   Text,
@@ -19,11 +19,55 @@ import '../../resources/css/style.css';
 import { FaGoogle } from 'react-icons/fa';
 import CaptionCarousel from '../../components/carousel';
 import axios from 'axios';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+import SaveGoolgeLogin from '../../components/modal/register'
+const CLIENT_ID = "512275838388-jal64cg1khdpl58kt7ba9c1k2ge0u041.apps.googleusercontent.com"
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [decodeCredentials, setDecodeCredentials] = useState({});
+  const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
   const toast = useToast();
+
+  const closeModalRegisterLogin = () =>  {
+      setModalRegisterLogin(false )
+  }
+
+  const handleLoginGoogle = async (credentialRes) => {
+    const creds = jwtDecode(credentialRes.credential)
+   console.log(creds, "email")
+    const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
+
+    if (res.data.message === 'false') {
+    setModalRegisterLogin(true)
+    setDecodeCredentials(jwtDecode(credentialRes.credential)) 
+    } else if (res.data.message === 'true') {
+      if (res.data.result[0].active) {
+        let origin = window.location.origin;
+        window.location.href = `${origin}/dashboard`;
+        toast({
+          title: 'Login Success',
+          status: 'success',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+
+      } else {
+
+        toast({
+          title: 'Please wait for admin verification',
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+	}
+  }
 
   const handleLogin = async () => {
     const res = await axios.post('/api/users/login', { username, password });
@@ -62,6 +106,8 @@ const Login = () => {
   };
 
   return (
+<StrictMode>
+<GoogleOAuthProvider clientId={CLIENT_ID}>
     <ChakraProvider>
       <Box bg="#232536" minHeight="100vh" color="white" display="flex" alignItems="center" justifyContent="center" >
         <Grid
@@ -139,16 +185,10 @@ const Login = () => {
               <Box className="at-sep custom-cursor-default-hover" mb={4}>
                 <Text className="devider custom-cursor-default-hover">OR</Text>
               </Box>
-              <Button
-                leftIcon={<FaGoogle />}
-                width="100%"
-                color="#000000"
-                bg="#ffffff"
-                mb={4}
-              >
-                Continue with Google
-              </Button>
-              <Box textAlign="center">
+             <Box className="google-container" mb={4}>
+              <GoogleLogin width={'100% !important'} marginBottom={6} onSuccess={(credentialRes) => handleLoginGoogle(credentialRes)} onError={() => console.log('login error')}/>
+             </Box>
+             <Box textAlign="center">
                 <Text display="inline">Don’t have an account?</Text>
                 <Text
                   as="a"
@@ -187,6 +227,9 @@ const Login = () => {
         </Grid>
       </Box>
     </ChakraProvider>
+    <SaveGoolgeLogin modalRegisterLogin={modalRegisterLogin} closeModalRegisterLogin={closeModalRegisterLogin} decodeCredentials={decodeCredentials}/>
+   </GoogleOAuthProvider >
+   </StrictMode>
   );
 };
 

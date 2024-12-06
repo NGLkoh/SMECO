@@ -276,11 +276,9 @@ const Template = ({ user }) => {
 			initialValue={editorState}
 
 			init={{
-
-
-				height: 680, // Set the height to 700px
-				plugins: 'anchor autolink charmap codesample emoticons image code link lists media searchreplace table visualblocks wordcount',
-				toolbar: 'code | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image |  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            height: '1500px',// Set the height to 700px
+			plugins: 'anchor autolink charmap codesample emoticons image code link lists media searchreplace table visualblocks wordcount',
+			toolbar: 'code | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image |  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
 }}
 			onChange={(e) => onEditorStateChange(e)}
 			/>

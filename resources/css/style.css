@@ -73,3 +73,6 @@ html, body, #fullheight {
   width: 100% !important;
 }
 
+.google-container #container {
+  width: 100% !important;
+}
