@@ -19,7 +19,6 @@ import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
-import ReCAPTCHA from 'react-google-recaptcha'; // Import reCAPTCHA component
 let socket;
 
 const BlogClient = () => {
@@ -32,9 +31,7 @@ const BlogClient = () => {
   const [userId, setUserId] = useState()
   const [comments, setComments] = useState([])
   const [profile, setProfile] = useState([])
- const [recaptchaValue, setRecaptchaValue] = useState(null);
   const toast = useToast()
-const RECAPTCHA_KEY = '6Ld3opMqAAAAALmG5XrP6JcEtPRMiWRhua-BvzMU';
   useEffect(() => {
     fetchIntialBlog()
     socketInitialize()
@@ -56,8 +53,6 @@ const RECAPTCHA_KEY = '6Ld3opMqAAAAALmG5XrP6JcEtPRMiWRhua-BvzMU';
     socket.on("refresh-comment", resfresh);
   }
 
- 
-
   const fetchIntialBlog = async () => {
     setDomain(window.location.href)
     const params = window.location.href.split('/')
@@ -78,54 +73,29 @@ const RECAPTCHA_KEY = '6Ld3opMqAAAAALmG5XrP6JcEtPRMiWRhua-BvzMU';
   }
 
   const handleSaveComment = async () => {
-    // Check if the email, comment, and reCAPTCHA value are provided
-    if (email !== "" && comment !== "" && recaptchaValue) {
-        try {
-            // Send comment to backend along with reCAPTCHA response
-            const res = await axios.post('/api/comment/create', { 
-                id: template[0]._id, 
-                message: comment, 
-                email: email,
-                recaptchaToken: recaptchaValue // Send reCAPTCHA token for validation
-            });
-
-            // Emit new comment using socket
-            socket.emit('add-comment', { result: res });
-
-            // Reset comment input and reCAPTCHA value
-            setComment('');
-            setRecaptchaValue(null);
-
-            // Success toast notification
-            toast({
-                title: "Successfully Added a Comment",
-                description: "Success",
-                status: "success",
-                duration: 2000,
-                isClosable: true,
-            });
-        } catch (error) {
-            console.error("Error saving comment:", error);
-            toast({
-                title: "Error",
-                description: "There was an error saving your comment.",
-                status: "error",
-                duration: 2000,
-                isClosable: true,
-            });
-        }
-    } else {
-        // Show warning toast if any required field is missing
+    if(email !== "" && comment !== "" ) {
+	    socket = io()
+		const res = await axios.post('/api/comment/create', { id: template[0]._id, message: comment, email:email })
+		socket.emit('add-comment', { result: res })
+		setComment('')
         toast({
-            title: "Fill up all fields",
-            description: "Please fill out all fields and complete the reCAPTCHA.",
-            status: "warning",
-            duration: 2000,
-            isClosable: true,
-        });
+		title: "Successfully Added a Comment",
+		description: "Success",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
+    } else {
+       toast({
+		title: "Please Fill up the blanks",
+		description: "Incomplete",
+		status: "warning",
+		duration: 2000,
+		isClosable: true,
+		});
     }
-};
-
+ 
+  }
 
   return (
     <Box className='client-blog'>
@@ -239,11 +209,6 @@ const RECAPTCHA_KEY = '6Ld3opMqAAAAALmG5XrP6JcEtPRMiWRhua-BvzMU';
               placeholder='Add a Comment '
               size='xl'
             />
-    {/* reCAPTCHA */}
-      <ReCAPTCHA
-        sitekey={RECAPTCHA_KEY}
-        onChange={(value) => setRecaptchaValue(value)} // Save the reCAPTCHA response token
-      />
             <Button
               cursor={'pointer'}
               onClick={() => handleSaveComment()}
