@@ -5,6 +5,13 @@ import { Box, ChakraProvider, extendTheme} from '@chakra-ui/react'
 import '../resources/css/style.css'
 import Header from '../../components/header/index'
 
+import ReactDOM from "react-dom";
+import App from "./App";
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-5SH1J2DZ49");
+
+ReactDOM.render(<App />, document.getElementById("root"));
 const theme = extendTheme({
 	styles: {
 	 global: () => ({

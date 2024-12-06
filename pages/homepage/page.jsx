@@ -5,8 +5,8 @@ import { Box } from '@chakra-ui/react'
 
 
 const LandingPage = () =>  {
-  return (<Box className="tite">
-  dsadasd
+  return (<Box className="title">
+  
 </Box>)
 }
 
