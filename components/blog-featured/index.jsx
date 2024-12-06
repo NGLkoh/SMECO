@@ -26,13 +26,12 @@ export default function CallToActionWithVideo() {
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
           <Heading
             lineHeight={1.1}
-            fontWeight={600}
-            fontSize={{ base: '1xl', sm: '2xl', lg: '4xl' }}>
+            fontWeight={700}
+            fontSize={{ base: '3xl', sm: '2xl', lg: '4xl' }}>
             <Text
               as={'span'}
               position={'relative'}
               _after={{
-             
                 position: 'absolute',
                 bottom: 1,
                 left: 0,
