@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Flex, Text, Input, Button, Link, HStack, useMediaQuery, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react'
 
 const DetailFooter = () => {
-const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
+  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
+  const [email, setEmail] = useState("")
+
+  const handleAddSubscribe = () => {
+     console.log(email)
+  }
+ 
   return (
 
     <Box as="footer" backgroundColor={'#232436'} color="white" py={30}>
@@ -47,6 +53,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 					placeholder="Enter Your Email"
 					bg="white"
 					borderColor="gray.600"
+                    onChange={(e) => setEmail(e.target.value)}
 					_placeholder={{ color: 'gray.400' }}
 					color="black!important"
 					_hover={{ borderColor: 'gray.500' }}
@@ -55,10 +62,8 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 					/>
 
 					<Button  ml={2} backgroundColor={'#ffcf4f'} color="black" size={'lg'}
-                    p={10}  onClick={(e) => {
-			window.location.href = "mailto:bdmpkitsolution24@gmail.com";
-			e.preventDefault();
-		}}>Subscribe</Button>
+                    p={10}  onClick={(e) => handleAddSubscribe()
+				    }>Subscribe</Button>
 				
 				</InputGroup>
 			</GridItem>

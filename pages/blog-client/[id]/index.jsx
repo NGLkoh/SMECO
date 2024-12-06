@@ -19,7 +19,9 @@ import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
+import {publicIpv4} from 'public-ip';
 let socket;
+var ip = require('ip');
 
 const BlogClient = () => {
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
@@ -31,6 +33,7 @@ const BlogClient = () => {
   const [userId, setUserId] = useState()
   const [comments, setComments] = useState([])
   const [profile, setProfile] = useState([])
+  const [pubIp, setIp] = useState('')
   const toast = useToast()
   useEffect(() => {
     fetchIntialBlog()
@@ -54,6 +57,8 @@ const BlogClient = () => {
   }
 
   const fetchIntialBlog = async () => {
+     let publicIp  = await publicIpv4();
+    setIp(publicIp)
     setDomain(window.location.href)
     const params = window.location.href.split('/')
     const res = await axios.post('/api/template/template', { id: params[4] })
@@ -96,7 +101,24 @@ const BlogClient = () => {
     }
  
   }
-
+  const handelAddLikes = async() => {
+      let publicIp  = await publicIpv4();
+      let params = window.location.href.split('/')
+       try {
+         await axios.post('/api/template/update-template-data', { id: params[4],  data: {ip: template[0].ip ? template[0].ip.includes(publicIp) ? "" : [...template[0].ip, publicIp] : [publicIp],likes: template[0].likes ?  template[0].likes + 1 : 1}, type : 2 })
+        toast({
+		title: "Successfuly Add likes",
+		description: "Success",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
+       fetchIntialBlog()
+       } catch(e) {
+          console.log(e)
+       }
+       
+    }
   return (
     <Box className='client-blog'>
       <ChakraProvider>
@@ -130,7 +152,9 @@ const BlogClient = () => {
              <Box position={'relative'}>
            <Text float={'left'}   fontSize={18} mb={2}> Comment </Text> 
          <Box position={'relative'}>
-           <Image
+                  <Text float={'right'}   mr={'5'} color={'#232536'}>{template ? template[0]?  template[0].likes ? `${template[0].likes} likes` : "" : "": ""} </Text>  
+        
+          <Image
              float={'right'}
               alt={'Hero Image'}
               fit={'cover'}
@@ -138,13 +162,15 @@ const BlogClient = () => {
               align={'center'}
               w={'25px'}
               mr={'20px'}
+              cursor={'pointer'}
+              zIndex={1}
               h={'25px'}
-          
+              onClick={() => handelAddLikes()}
               src={
-                '/like.png'
+              template? template[0] ? template[0].ip.includes(pubIp)  ? '/like-blue.png': '/like.png' : "" : ""
               }
             />
-
+  
           <Box position={'absolute'} right={10} display={share ? 'block': 'none'} bottom={0} p={2} width={'200px'}  >
             <Box position={'relative'} w={'80%'} borderRadius={8} bg={'#232536'} border={'1px solid #dddd'}  p={1} margin={'auto'}>
 	        <Box ml={2} mt={2} display={'inline-block'}>
