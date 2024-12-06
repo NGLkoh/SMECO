@@ -14,6 +14,7 @@ import {
   Spacer,
   Button,
   useToast,
+	useMediaQuery,
 } from '@chakra-ui/react';
 import '../../resources/css/style.css';
 import { FaGoogle } from 'react-icons/fa';
@@ -35,7 +36,7 @@ const Login = () => {
   const closeModalRegisterLogin = () =>  {
       setModalRegisterLogin(false )
   }
-
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   const handleLoginGoogle = async (credentialRes) => {
     const creds = jwtDecode(credentialRes.credential)
    console.log(creds, "email")
@@ -116,7 +117,7 @@ const Login = () => {
           maxWidth="1200px"
           width="100%"
           margin="auto"
-          p={{ base: 4, md: 20 }}
+          p={{ base: 2, md: 20 }}
           gap={0}
         >
           {/* Left Section */}
@@ -129,11 +130,11 @@ const Login = () => {
             <Box
 			bg="#232536"
 			borderRadius="16px"
-			borderBottomRightRadius= "0px"
-			borderTopRightRadius= "0px"
+			borderBottomRightRadius= {isLargerThan980 ? "0px" : 16}
+			borderTopRightRadius= {isLargerThan980 ? "0px" : 16}
 			border="2px solid"
 			borderColor="white"
-              borderRight="0"
+              borderRight={isLargerThan980 ? "" : "2"}
               padding={10}
               width="100%"
               height="100%"
@@ -185,7 +186,13 @@ const Login = () => {
               <Box className="at-sep custom-cursor-default-hover" mb={4}>
                 <Text className="devider custom-cursor-default-hover">OR</Text>
               </Box>
-             <Box className="google-container" mb={4}>
+             <Box  className="google-container"
+  mb={4}
+  sx={{
+    display: 'flex',
+    justifyContent: 'center', // Centers horizontally
+    alignItems: 'center',      // Centers vertically           // Make the Box take full height of its parent (if needed)
+  }}>
               <GoogleLogin width={'100% !important'} marginBottom={6} onSuccess={(credentialRes) => handleLoginGoogle(credentialRes)} onError={() => console.log('login error')}/>
              </Box>
              <Box textAlign="center">
@@ -212,8 +219,8 @@ const Login = () => {
             alignItems="center"
             justifyContent="center"
 			borderRadius="16px"
-			borderBottomLeftRadius= "0px"
-			borderTopLeftRadius= "0px"
+			borderBottomLeftRadius= {isLargerThan980 ? "0px" : 16}
+			borderTopLeftRadius= {isLargerThan980 ? "0px" : 16}
 			border="2px solid"
 			borderColor="white"
           >
@@ -221,7 +228,7 @@ const Login = () => {
               borderRadius="16px" // Same border radius as the left section
               overflow="hidden" // Ensure the carousel fits within the rounded box
             >
-              <CaptionCarousel />
+              <CaptionCarousel  />
             </Box>
           </GridItem>
         </Grid>

@@ -87,13 +87,13 @@ export const MessageGuest = ({ user}) => {
             bg={selectedChat?._id === chat._id ? 'gray.200' : 'inherit'}
             _hover={{ bg: 'gray.100' }}
           >
-            <Avatar src={chat.avatar} mr={4} />
+            <Avatar src={chat.avatar} name={chat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' :chat.convo[0].name} mr={4} />
             <Box flex="1">
               <Flex justify="space-between">
-                <Text fontWeight="bold">{chat.convo[0].name ? chat.convo[0].name : 'Admin'}</Text>
+                <Text fontWeight="bold">{chat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' :chat.convo[0].name }</Text>
                 <Text fontSize="sm" color="gray.500">{chat.time}</Text>
               </Flex>
-              <Text fontSize="sm" color="gray.600">{chat.convo ? chat.convo[chat.convo.length - 1].message : ""}</Text>
+              <Text fontSize="sm" color="gray.600">{chat.convo ?  chat.convo[chat.convo.length - 1].message  : "" } </Text>
             </Box>
             {chat.unread && <Badge colorScheme="blue" ml={2}></Badge>}
           </Flex>
@@ -104,8 +104,8 @@ export const MessageGuest = ({ user}) => {
           <>
             <Flex align="center" justify="space-between" p={4} bg="white" borderBottom="1px solid gray">
               <Flex align="center">
-                <Avatar src={selectedChat.avatar} mr={4} />
-                <Text fontWeight="bold">{selectedChat.convo[0].name ? selectedChat.convo[0].name : "Admin"}</Text>
+                <Avatar src={selectedChat.avatar} name={selectedChat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' : selectedChat.convo[0].name} mr={4} />
+                <Text fontWeight="bold">{selectedChat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' : selectedChat.convo[0].name }</Text>
               </Flex>
             </Flex>
             <Box h="calc(100% - 120px)" overflowY="auto" p={4}>

@@ -31,22 +31,23 @@ const Register = () => {
 	const [ title, setTitle] = useState("")
 	const [ source, setSource] = useState('')
 	const [ open, setOpen] = useState(false)
+
 	let fields = [
 		{
 			function: setFirstname,
-			title: 'Enter Fist Name',
+			title: 'Enter your First Name',
 			placeholder: 'Juan',
 			value: firstName
 		},
 		{
 			function: setlastName,
-			title: 'Enter Last Name',
+			title: 'Enter your Last Name',
 			placeholder: 'Dela Cruz',
 			value: lastName
 		},
 		{
 			function: setEmail,
-			title: 'Enter Business E-email',
+			title: 'Enter your Business Email',
 			placeholder: 'business@gmail.com',
 			value: email
 		},

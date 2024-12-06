@@ -10,6 +10,7 @@ import {
   Text,
   Button,
   Container,
+useMediaQuery,
 } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
@@ -28,13 +29,15 @@ const settings = {
   slidesToScroll: 1,
 };
 
+
+
 export default function CaptionCarousel() {
   const [slider, setSlider] = useState();
   const router = useRouter(); // Use Next.js router for programmatic navigation
 
   const top = useBreakpointValue({ base: '90%', md: '50%' });
   const side = useBreakpointValue({ base: '30%', md: '40px' });
-
+const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   const cards = [
     {
       title: 'SMECO Protects your Privacy',
@@ -65,7 +68,7 @@ export default function CaptionCarousel() {
   };
 
   return (
-    <Box position="relative" height="600px" width="full" overflow="hidden" borderLeft={0} borderRadius="16px">
+    <Box position="relative" height="600px" width="full" overflow="hidden" borderLeft={0} borderRadius="16px" >
       {/* CSS files for react-slick */}
       <link
         rel="stylesheet"
@@ -125,6 +128,7 @@ export default function CaptionCarousel() {
               height="600px"
               position="relative"
               overflow="hidden"
+
             >
               <Stack
                 spacing={6}
@@ -137,7 +141,7 @@ export default function CaptionCarousel() {
                 <Box
                   bg="white"
                   p={12}
-                  marginLeft={8}
+                  marginLeft={isLargerThan980 ? "8" : "6"}
                   maxWidth="80%"
                   borderRadius={12}
                   boxShadow="lg"

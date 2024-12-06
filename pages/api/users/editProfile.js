@@ -3,6 +3,7 @@ import axios from "axios";
 export default async function handler(req, res) {
 const UAT_URL = process.env.UAT_URL;
 	let { id, data} = req.body;
+    console.log(data)
      try {
        const response = await axios.post(`${UAT_URL}/user/edit-profile-blog`, {
          id: id,

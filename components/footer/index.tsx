@@ -48,12 +48,12 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 					bg="white"
 					borderColor="gray.600"
 					_placeholder={{ color: 'gray.400' }}
-					color="white"
+					color="black!important"
 					_hover={{ borderColor: 'gray.500' }}
 					size={'sm'}
                     p={10}
 					/>
-				
+
 					<Button  ml={2} backgroundColor={'#ffcf4f'} color="black" size={'lg'}
                     p={10}  onClick={(e) => {
 			window.location.href = "mailto:bdmpkitsolution24@gmail.com";

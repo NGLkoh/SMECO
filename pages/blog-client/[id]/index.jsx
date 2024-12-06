@@ -38,6 +38,7 @@ const BlogClient = () => {
     fetchIntialComment()
   }, [])
 
+
   const socketInitialize = async () => {
     socket = io()
 
@@ -143,6 +144,7 @@ const BlogClient = () => {
                 '/like.png'
               }
             />
+
           <Box position={'absolute'} right={10} display={share ? 'block': 'none'} bottom={0} p={2} width={'200px'}  >
             <Box position={'relative'} w={'80%'} borderRadius={8} bg={'#232536'} border={'1px solid #dddd'}  p={1} margin={'auto'}>
 	        <Box ml={2} mt={2} display={'inline-block'}>

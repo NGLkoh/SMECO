@@ -16,7 +16,6 @@ const TemplateCategory = ({user}) => {
    const [ edit, setEdit] = useState(false)
    const [ updateState, setUpdateState] = useState()
    const [templateState, setTemplateState] = useState()
-
 	useEffect(() => {
       getTemplate()
 	}, [])
@@ -47,17 +46,40 @@ const TemplateCategory = ({user}) => {
 	} catch (e) { }
     }
   
-   const handleEdit = (template) => {
-    setEditingTemplate(template);  // Set the template that is being edited
-    const content = convertFromHTML(template.content); // Assuming 'content' is HTML in the template object
-    const contentState = ContentState.createFromBlockArray(content.contentBlocks);
- // Set the editor state to the existing template content
-  };
+  const handleEdit = async (data) => {
+      setAdd(true)
+      setEdit(true)
+      setUpdateState(data)
+    }
 
     const handleAdd = async () => {
       setAdd(true)
       setEdit(false)
 	}
+   const handleDelete = async(data) => {
+		try { 
+		await axios.post('/api/category/remove', {
+						"id": data._id ,
+			})
+			toast({
+					title: 'Category Deleted Succces',
+					status: 'success',
+					position: 'top-right',
+					duration: 9000,
+					isClosable: true,
+					})
+       getTemplate()
+		}  catch (e) { 
+           	toast({
+			title: 'Category Not Succces',
+			status: 'warning',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+			})
+		}
+         
+   }
 
 	const handleTemplateUpdate = async() => {
 	try {
@@ -144,7 +166,8 @@ const TemplateCategory = ({user}) => {
 			color={'#ffffff'}
 			size={'md'}
 			mr={4}
-            onClick={(event) => handleEdit(e)}>
+            onClick={() => handleEdit(e)}
+         >
 			Update
 			</Button>
 			</Box><Box display={'inline'}>	
@@ -152,7 +175,9 @@ const TemplateCategory = ({user}) => {
 			bg={'black'} variant='solid'
 			color={'#ffffff'}
 			size={'md'}
-			mr={4}>
+			mr={4}
+            onClick={() => handleDelete(e)}
+            >
 			Delete
 			</Button>
 		</Box></Td>

@@ -5,13 +5,14 @@ import {
   ChakraProvider, Tbody, Td
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import { FaPen, FaTrash, FaEye } from 'react-icons/fa';
+import { FaPen, FaTrash, FaEye, FaDotCircle, FaHamburger, FaDonate, FaEllipsisH } from 'react-icons/fa';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import SaveTemplate from '../modal/saveTemplate'
 import axios from "axios";
 import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
+import EditTemplate from '../modal/editTemplateDescription'
 import { Editor } from '@tinymce/tinymce-react';
 
 const Template = ({ user }) => {
@@ -21,9 +22,10 @@ const Template = ({ user }) => {
   const [modalHtmlTemplate, setModalHtmlTemplate] = useState(false)
   const [edit, setEdit] = useState(false)
   const [html, setRawHtml] = useState('')
+  const [modalEditTemplate, setModalEditTemplate] = useState(false)
   const [templateId, setTemplateId] = useState('')
   const [editorState, setEditorState] = useState('<p>My initial content.</p>')
-
+   const [editState, setEditState] = useState({})
   const [templateState, setTemplateState] = useState()
 
   useEffect(() => {
@@ -34,6 +36,15 @@ const Template = ({ user }) => {
 
   const [image, setImage ] = useState([]) 
   const toast = useToast()
+
+  const handleEditDescription = (data) => {
+   setModalEditTemplate(true)
+    setEditState(data)
+  }
+
+  const closeEditModal = () => {
+    setModalEditTemplate(false)
+  }
 
   const handleTemplateSave = () => {
     setModalTemplate(true)
@@ -86,7 +97,8 @@ const Template = ({ user }) => {
 
 
   // Handle delete with toast confirmation
-  const handleDelete = (postId) => {
+  const handleDelete =  async(id) => {
+    await axios.post('/api/template/remove', { id: id })
     toast({
       title: "Are you sure?",
       description: "Do you really want to delete this post?",
@@ -96,7 +108,7 @@ const Template = ({ user }) => {
       position: 'top',
       render: () => (
         <Box color="white" p={3} bg="red.500" borderRadius="md">
-          <Button onClick={() => confirmDelete(postId)} colorScheme="red">Yes, Delete</Button>
+          <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
           <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
         </Box>
       ),
@@ -130,7 +142,7 @@ const Template = ({ user }) => {
 
   const handleSaveEdit = async ()  => {
   try{
-         await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState })
+         await axios.post('/api/template/update-template-data', { id: templateId,  data: editorState, type: 1 })
 		toast({
 		title: "Post Edited",
 		description: "Successfully Edited",
@@ -215,15 +227,66 @@ const Template = ({ user }) => {
           )}
         </Flex>
       </Flex>
-
+ {/* toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
+			     */}
       {edit ?  <Box position={'relative'} border={'2px solid #000000'} height={'auto'} padding={2}>
 		<Editor
 			apiKey='o5zjdgzwmjb9rdi6r4md7rq26kq13c55p55vrwubsaz8k75a'
 			initialValue={editorState}
 			init={{
-				plugins: 'anchor autolink charmap codesample image link lists media searchreplace visualblocks wordcount',
-				height: 680, // Set the height to 700px
-				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
+            height: '670px',
+			selector: 'textarea#file-picker',
+			plugins: 'image code',
+			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
+			/* enable title field in the Image dialog*/
+			image_title: true,
+			/* enable automatic uploads of images represented by blob or data URIs*/
+			automatic_uploads: true,
+			/*
+				URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+				images_upload_url: 'postAcceptor.php',
+				here we add custom filepicker only to Image dialog
+			*/
+			file_picker_types: 'image',
+			/* and here's our custom image picker*/
+			file_picker_callback: function (cb, value, meta) {
+				var input = document.createElement('input');
+				input.setAttribute('type', 'file');
+				input.setAttribute('accept', 'image/*');
+
+				/*
+				Note: In modern browsers input[type="file"] is functional without
+				even adding it to the DOM, but that might not be the case in some older
+				or quirky browsers like IE, so you might want to add it to the DOM
+				just in case, and visually hide it. And do not forget do remove it
+				once you do not need it anymore.
+				*/
+
+				input.onchange = function () {
+				var file = this.files[0];
+
+				var reader = new FileReader();
+				reader.onload = function () {
+					/*
+					Note: Now we need to register the blob in TinyMCEs image blob
+					registry. In the next release this part hopefully won't be
+					necessary, as we are looking to handle it internally.
+					*/
+					var id = 'blobid' + (new Date()).getTime();
+					var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+					var base64 = reader.result.split(',')[1];
+					var blobInfo = blobCache.create(id, file, base64);
+					blobCache.add(blobInfo);
+
+					/* call the callback and populate the Title field with the file name */
+					cb(blobInfo.blobUri(), { title: file.name });
+				};
+				reader.readAsDataURL(file);
+				};
+
+				input.click();
+			},
+			content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
 			}}
 			onChange={(e) => onEditorStateChange(e)}
 			/>
@@ -262,6 +325,9 @@ const Template = ({ user }) => {
                 <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} onClick={() => handleView(e)} mr={4}>
                   <FaEye />
                 </Button>
+                <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEditDescription(e)}>
+                  <FaEllipsisH />
+                </Button>
               </Box>
                   </Td>
                 </Tr>
@@ -276,10 +342,60 @@ const Template = ({ user }) => {
 			initialValue={editorState}
 
 			init={{
-            height: '1500px',// Set the height to 700px
-			plugins: 'anchor autolink charmap codesample emoticons image code link lists media searchreplace table visualblocks wordcount',
-			toolbar: 'code | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image |  table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-}}
+            height: '670px',
+			selector: 'textarea#file-picker',
+			plugins: 'image code',
+			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
+			/* enable title field in the Image dialog*/
+			image_title: true,
+			/* enable automatic uploads of images represented by blob or data URIs*/
+			automatic_uploads: true,
+			/*
+				URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+				images_upload_url: 'postAcceptor.php',
+				here we add custom filepicker only to Image dialog
+			*/
+			file_picker_types: 'image',
+			/* and here's our custom image picker*/
+			file_picker_callback: function (cb, value, meta) {
+				var input = document.createElement('input');
+				input.setAttribute('type', 'file');
+				input.setAttribute('accept', 'image/*');
+
+				/*
+				Note: In modern browsers input[type="file"] is functional without
+				even adding it to the DOM, but that might not be the case in some older
+				or quirky browsers like IE, so you might want to add it to the DOM
+				just in case, and visually hide it. And do not forget do remove it
+				once you do not need it anymore.
+				*/
+
+				input.onchange = function () {
+				var file = this.files[0];
+
+				var reader = new FileReader();
+				reader.onload = function () {
+					/*
+					Note: Now we need to register the blob in TinyMCEs image blob
+					registry. In the next release this part hopefully won't be
+					necessary, as we are looking to handle it internally.
+					*/
+					var id = 'blobid' + (new Date()).getTime();
+					var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+					var base64 = reader.result.split(',')[1];
+					var blobInfo = blobCache.create(id, file, base64);
+					blobCache.add(blobInfo);
+
+					/* call the callback and populate the Title field with the file name */
+					cb(blobInfo.blobUri(), { title: file.name });
+				};
+				reader.readAsDataURL(file);
+				};
+
+				input.click();
+			},
+			content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+			}}
 			onChange={(e) => onEditorStateChange(e)}
 			/>
         
@@ -288,6 +404,7 @@ const Template = ({ user }) => {
 
       <HtmlModalTemplate modalHtmlTemplate={modalHtmlTemplate} setRawHtml={setRawHtml} html={html} handleSaveHtml={handleSaveHtml} closeModalHtml={closeModalHtml} />
       <SaveTemplate closeModal={closeModal} refresh={getTemplate} back={setAdd} html={html} user={user} modalTemplate={modalTemplate} />
+     <EditTemplate editState={editState} refresh={getTemplate} modalEditTemplate={modalEditTemplate} closeEditModal={closeEditModal}/>
     </ChakraProvider>
   )
 }

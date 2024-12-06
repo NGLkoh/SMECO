@@ -79,6 +79,21 @@ const LinkItems = [
   { name: 'Settings', icon: FiSettings, id: 'profile' }
 ];
 
+const LinkSubUserItems = [
+  { name: 'Dashboard', icon: FiLayout, id: 'dashboard' },
+  {
+    name: 'Blog Articles',
+    icon: FiFileText,
+    id: 'addTemplate',
+    subLinks: [
+	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
+    ],
+  },
+  { name: 'Comments', icon: FiMessageSquare,  id: 'comment' },
+  { name: 'Anouncement', icon: BsFillCalendarEventFill,  id: 'events' },
+  { name: 'Message', icon: FiMessageSquare,  id: 'guestMessage' },
+  { name: 'Media', icon: FiCamera,  id: 'imageUpload' }
+];
 
 const LinkAdmin = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard-admin' },
@@ -109,8 +124,8 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
         <img src="logo.png" alt="logo" />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {user && user.userType === 'admin'
-        ? LinkAdmin.map((link) => (
+      {user && user.userType === 'sub-user'
+        && LinkSubUserItems.map((link) => (
             <Box key={link.name}>
               {user && user.ids && link.id === 'users' ? null : (
                 <NavItem
@@ -127,9 +142,29 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
               )}
             </Box>
           ))
-        : <>{LinkItems.map((link) => (
+        }
+      {user && user.userType === 'admin'
+        && LinkAdmin.map((link) => (
             <Box key={link.name}>
               {user && user.ids && link.id === 'users' ? null : (
+                <NavItem
+                  icon={link.icon}
+                  count={count}
+                  id={link.id}
+                  subLinks={link.subLinks}
+                  setNav={setNav}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                >
+                  {link.name}
+                </NavItem>
+              )}
+            </Box>
+          ))
+        }
+         {user && user.userType === 'user' && <>{LinkItems.map((link) => (
+            <Box key={link.name}>
+              {user && user.ids && link.id === 'users' ?  null :  (
                 <NavItem
                   icon={link.icon}
                   count={count}
@@ -343,7 +378,6 @@ const  handleLogout = async () => {
   ) : (
     <MenuItem isDisabled>Profile</MenuItem> // Optional fallback if user._id is not available
   )}
-  <MenuItem>Settings</MenuItem>
   <MenuDivider />
   <MenuItem onClick={handleLogout}>Sign out</MenuItem>
 </MenuList>
@@ -441,7 +475,7 @@ export const SidebarWithHeader = () => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'white')}>
-      { user ? user.profileSet === 0 ? <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
+      { user ? user.profileSet === 0 && user.userType !== "sub-user" ? <Box position={'absolute'} top={'0px'} bottom={'0px'} zIndex={1} width={'100%'} background={"#dbdbdbb8"}> 
             <Box w={'50%'} padding={10} margin={'auto'} position={'relative'} top={'2%'} zIndex={11} background={'#ffff'}>
 			    <Text mb={4} textAlign={'center'} fontSize={25}>Blog Profile</Text>
                 <Text mb={2}>Blog Profile Image:</Text>
