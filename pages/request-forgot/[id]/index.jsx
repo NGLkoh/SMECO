@@ -16,14 +16,14 @@ const [confirmPassword , setConfirmPassword] = useState("")
 
 const fields = [{
 			function: setNewPassword,
-			title: 'Registered email',
+			title: 'Enter New Password',
 			placeholder: 'Enter new password',
 			value: newPassword
 }, 
 {
 			function: setConfirmPassword,
-			title: 'Confirm password',
-			placeholder: 'Enter confirm password',
+			title: 'Confirm New Password',
+			placeholder: 'Confirm New Password',
 			value: confirmPassword
 }]
 

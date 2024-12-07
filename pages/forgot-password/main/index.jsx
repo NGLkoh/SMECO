@@ -22,7 +22,7 @@ const handleResetPassword = async () => {
   const res = await axios.post('/api/users/reset-password', {email : email})
   toast({
       title: "Success",
-      description: "Please check your for link.",
+      description: "Please check the link sent to your email.",
       status: "success",
       duration: 2000,
       isClosable: true,
