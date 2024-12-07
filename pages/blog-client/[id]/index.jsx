@@ -21,7 +21,7 @@ import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
 import {publicIpv4} from 'public-ip';
 let socket;
-var ip = require('ip');
+var ip = require(ip);
 
 const BlogClient = () => {
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
