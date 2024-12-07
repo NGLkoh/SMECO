@@ -21,7 +21,6 @@ import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
 import {publicIpv4} from 'public-ip';
 let socket;
-var ip = require('ip');
 
 let ip;
 if (typeof window === 'undefined') {
