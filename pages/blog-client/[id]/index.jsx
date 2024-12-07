@@ -21,7 +21,12 @@ import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
 import {publicIpv4} from 'public-ip';
 let socket;
-var ip = require(ip);
+var ip = require('ip');
+
+let ip;
+if (typeof window === 'undefined') {
+  ip = await import('ip');
+}
 
 const BlogClient = () => {
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
@@ -107,7 +112,7 @@ const BlogClient = () => {
        try {
          await axios.post('/api/template/update-template-data', { id: params[4],  data: {ip: template[0].ip ? template[0].ip.includes(publicIp) ? "" : [...template[0].ip, publicIp] : [publicIp],likes: template[0].likes ?  template[0].likes + 1 : 1}, type : 2 })
         toast({
-		title: "Successfuly Add likes",
+		title: "Liked",
 		description: "Success",
 		status: "success",
 		duration: 2000,
