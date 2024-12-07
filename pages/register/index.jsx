@@ -58,15 +58,23 @@ const Register = () => {
 			value: email
 		},
 		{
-			function: setPassword,
-			title: 'Create your Password',
-			placeholder: '@!#$$%',
-			value: password
+		function: setPassword,
+		title: 'Create your Password',
+		placeholder: '*******',
+		value: password,
+		type: 'password', // Fixed: type should be a string
+		helperText: 'Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.',
+		validate: (value) => {
+			const isValid = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(value);
+			return isValid ? '' : 'Password does not meet the requirements.'; // Fixed: Ensure the validate function returns a string message
+		}
 		}
 	]
   const closeModalRegisterLogin = () =>  {
       setModalRegisterLogin(false )
   }
+
+
 	const toast = useToast()
   const handleOpenModal = (title, source) => {
       setOpen(true)

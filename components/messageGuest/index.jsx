@@ -90,7 +90,7 @@ export const MessageGuest = ({ user}) => {
             <Avatar src={chat.avatar} name={chat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' :chat.convo[0].name} mr={4} />
             <Box flex="1">
               <Flex justify="space-between">
-                <Text fontWeight="bold">{chat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' :chat.convo[0].name }</Text>
+                <Text fontWeight="bold"> {chat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' : chat.convo[0].name }</Text>
                 <Text fontSize="sm" color="gray.500">{chat.time}</Text>
               </Flex>
               <Text fontSize="sm" color="gray.600">{chat.convo ?  chat.convo[chat.convo.length - 1].message  : "" } </Text>
@@ -99,6 +99,7 @@ export const MessageGuest = ({ user}) => {
           </Flex>
         ))}
       </Box>
+
       <Box flex="1" bg="gray.50" color="black" position="relative">
         {selectedChat ? (
           <>
