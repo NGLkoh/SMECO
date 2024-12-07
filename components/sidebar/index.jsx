@@ -56,7 +56,7 @@ import AdminEvents from '../admin-events/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 import { BsFillCalendarEventFill } from 'react-icons/bs';
-import { FiPocket } from 'react-icons/fi'
+import { FiPocket } from 'react-icons/fi';
 
 
 
@@ -366,7 +366,7 @@ const  handleLogout = async () => {
   bg={useColorModeValue('white', 'gray.900')}
   borderColor={useColorModeValue('gray.200', 'gray.700')}
 >
-  {user?._id ? (
+  {user?._id && user?._id !== ('672ff29e19abf9597c2544f6') ? (
     <MenuItem
       as="a"
       href={`/blog-user/${user._id}`}
@@ -406,6 +406,7 @@ export const SidebarWithHeader = () => {
       getCookieUserData()
 	}, [])
 
+ 
 
 	const getEvent = async (userId) => {
       setCount(0); 
@@ -447,6 +448,13 @@ export const SidebarWithHeader = () => {
     console.log(user)
 	console.log(user.firstName)
 	setUser(user)
+// Set the initial nav state to dashboard based on user type
+  if (user.userType === 'admin') {
+    setNav('dashboard-admin'); // Admin dashboard
+  } else if (user.userType === 'sub-user' || user.userType === 'user') {
+    setNav('dashboard'); // Client dashboard
+  }
+
     getEvent(user._id)
   }
 

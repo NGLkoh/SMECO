@@ -1,7 +1,12 @@
 'use client'
 
-import React from 'react'
-import {Image , Box} from '@chakra-ui/react'
+import {
+ 
+  Box,
+
+  Image,
+
+} from '@chakra-ui/react'
 
 const ImageBanner = () => {
    return (
@@ -12,3 +17,4 @@ const ImageBanner = () => {
 }
 
 export default ImageBanner
+
