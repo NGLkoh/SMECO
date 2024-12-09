@@ -36,6 +36,8 @@ const Banner = () => {
             align="flex-start"
             position="relative"
             zIndex="2" // Ensure content is above the overlay
+            spacing={6} // Added spacing between stack items
+            minHeight="100%" // Prevent content from shifting
           >
             <Stack
               maxW={isLargerThan980 ? '6xl' : isLargerThan600 ? '4xl' : '2xl'}
@@ -52,6 +54,7 @@ const Banner = () => {
                   lg: '8xl', // Scales up for larger screens
                 }}
                 color="white"
+                textAlign="left" // Ensure text doesn't shift horizontally
               >
                 Elevate your Business Marketing Game
               </Text>
@@ -65,6 +68,7 @@ const Banner = () => {
                   lg: '3xl',
                 }}
                 color="white"
+                textAlign="left"
               >
                 "Discover innovative strategies and tools to boost your brand's visibility and engagement."
               </Text>

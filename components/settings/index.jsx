@@ -50,10 +50,10 @@ const handleChange = async (event, type) => {
       try{
         let data = { 
           backgroundImage: bgFileName ? bgFileName : user.profile[0].backgroundImage, 
+		  description: description ? description : user.profile[0].description,
           facebook: facebook ? facebook : user.profile[0].facebook,
           instagram: instagram ? instagram : user.profile[0].instagram,
           fileName: fileName ? fileName : user.profile[0].fileName,
-          description: description,
           shopee: shopee ? shopee : user.profile[0].shopee,
           lazada: lazada ? lazada : user.profile[0].lazada, // Add Lazada link data
           tiktok: tiktok ? tiktok : user.profile[0].tiktok,  // Add TikTok link data

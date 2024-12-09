@@ -2,9 +2,10 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+const UAT_URL = process.env.UAT_URL;
 	let { id } = req.body;
      try {
-       const response = await axios.post('http://localhost:3001/media/search', {
+       const response = await axios.post(`${UAT_URL}/media/search`, {
          ids: id
        });
        console.log(response.data);

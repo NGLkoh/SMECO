@@ -2,15 +2,13 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-const UAT_URL = process.env.UAT_URL;
-	let { id, key } = req.body;
-    const currentTime = new Date(); 
-
+	let { title, details, link } = req.body;
+    const UAT_URL = process.env.UAT_URL;
      try {
-       const response = await axios.post(`${UAT_URL}/media/create`, {
-         ids: id,
-         key: key,
-		 date: currentTime
+       const response = await axios.post(`${UAT_URL}/search/create`, {
+         title: title,
+		 details: details,
+         link: link
          // add more data if needed
        });
        console.log(response.data);

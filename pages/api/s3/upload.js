@@ -14,6 +14,15 @@ export const S3 = new S3Client({
   Bucket: Bucket
 });
 
+export const config = {
+
+  api: {
+     bodyParser:{ 
+      sizeLimit: "50mb"
+     }
+  }
+}
+
 export default async function handler(req, res) {
    let {  base64, filename } = req.body;
     const base64String = base64.replace(/^data:image\/\w+;base64,/, "");

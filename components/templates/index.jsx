@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react'
 import { Editor } from '@tinymce/tinymce-react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import { FaPen, FaTrash, FaEye, FaDotCircle, FaHamburger, FaDonate, FaEllipsisH } from 'react-icons/fa';
+import { FaPen, FaTrash, FaEye, FaDotCircle, FaImage , FaHamburger, FaDonate, FaEllipsisH } from 'react-icons/fa';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import SaveTemplate from '../modal/saveTemplate'
@@ -14,6 +14,7 @@ import axios from "axios";
 import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
 import EditTemplate from '../modal/editTemplateDescription'
+import ImageInsertTemplate from '../modal/ImageTemplate'
 
 const Template = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -27,7 +28,7 @@ const Template = ({ user }) => {
   const [editorState, setEditorState] = useState('<p>My initial content.</p>')
    const [editState, setEditState] = useState({})
   const [templateState, setTemplateState] = useState()
-
+   const [imageModal, setImageModal] = useState(false)
   useEffect(() => {
     getTemplate()
     getCategory()
@@ -36,7 +37,33 @@ const Template = ({ user }) => {
 
   const [image, setImage ] = useState([]) 
   const toast = useToast()
+  
+    const closeModalImage = () => {
+    setImageModal(false)
+  }
 
+  const openImageModal = () => {
+    setImageModal(true)
+  }
+
+  
+ const handleInset = () => {
+        //  let data = <img src="https://www.yttags.com/blog/wp-content/uploads/2023/02/image-urls-for-testing.webp" alt="" style="height: auto;width: auto"/>
+        let imageString = ''
+        image.map(row => {
+        imageString += `<img src="https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row}"  alt="test" style="height: 100%;width: 100%"/>`
+                
+       })
+        console.log(html)
+        let res =  imageString.concat(html);
+        console.log(res)
+        setEditorState(res + editorState)
+
+      setImage([])
+     setImageModal(false)
+        console.log(res, "insert")
+       console.log(image, "insert")
+   }
   const handleEditDescription = (data) => {
    setModalEditTemplate(true)
     setEditState(data)
@@ -177,7 +204,17 @@ const Template = ({ user }) => {
         />
         <HStack spacing={8} alignItems={'center'}>
           <Box fontSize={'xl'} fontWeight={'600'}>Blog Articles</Box>
+            <Button
+				leftIcon={<FaImage />}
+				onClick={(e) => openImageModal()}
+				bg={'gray'} variant='solid'
+				color={'#ffffff'}
+				size={'md'}
+				mr={4}>
+				Insert Image
+			</Button>
         </HStack>
+         
         <Flex alignItems={'center'}>
           { edit ? <> <Button
                 bg={'#232536'} variant='solid'
@@ -206,6 +243,7 @@ const Template = ({ user }) => {
                 onClick={() => setAdd(false)}>
                 Back
               </Button>
+             
               <Button
                 bg={'#FFD050'} variant='solid'
                 color={'#ffffff'}
@@ -214,6 +252,7 @@ const Template = ({ user }) => {
                 onClick={(e) => handleTemplateSave(e)}>
                 Publish Post
               </Button>
+            
             </>
           ) : (
             <Button
@@ -405,6 +444,7 @@ const Template = ({ user }) => {
       <HtmlModalTemplate modalHtmlTemplate={modalHtmlTemplate} setRawHtml={setRawHtml} html={html} handleSaveHtml={handleSaveHtml} closeModalHtml={closeModalHtml} />
       <SaveTemplate closeModal={closeModal} refresh={getTemplate} back={setAdd} html={html} user={user} modalTemplate={modalTemplate} />
      <EditTemplate editState={editState} refresh={getTemplate} modalEditTemplate={modalEditTemplate} closeEditModal={closeEditModal}/>
+      <ImageInsertTemplate imageModal={imageModal} closeModalImage={closeModalImage} user={user} image={image} setImage={setImage} handleInset={handleInset} />
     </ChakraProvider>
   )
 }

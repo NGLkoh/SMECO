@@ -38,6 +38,7 @@ const BlogClient = () => {
   const [comments, setComments] = useState([])
   const [profile, setProfile] = useState([])
   const [pubIp, setIp] = useState('')
+
   const toast = useToast()
   useEffect(() => {
     fetchIntialBlog()
@@ -61,7 +62,7 @@ const BlogClient = () => {
   }
 
   const fetchIntialBlog = async () => {
-     let publicIp  = await publicIpv4();
+    let publicIp  = await publicIpv4();
     setIp(publicIp)
     setDomain(window.location.href)
     const params = window.location.href.split('/')
