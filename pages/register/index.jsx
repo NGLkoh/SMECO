@@ -1,6 +1,8 @@
 
 'use client'
 
+
+import ReCAPTCHA from "react-google-recaptcha";
 import React, {StrictMode, useState} from 'react'
 import {Box, Text, ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
@@ -36,6 +38,7 @@ const Register = () => {
 	const [ title, setTitle] = useState("")
 	const [ source, setSource] = useState('')
 	const [ open, setOpen] = useState(false)
+const [recaptchaVerified, setRecaptchaVerified] = useState(false);
     const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
   const [decodeCredentials, setDecodeCredentials] = useState({});
 	let fields = [
@@ -203,6 +206,10 @@ const Register = () => {
 		 }
 	}
 
+  const onChangeRecapcha = () => {
+ setRecaptchaVerified(true); 
+ }
+
    return (<StrictMode> <GoogleOAuthProvider clientId={CLIENT_ID}> <Box><ChakraProvider>
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
 	   <Navbar page='register'/>
@@ -217,12 +224,26 @@ const Register = () => {
 				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
 			  
                 <Box textAlign={'center'} mt={4} >
-				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  setNext(2)}>
+	<Box margin={"auto"} pl={ isLargerThan980 ? '34%' : '6%'} mb={"20px"}>
+		<ReCAPTCHA
+        sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
+        onChange={ () => onChangeRecapcha()}
+      /></Box>
+				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
+     toast({
+		title: "Please complete the reCAPTCHA",
+		description: "Warning",
+		status: "warning",
+		duration: 2000,
+		isClosable: true,
+		});
+      return;
+    } else { setNext(2)}}}>
 						Next
 				</Button>
              <Box  className="google-container"
 				mb={4}
-                mt={4}
+                mt={10}
 				sx={{
 					display: 'flex',
 					justifyContent: 'center', // Centers horizontally

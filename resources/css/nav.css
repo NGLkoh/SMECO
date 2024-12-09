@@ -1,0 +1,11 @@
+.sc-bcXHqe.bncmtB.react-search-box-dropdown {
+    position: absolute;
+    top: 51px;
+    z-index: 5;
+    width: 257px;
+}
+
+
+.bncmtB > ul > li {
+  height: auto !important;
+}

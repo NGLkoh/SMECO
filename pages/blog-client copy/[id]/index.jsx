@@ -1,7 +1,5 @@
 'use client'
 
-import ReCAPTCHA from "react-google-recaptcha";
-
 import React, { useState, useEffect } from 'react'
 import { Box, Text, ChakraProvider, Image, Textarea, Avatar, Input, Button, useToast, useMediaQuery } from '@chakra-ui/react'
 import Navbar from '../../../components/nabvar'
@@ -41,7 +39,6 @@ const BlogClient = () => {
   const [profile, setProfile] = useState([])
   const [pubIp, setIp] = useState('')
   const toast = useToast()
-const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   useEffect(() => {
     fetchIntialBlog()
     socketInitialize()
@@ -85,16 +82,6 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   }
 
   const handleSaveComment = async () => {
- if (!recaptchaVerified) {
-     toast({
-		title: "Please complete the reCAPTCHA before posting comment.",
-		description: "Warning",
-		status: "warning",
-		duration: 2000,
-		isClosable: true,
-		});
-      return;
-    } else {
     if(email !== "" && comment !== "" ) {
 	    socket = io()
 		const res = await axios.post('/api/comment/create', { id: template[0]._id, message: comment, email:email })
@@ -116,7 +103,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 		isClosable: true,
 		});
     }
-	}
+ 
   }
   const handelAddLikes = async() => {
       let publicIp  = await publicIpv4();
@@ -136,11 +123,6 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
        }
        
     }
-
-  const onChangeRecapcha = () => {
- setRecaptchaVerified(true); 
- }
-
   return (
     <Box className='client-blog'>
       <ChakraProvider>
@@ -257,23 +239,19 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
               placeholder='Add a Comment '
               size='xl'
             />
- 		<ReCAPTCHA
-        sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
-        onChange={ () => onChangeRecapcha()}
-      />
-      <Button
-        cursor={'pointer'}
-        onClick={handleSaveComment}
-        mt={2}
-        top={isLargerThan980 ? '-54px' : '-65px'}
-        position={'relative'}
-        left={isLargerThan980 ? '89%' : '85%'}
-        background={'#232436'}
-        color={'white'}
-        width={'10%'}
-      >
-        Post
-      </Button>
+            <Button
+              cursor={'pointer'}
+              onClick={() => handleSaveComment()}
+              mt={2}
+              top={isLargerThan980 ? '-54px' : '-65px'}
+              position={'relative'}
+              left={isLargerThan980 ? '89%' : '85%'}
+              background={'#232436'}
+              color={'white'}
+              width={'10%'}
+            >
+              Post
+            </Button>
             <GridBlurredBackdrop profile={profile} />
             {
               comments.map((e, key) => (

@@ -23,7 +23,14 @@ import {
   Stack,
   Link
 } from '@chakra-ui/react'
+
+import ReactSearchBox from "react-search-box";
+import '../../resources/css/nav.css'
 import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons'
+import { FaSearch } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+
 const NavLink = (props) => {
   const { children } = props
 
@@ -45,6 +52,18 @@ const NavLink = (props) => {
 
 export default function Simple() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [ records, setRecords ] = useState([])
+   useEffect(() => {
+    fetchIntialSearch()
+  }, [])
+
+  const fetchIntialSearch = async() => {
+  const search =  await axios.post('/api/search/all')
+         console.log(search.data.result)
+      let res = search.data.result
+     res.map(row =>   setRecords(oldState => [...oldState, {key: row.title, value: `${row.title} : ${row.details}`, link: row.link}]))
+   
+  }
 
   return (
       <ChakraProvider>
@@ -71,24 +90,22 @@ export default function Simple() {
                 <Link href='/../blog'>Blog</Link>
                 <Link href='/../about-us'>About Us</Link>
                 <Link href='/../contact-us'>Contact Us</Link>
-
-            <InputGroup w="150px" display="inline-block" backgroundColor="white" borderRadius={15} boxShadow="md">
-			<Input
-				placeholder="Search"
-				height="35px"
-				fontSize="16px"
-				padding="0 10px"
-				borderColor="gray.300"
-				borderWidth={1}
-				_focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px #3182CE" }}
-				textColor="gray.700"
-				_placeholder={{ color: "gray.500" }}
-			/>
-			<InputRightElement>
-				<Search2Icon color="gray.500" />
-			</InputRightElement>
-			</InputGroup>
-
+             <Box  color={'black'}	>
+             <ReactSearchBox
+               
+				placeholder="Search Here"
+				data={records}
+				onSelect={(record) => { window.location.href = record.item.link}}
+				onFocus={() => {
+					console.log("This function is called when is focussed");
+				}}
+				onChange={(value) => console.log(value)}
+				autoFocus
+				leftIcon={<><FaSearch/></>}
+				iconBoxSize="48px"
+				/>
+			</Box>
+		
             </HStack>
               <MenuButton
                 as={Button}
