@@ -340,7 +340,7 @@ const  handleLogout = async () => {
         icon={<FiMenu />}
       />
       <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton color="white" size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+  
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>

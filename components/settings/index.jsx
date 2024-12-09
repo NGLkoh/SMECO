@@ -18,11 +18,17 @@ const ProfileEdit = ({user}) => {
 	const [shopee, setShopee] = useState()  // Added Shopee link state
 	const [lazada, setLazada] = useState()  // Added Lazada link state
 	const [tiktok, setTiktok] = useState()  // Added TikTok link state
+   const [userData, setUserData] = useState({})
    const toast = useToast()
 
   useEffect(() => {
-    // Any initial setup can be done here
+   initialGetUset()
   }, []);
+ const initialGetUset = async() => {
+    const res = await axios.post('/api/users/usersById', { id: user._id })
+	console.log(res.data.result[0].profile[0], "TANGGNGGNGN") 
+   setUserData(res.data.result[0])
+  }
 
 const handleChange = async (event, type) => {
   let r = (Math.random() + 1).toString(36).substring(7);
@@ -76,7 +82,7 @@ const handleChange = async (event, type) => {
           duration: 9000,
           isClosable: true,
         })
-
+initialGetUset()
       } catch(e) {
         console.log(e)
       }
@@ -99,28 +105,28 @@ const handleChange = async (event, type) => {
         <Text mb={2}>Background Image:</Text>
         <FileUploader name="file" handleChange={(e) => handleChange(e, "bg")} types={fileTypes} />
         <Text mt={2} mb={2}>Blog Profile Description:</Text>
-        <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={user ? user.profile[0].description : ""}/>
+        <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].description : "" : ""}/>
         
         <Text mt={2} mb={2}>Facebook:</Text>
-        <Input onChange={(e) => setFacebook(e.target.value)} defaultValue={user ? user.profile[0].facebook : ""}/>
+        <Input onChange={(e) => setFacebook(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].facebook  : "" : ""}/>
         
         <Text mt={2} mb={2}>Instagram:</Text>
-        <Input onChange={(e) => setInstagram(e.target.value)} defaultValue={user ? user.profile[0].instagram : ""}/>
+        <Input onChange={(e) => setInstagram(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].instagram : "" : ""}/>
     
         {/* Add Shopee Link */}
         <Text mt={2} mb={2}>Shopee:</Text>
         <HStack>
-          <Input onChange={(e) => setShopee(e.target.value)} defaultValue={user ? user.profile[0].shopee : ""}/>
+          <Input onChange={(e) => setShopee(e.target.value)} defaultValue={userData ?  userData.profile ? userData.profile[0].shopee : "" : ""}/>
         </HStack>
 
         <Text mt={2} mb={2}>Lazada:</Text>
         <HStack>
-          <Input onChange={(e) => setLazada(e.target.value)} defaultValue={user ? user.profile[0].lazada : ""}/>
+          <Input onChange={(e) => setLazada(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].lazada : "" : ""}/>
         </HStack>
 
         <Text mt={2} mb={2}>TikTok:</Text>
         <HStack>
-          <Input onChange={(e) => setTiktok(e.target.value)} defaultValue={user ? user.profile[0].tiktok : ""}/>
+          <Input onChange={(e) => setTiktok(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].tiktok : "" : ""}/>
         </HStack>
 
         <Button backgroundColor="#ffb509" mt={2} onClick={() => handleEditBtn()} color={'white'}>Submit</Button>

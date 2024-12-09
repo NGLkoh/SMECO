@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Text, Card, ChakraProvider, Heading, CardBody, Button, useMediaQuery, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, Text, Card, ChakraProvider, Heading, CardBody, Button, useMediaQuery, Spinner, Alert, AlertIcon, Link } from "@chakra-ui/react";
 import axios from "axios";
 
 const Category = () => {
@@ -73,8 +73,8 @@ const Category = () => {
                   autoplay={true}
                 >
                   {categories.map((category) =>
-                    category.title ? (
-                      <div key={category._id}>
+                    category.title ? (<Link href={`/category-page/${category._id},${category.title}`} key={category._id}>
+                      <div >
                         <Card
                           textAlign="center"
                           w="100%"
@@ -92,6 +92,7 @@ const Category = () => {
                           </CardBody>
                         </Card>
                       </div>
+                    </Link>
                     ) : null
                   )}
                 </Slider>
