@@ -18,7 +18,7 @@ import Footer from '../../../components/footer'
 const BlogTags = (props) => {
   const { marginTop = 0, tags } = props
 
-  return (
+  return ( 
     <HStack spacing={2} marginTop={marginTop}>
       {tags.map((tag) => {
         return (
@@ -123,14 +123,16 @@ const FeaturedSecond = () => {
           </Text>
           {/* { row.ids ? <GetUsers ids={row.ids} date={row.date}/> : "" } */}
         </Box>
-      </Box>    </Link> ) ) : ""
+      </Box>    </Link> ) ) : " "
         }
       
 
     </Container>
-</Box><Footer/>
- </ChakraProvider>
-  )
+</Box>
+<Footer/>
+ </ChakraProvider> )
+
 }
+  	
 
 export default FeaturedSecond

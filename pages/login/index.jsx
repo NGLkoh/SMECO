@@ -14,7 +14,7 @@ import {
   Spacer,
   Button,
   useToast,
-	useMediaQuery,
+	useMediaQuery,Link,
 } from '@chakra-ui/react';
 import '../../resources/css/style.css';
 import { FaGoogle } from 'react-icons/fa';
@@ -141,7 +141,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
               maxWidth="530px"
               textAlign="left"
             >
-              <Image src="logo.png" className="logo" w="150px" marginBottom={6} />
+              <Link href='/homepage'><Image  src="logo.png" className="logo" w="150px" marginBottom={6} /></Link>
               <Text fontSize="2xl" fontWeight={800} mb={4}>
                 Sign in
               </Text>

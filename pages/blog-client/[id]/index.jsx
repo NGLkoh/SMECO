@@ -257,23 +257,25 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
               placeholder='Add a Comment '
               size='xl'
             />
- 		<ReCAPTCHA
-        sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
-        onChange={ () => onChangeRecapcha()}
-      />
-      <Button
-        cursor={'pointer'}
-        onClick={handleSaveComment}
-        mt={2}
-        top={isLargerThan980 ? '-54px' : '-65px'}
-        position={'relative'}
-        left={isLargerThan980 ? '89%' : '85%'}
-        background={'#232436'}
-        color={'white'}
-        width={'10%'}
-      >
-        Post
-      </Button>
+	<Box mt={10} display="flex" flexDirection="column" alignItems="center" height="100%" justifyContent="center">
+  <ReCAPTCHA
+    sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
+    onChange={() => onChangeRecapcha()}
+    className="recaptcha-container"
+  />
+  <Button
+    cursor={'pointer'}
+    onClick={handleSaveComment}
+    mt={4} // Adjusted margin to give some space below the recaptcha
+    background={'#232436'}
+    color={'white'}
+    width={isLargerThan980 ? '20%' : '50%'} 
+	marginTop={10}// Adjusted width for better button sizing
+  >
+    Post
+  </Button>
+</Box>
+
             <GridBlurredBackdrop profile={profile} />
             {
               comments.map((e, key) => (

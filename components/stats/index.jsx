@@ -11,16 +11,13 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 
-import { ReactNode, useState, useEffect } from 'react'
-import { BsPerson } from 'react-icons/bs'
-import { FiServer } from 'react-icons/fi'
-import { GoLocation } from 'react-icons/go'
+import { useState, useEffect } from 'react'
+import { FaComments, FaPodcast, FaThumbsUp } from 'react-icons/fa'
+import dynamic from 'next/dynamic'
 import axios from 'axios'
-import { FaShare, FaComments, FaPodcast, FaEye, FaThumbsUp } from 'react-icons/fa'
-import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+// Dynamically import ApexCharts
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 function StatsCard(props) {
   const { title, stat, icon } = props
@@ -53,28 +50,50 @@ function StatsCard(props) {
 }
 
 export default function BasicStatistics({ user }) {
-  const [templateState, setTemplateState] = useState([])
   const [post, setPost] = useState(0)
   const [comment, setComment] = useState(0)
-  const [likes, setLikes] = useState(4) // Example static view count, update based on actual data
+  const [likes, setLikes] = useState(0)
   const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
+    series: [
       {
-        label: 'Comments',
+        name: 'Comments',
         data: [],
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: false,
       },
       {
-        label: 'Posts',
+        name: 'Posts',
         data: [],
-        borderColor: 'rgb(153, 102, 255)',
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        fill: false,
+      },
+      {
+        name: 'Likes',
+        data: [],
       },
     ],
+    options: {
+      chart: {
+        type: 'line',
+        height: 350,
+        zoom: {
+          enabled: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+      stroke: {
+        curve: 'smooth',
+      },
+      tooltip: {
+        enabled: true,
+      },
+      markers: {
+        size: 5,
+      },
+    },
+  })
+
+  const [gaugeData, setGaugeData] = useState({
+    comments: 0,
+    likes: 0,
   })
 
   useEffect(() => {
@@ -88,31 +107,32 @@ export default function BasicStatistics({ user }) {
     let likesCount = 0
     const posts = res.data.result.length
     for (const row of res.data.result) {
-      likesCount += row.likes ?  row.likes : 0
+      likesCount += row.likes ? row.likes : 0
       const commentRes = await axios.post('/api/comment/search', { id: row._id })
       commentCount += commentRes.data.result.length
     }
     setLikes(likesCount)
     setPost(posts)
     setComment(commentCount)
-    setTemplateState(res.data.result)
 
     // Update chart data
-    setChartData((prevData) => {
-      const newLabels = [...prevData.labels, new Date().toLocaleTimeString()]
-      const newCommentData = [...prevData.datasets[0].data, commentCount]
-      const newPostData = [...prevData.datasets[1].data, posts]
+    setChartData((prevData) => ({
+      ...prevData,
+      series: [
+        { ...prevData.series[0], data: [...prevData.series[0].data, commentCount] },
+        { ...prevData.series[1], data: [...prevData.series[1].data, posts] },
+        { ...prevData.series[2], data: [...prevData.series[2].data, likesCount] },
+      ],
+      options: {
+        ...prevData.options,
+        xaxis: {
+          categories: [...prevData.options.xaxis.categories, new Date().toLocaleTimeString()],
+        },
+      },
+    }))
 
-      return {
-        labels: newLabels,
-        datasets: [
-          { ...prevData.datasets[0], data: newCommentData },
-          { ...prevData.datasets[1], data: newPostData },
-        ],
-      }
-    })
-
-    console.log(res)
+    // Update gauge data
+    setGaugeData({ comments: commentCount, likes: likesCount })
   }
 
   return (
@@ -133,11 +153,61 @@ export default function BasicStatistics({ user }) {
         <chakra.h4 fontSize={'sm'} py={2}>
           Activity Graph (Real-time)
         </chakra.h4>
+        <Flex gap={5} alignItems="center">
+          {/* Line Graph */}
+          <Box flex={2}>
+            <Chart options={chartData.options} series={chartData.series} type="line" height={350} />
+          </Box>
 
-        <Line data={chartData} options={{ responsive: true }} />
-
+          {/* Gauges */}
+          <Flex flex={1} direction="column" alignItems="center" justifyContent="space-around">
+            <Box w="100%" mb={4}>
+              <Chart
+                options={{
+                  chart: {
+                    type: 'radialBar',
+                  },
+                  plotOptions: {
+                    radialBar: {
+                      hollow: { size: '70%' },
+                      dataLabels: {
+                        name: { show: true, fontSize: '16px' },
+                        value: { fontSize: '16px' },
+                      },
+                    },
+                  },
+                  labels: ['Comments'],
+                }}
+                series={[gaugeData.comments]}
+                type="radialBar"
+                height={150}
+              />
+            </Box>
+            <Box w="100%">
+              <Chart
+                options={{
+                  chart: {
+                    type: 'radialBar',
+                  },
+                  plotOptions: {
+                    radialBar: {
+                      hollow: { size: '70%' },
+                      dataLabels: {
+                        name: { show: true, fontSize: '16px' },
+                        value: { fontSize: '16px' },
+                      },
+                    },
+                  },
+                  labels: ['Likes'],
+                }}
+                series={[gaugeData.likes]}
+                type="radialBar"
+                height={150}
+              />
+            </Box>
+          </Flex>
+        </Flex>
       </Box>
-
     </Box>
   )
 }

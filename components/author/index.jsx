@@ -96,11 +96,11 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   return (
     <Flex
       textAlign={'center'}
-      pt={isLargerThan980 ? 10 : 0}
+      pt={isLargerThan980 ? 20 : 50}
       justifyContent={'center'}
       direction={'column'}
       width={'full'}
-      height={isLargerThan980 ? "" : '400px'}
+      height={isLargerThan980 ? "" : '100%'}
       overflow={'hidden'}>
       <Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
       </Box>

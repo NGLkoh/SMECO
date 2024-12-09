@@ -21,7 +21,7 @@ import {
  useToast,
 Textarea,
 Input,
-Button
+Button, Link,
 } from '@chakra-ui/react';
 import {
   FiSettings,
@@ -124,7 +124,7 @@ const SidebarContent = ({ onClose, user, count, setNav }) => {
 
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <img src="logo.png" alt="logo" />
+       <Link href='/homepage'><img src="logo.png" alt="logo" /></Link> 
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {user && user.userType === 'sub-user'
