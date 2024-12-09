@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Box, Flex, Text, Input, Button, Link, useToast, HStack, useMediaQuery, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Text, Input, Button, Link, useToast, HStack, useMediaQuery, InputGroup, IconButton } from '@chakra-ui/react';
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react'
 import axios from 'axios';
