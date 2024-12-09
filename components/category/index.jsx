@@ -4,13 +4,11 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Text, Card, ChakraProvider, Heading, CardBody, Button, Input, useMediaQuery, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, Text, Card, ChakraProvider, Heading, CardBody, Button, useMediaQuery, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
 import axios from "axios";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const [loading, setLoading] = useState(false); // Loading state for fetching categories
   const [error, setError] = useState(""); // Error state to handle API failures
   const [isLargerThan980] = useMediaQuery("(min-width: 980px)");
@@ -27,22 +25,12 @@ const Category = () => {
         new Map(res.data.result.map((cat) => [cat.title, cat])).values()
       );
       setCategories(uniqueCategories);
-      setFilteredCategories(uniqueCategories); // Set the filtered categories initially
       setLoading(false); // Set loading state to false after data is fetched
     } catch (e) {
       console.error(e);
       setError("Failed to load categories. Please try again later.");
       setLoading(false); // Set loading to false in case of an error
     }
-  };
-
-  // Handle category search filter
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    const filtered = categories.filter((category) =>
-      category.title && category.title.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setFilteredCategories(filtered);
   };
 
   const redirectToCategoryPage = (categoryId) => {
@@ -65,15 +53,6 @@ const Category = () => {
               List of Categories
             </Text>
 
-            {/* Search input for filtering categories */}
-            <Input
-              placeholder="Search categories"
-              value={searchTerm}
-              onChange={handleSearch}
-              mb={5}
-              borderRadius="md"
-            />
-
             {/* Display loading spinner */}
             {loading ? (
               <Box textAlign="center">
@@ -93,7 +72,7 @@ const Category = () => {
                   slidesToScroll={isLargerThan980 ? 4 : 1}
                   autoplay={true}
                 >
-                  {filteredCategories.map((category) =>
+                  {categories.map((category) =>
                     category.title ? (
                       <div key={category._id}>
                         <Card

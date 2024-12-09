@@ -76,7 +76,7 @@ const NewsLetter = ({user}) => {
               p={2}
               onClick={() => setModalSubscribe(true)}
               >
-              List of Subscribes
+              List of Subscribers
             </Button>
         
         </Flex>
@@ -154,7 +154,7 @@ const NewsLetter = ({user}) => {
               >
               Send Newsletter 
             </Button>
-        <ModalSubscribe title={"Subscribes"} subscribes={subscribes} open={modalSubscribe} onCloseModal={onCloseModal}/>
+        <ModalSubscribe title={"Subscribers"} subscribes={subscribes} open={modalSubscribe} onCloseModal={onCloseModal}/>
     </ChakraProvider>) 
 }
 
