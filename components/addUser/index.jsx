@@ -77,24 +77,9 @@ const AddSubUserAdmin = ({user}) => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontSize={'xl'} fontWeight={'600'}>Create User</Box>
+            <Box fontSize={'xl'} fontWeight={'600'}>View Users</Box>
           </HStack>
           <Flex alignItems={'center'}>
-			{add  ? <><Button
-              bg={'#232536'} variant='solid'
-			  color={'#ffffff'}
-			  size={'md'}
-              mr={4}
-			 onClick={() => setAdd(false)}>
-              Back
-            </Button> </> : <><Button
-              bg={'#232536'} variant='solid'
-			  color={'#ffffff'}
-			  size={'md'}
-              mr={4}
-			 onClick={() => setAdd(true)}>
-              Add
-            </Button></> }
            
           </Flex>
         </Flex>
