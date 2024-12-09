@@ -58,7 +58,7 @@ const Banner = () => {
               <Stack direction={isLargerThan600 ? 'row' : 'column'} spacing={4}>
                 {isLargerThan980 ? (
                   <>
-                    <Link href="/login">
+                    <Link href="/dashboard">
                       <Button
                         bg="#ffd050"
                         color="black"

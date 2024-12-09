@@ -4,6 +4,7 @@ import {
    Thead, IconButton, HStack, Box, Tr, Th, Button, 
   ChakraProvider, Tbody, Td
 } from '@chakra-ui/react'
+import { Editor } from '@tinymce/tinymce-react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { FaPen, FaTrash, FaEye, FaDotCircle, FaHamburger, FaDonate, FaEllipsisH } from 'react-icons/fa';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -13,7 +14,6 @@ import axios from "axios";
 import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
 import EditTemplate from '../modal/editTemplateDescription'
-import { Editor } from '@tinymce/tinymce-react';
 
 const Template = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()

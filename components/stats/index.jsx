@@ -16,7 +16,7 @@ import { BsPerson } from 'react-icons/bs'
 import { FiServer } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
 import axios from 'axios'
-import { FaShare, FaComments, FaPodcast, FaEye } from 'react-icons/fa'
+import { FaShare, FaComments, FaPodcast, FaEye, FaThumbsUp } from 'react-icons/fa'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 
@@ -56,7 +56,7 @@ export default function BasicStatistics({ user }) {
   const [templateState, setTemplateState] = useState([])
   const [post, setPost] = useState(0)
   const [comment, setComment] = useState(0)
-  const [views, setViews] = useState(4) // Example static view count, update based on actual data
+  const [likes, setLikes] = useState(4) // Example static view count, update based on actual data
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -123,7 +123,7 @@ export default function BasicStatistics({ user }) {
       </chakra.h4>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard title={'Posts'} stat={post} icon={<FaPodcast size={'3em'} />} />
-        <StatsCard title={'Views'} stat={views} icon={<FaEye size={'3em'} />} />
+        <StatsCard title={'Likes'} stat={likes} icon={<FaThumbsUp size={'3em'} />} />
         <StatsCard title={'Comments'} stat={comment} icon={<FaComments size={'3em'} />} />
       </SimpleGrid>
       

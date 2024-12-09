@@ -1,14 +1,38 @@
 import React, {useState} from 'react';
-import { Box, Flex, Text, Input, Button, Link, HStack, useMediaQuery, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { Box, Flex, Text, Input, Button, Link, useToast, HStack, useMediaQuery, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
+import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react'
+import axios from 'axios';
 
 const DetailFooter = () => {
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   const [email, setEmail] = useState("")
+  const toast = useToast()
+  const handleAddSubscribe = async () => {
+      const checker: any = await axios.post("/api/subscribe/searchByEmail", { email : email});
+      console.log(checker, "checker")
+     if(checker.data.message === "true"){ 
+       toast({
+          title: 'Email already subscribe', 
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        })
+     } else {
+        try {
+           const res = await axios.post("/api/subscribe/create", { email : email, sub : 1});
+		   toast({
+		      title: 'Successfully Edit your Profile ', 
+		      status: 'success',
+		      position: 'top-right',
+		      duration: 9000,
+		      isClosable: true,
+		    })
 
-  const handleAddSubscribe = () => {
-     console.log(email)
+        } catch(e) { console.log(e)}
+      
+     }
   }
  
   return (
@@ -76,42 +100,36 @@ const DetailFooter = () => {
             <Text>InBox FoodHub, Bayan Luma 8, Emilio Aguinaldo Hi-way, City of Imus</Text>
           </Box>
           
-
         {/* Social Media Icons */}
         <Flex justify={["center", "space-between"]} align="center" mt={8} display={isLargerThan980 ? 'flex' : 'block'}>
           <Text fontSize="sm" textAlign={isLargerThan980 ? 'left' : 'center'}>© 2024 Cavite Association of Producers & Entrepreneurs - CAPE. All rights reserved.</Text>
           <HStack spacing={4} paddingTop={isLargerThan980 ? '' : '20px'} paddingLeft={isLargerThan980 ? '' : '40%'}>
             <IconButton
               as="a"
-              href="#"
+              href="https://www.facebook.com/profile.php?id=100065009122013"
               aria-label="Facebook"
               icon={<FaFacebookF />}
               colorScheme="gray"
               variant="ghost"
+			target='_blank'
             />
             <IconButton
               as="a"
-              href="#"
+              href="https://x.com/OllocalPH"
               aria-label="Twitter"
               icon={<FaTwitter />}
               colorScheme="gray"
               variant="ghost"
+			target='_blank'
             />
             <IconButton
               as="a"
-              href="#"
+              href="https://www.instagram.com/ollocalph/"
               aria-label="Instagram"
               icon={<FaInstagram />}
               colorScheme="gray"
               variant="ghost"
-            />
-            <IconButton
-              as="a"
-              href="#"
-              aria-label="LinkedIn"
-              icon={<FaLinkedin />}
-              colorScheme="gray"
-              variant="ghost"
+			target='_blank'
             />
           </HStack>
         </Flex>

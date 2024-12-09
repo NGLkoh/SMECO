@@ -53,9 +53,11 @@ import Comments from '../comments/index'
 import ProfileEdit from '../settings/index'
 import Events from '../events/index'
 import AdminEvents from '../admin-events/index'
+import NewsLetter from '../newletter/index'
+import MessageGuestToAdmin from '../messageGuestToAdmin/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
-import { BsFillCalendarEventFill } from 'react-icons/bs';
+import { BsFillCalendarEventFill, BsNewspaper } from 'react-icons/bs';
 import { FiPocket } from 'react-icons/fi';
 
 
@@ -100,8 +102,9 @@ const LinkAdmin = [
   { name: 'Users', icon: FiUser,
   id: 'addNewUser-admin'
   },
-  { name: 'Message', icon: FiMessageSquare, id: 'guestMessage'},
+  { name: 'Message', icon: FiMessageSquare, id: 'guestToAdminMessage'},
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
+ { name: 'Newsletter', icon: BsNewspaper,  id: 'admin-newletter' },
 ];
 
 const SidebarContent = ({ onClose, user, count, setNav }) => {
@@ -396,9 +399,11 @@ export const SidebarWithHeader = () => {
     const [file, setFile] = useState()
     const [description, setDescription] = useState()
     const [facebook, setFacebook] = useState()
-    const [twitter, setTwitter] = useState()
     const [instagram, setInstagram] = useState()
-    const [linkIn, setLinkIn] = useState()
+    const [tiktok, setTiktok] = useState()
+    const [shopee, setShopee] = useState()
+    const [lazada, setLazada] = useState()
+
     const [count, setCount] = useState(0)
  	const toast = useToast()
    
@@ -465,7 +470,7 @@ export const SidebarWithHeader = () => {
 		newUsers["profileSet"] = 1; 
 		console.log(newUsers)
 		await axios.post('/api/users/getUpdateCookies', { user: newUsers})
-		let data = { facebook: facebook , twitter: twitter, linkIn: linkIn,  instagram: instagram, fileName: fileName, description: description}
+		let data = { facebook: facebook , lazada: lazada, shopee: shopee, tiktok: tiktok,  instagram: instagram, fileName: fileName, description: description}
 		 await axios.post('/api/s3/upload', {filename: fileName, base64: file})
 	     await axios.post('/api/users/profile', { id: user._id, data: data})
 
@@ -492,12 +497,15 @@ export const SidebarWithHeader = () => {
                 <Textarea  onChange={(e) => setDescription(e.target.value)}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
                 <Input onChange={(e) => setFacebook(e.target.value)}/>
-                <Text mt={2} mb={2}>Twitter:</Text>
-                <Input onChange={(e) => setTwitter(e.target.value)}/>
                 <Text mt={2} mb={2}>Instagram:</Text>
                 <Input onChange={(e) => setInstagram(e.target.value)}/>
-                <Text mt={2} mb={2}>LinkIn:</Text>
-                <Input onChange={(e) => setLinkIn(e.target.value)}/>
+                <Text mt={2} mb={2}>Shopee:</Text>
+                <Input onChange={(e) => setShopee(e.target.value)}/>
+  				<Text mt={2} mb={2}>Lazada:</Text>
+                <Input onChange={(e) => setLazada(e.target.value)}/>
+  				<Text mt={2} mb={2}>Tiktok:</Text>
+                <Input onChange={(e) => setTiktok(e.target.value)}/>
+
 
                  <Button colorScheme='blue' onClick={(e => handleSaveProfile())} mt={2} mr={3} w={'100%'}>
 				Save
@@ -532,8 +540,10 @@ export const SidebarWithHeader = () => {
         { nav === 'guestMessage'  && (<ContactGuest user={user}/>) } 
         { nav === 'profile'  && (<ProfileEdit user={user}/>) } 
         { nav === 'events'  && (<Events user={user}/>) } 
-        {  nav === 'admin-events'  && (<AdminEvents user={user}/>)}
-        { nav==='comment' && (<Comments user={user}/>)}
+        { nav === 'admin-events'  && (<AdminEvents user={user}/>)}
+        { nav === 'comment' && (<Comments user={user}/>)}
+        { nav ==='admin-newletter' && (<NewsLetter user={user}/>)}
+        { nav ==='guestToAdminMessage' && (<MessageGuestToAdmin user={user}/>)}
       </Box>
 
        { user ? user.userType == "user" && nav !== 'guestMessage' && (<ContactAdmin user={user}/>) : ""}

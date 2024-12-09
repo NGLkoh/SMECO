@@ -18,12 +18,14 @@ const fields = [{
 			function: setNewPassword,
 			title: 'Enter New Password',
 			placeholder: 'Enter new password',
+            type: 'password',
 			value: newPassword
 }, 
 {
 			function: setConfirmPassword,
 			title: 'Confirm New Password',
 			placeholder: 'Confirm New Password',
+             type: 'password',
 			value: confirmPassword
 }]
 

@@ -5,8 +5,9 @@ import axios from 'axios';
 import { FileUploader } from "react-drag-drop-files";
 import moment from 'moment';
 import ModalImage from '../modal/viewModalImage'
-
-
+import { FaEye, FaPen, FaTrash } from 'react-icons/fa';
+import EditEvent from '../modal/editEvent'
+import ModalUserEvent from '../modal/viewListOfEventUsers'
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const AdminEvents = ({user}) => {
@@ -18,19 +19,47 @@ const AdminEvents = ({user}) => {
 
   const [source, setSource] = useState("");
   const [fileName, setFileName] = useState("");
+  const [selected, setSelected] = useState({});
   const [description, setDescription] = useState();
-	const toast = useToast()
+  const [modalEditEvent, setModalEditEvent] = useState(false);
+  const [viewUSers, setViewUSers] = useState(false);
+  const [users, setUsers] = useState(false);
+  const toast = useToast()
+
   useEffect(() => {
     getEvent()
   }, []);
 
+ const closeEditEventModal = () => {
+    setModalEditEvent(false)
+ }
 
+  const closeModalUSers = () => {
+    setViewUSers(false)
+ }
+  
+ const handleViewUser = (data) => {
+    setUsers(data)
+    setViewUSers(true)
+ }
+  
   const getEvent = async () => {
 
     try {
       const res = await axios.post('/api/event/event');
-      setEvent(res.data.result);
- console.log(res)
+
+     res.data.result.map(async(row) => { 
+     let userListName = []
+       row.users.map(async(userId) => { 
+         const resUser = await axios.post('/api/users/getProfilePicture', {
+         id: userId,
+      });
+           resUser.data.result.map(user => userListName.push(`${user.firstName} ${user.lastName}`))
+      })
+        console.log({...row, usersList : userListName ? userListName : []} , "TEST")
+        setEvent(oldState => [...oldState, {...row, usersList : userListName}])
+    })
+      
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -90,6 +119,45 @@ const AdminEvents = ({user}) => {
    const onCloseModal = () => {
      setOpen(false)
     }
+
+  const handleEdit = (e) => {
+    console.log(e)
+	setSelected(e)
+	setModalEditEvent(true)
+  }
+
+       console.log(event)
+
+  const handleDelete =  async(id) => {
+    await axios.post('/api/event/remove', { id: id })
+    toast({
+      title: "Are you sure?",
+      description: "Do you really want to delete this event?",
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+      position: 'top',
+      render: () => (
+        <Box color="white" p={3} bg="red.500" borderRadius="md">
+          <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
+          <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
+        </Box>
+      ),
+    });
+  };
+
+   const confirmDelete = (postId) => {
+    // Logic to delete the post, likely an API request or state update
+    console.log('Deleting post with ID:', postId);
+    setEvent(event.filter(post => post._id !== postId)); // Remove post from state
+    toast({
+      title: "Post Deleted",
+      description: "The post has been deleted successfully.",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
   return (
     <Box >
 		<HStack spacing={8} alignItems={'center'}>
@@ -116,6 +184,7 @@ const AdminEvents = ({user}) => {
                 <Th border={'2px solid #dddddd'}>Description</Th>
 				<Th border={'2px solid #dddddd'}>Users</Th>
 				<Th border={'2px solid #dddddd'}>Date</Th>
+                <Th border={'2px solid #dddddd'}>Action</Th>
 			</Tr >
 			</Thead>
 			<Tbody border={'2px solid #dddddd'}>
@@ -132,16 +201,23 @@ const AdminEvents = ({user}) => {
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${e.fileName}`}
 			/>   </Td>
                 <Td border={'2px solid #dddddd'}>{e.description}</Td>
-				<Td border={'2px solid #dddddd'}>{e.users ? e.users.length : 0} </Td>
+                <Td border={'2px solid #dddddd'}><FaEye onClick={() => handleViewUser(e.usersList)}/></Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
+                <Td border={'2px solid #dddddd'}> <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e)}>
+                  <FaPen/>
+                </Button>
+                 <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleDelete(e._id)}>
+                  <FaTrash/>
+                </Button></Td>
 			</Tr> ) : ""
           }
 			
 			</Tbody>
 		</Table>
 		</TableContainer>
-
+      <ModalUserEvent  title={'Users'} open={viewUSers} onCloseModal={closeModalUSers} users={users}/>
       <ModalImage open={open} onCloseModal={onCloseModal} source={source} title={title}/>
+      <EditEvent modalEditEvent={modalEditEvent}  closeEditEventModal={closeEditEventModal} refresh={getEvent} editState={selected}/>
      </Box>
   );
 };

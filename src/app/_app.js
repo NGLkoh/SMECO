@@ -22,7 +22,12 @@ App.prototype = {
 
 function App({pageProps}) {
   const Layout = Component.Layout || EmptyLayout
- return (<ChakraProvider theme={theme}> <Box><Layout> <Header/><Component {...pageProps} /> </Layout> </Box></ChakraProvider>)
+ return (<ChakraProvider theme={theme}> <Box><Layout> <Header/><Component {...pageProps} /> 
+
+</Layout> </Box></ChakraProvider>
+
+)
+
 }
 
 const EmptyLayout = ({ children}) =>  <> {children} </>

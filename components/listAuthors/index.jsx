@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Box, Text, ChakraProvider, Avatar, Card, Heading, CardBody, useMediaQuery, Link} from '@chakra-ui/react'
-import { FaFacebook, FaInstagram , FaTwitter, FaLinkedin} from 'react-icons/fa'; 
+import { FaFacebook, FaInstagram , FaLinkedin} from 'react-icons/fa'; 
 
 import axios from "axios";
 
@@ -49,7 +49,6 @@ const [user, setUsers] = useState([])
 				{/* <Text fontSize={'10px'} >{e.sub}</Text>  */}
 				<Box textAlign={'center'} position={'relative'} mt={2} w={'100%'}>
 						<Text display={'inline-block'} m={1}> <FaFacebook/></Text>  
-						<Text display={'inline-block'} m={1}> <FaTwitter/></Text>
 						<Text display={'inline-block'} m={1}> <FaInstagram/></Text>
 						<Text display={'inline-block'} m={1}> <FaLinkedin/></Text>
                 </Box>

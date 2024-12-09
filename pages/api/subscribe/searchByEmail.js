@@ -2,15 +2,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-	let { sub, email } = req.body;
-    const currentTime = new Date(); 
-    const UAT_URL = process.env.UAT_URL;
+const UAT_URL = process.env.UAT_URL;
+	let { email } = req.body;
      try {
-       const response = await axios.post(`${UAT_URL}/subscribe/create`, {
-         email: email,
-		 date: currentTime,
-         sub: sub
-         // add more data if needed
+       const response = await axios.post(`${UAT_URL}/subscribe/searchByEmail`, {
+         email: email
        });
        console.log(response.data);
        res.status(200).json(response.data);
