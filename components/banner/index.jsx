@@ -13,15 +13,29 @@ const Banner = () => {
         <Flex
           w="full"
           h={isLargerThan980 ? '100vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
-          backgroundImage="url('bg1.jpg')"
+          backgroundImage="url('BANNER1.PNG')"
           backgroundSize="cover"
           backgroundPosition="center"
+          position="relative" // Enable positioning for the overlay
         >
+          {/* Color Mask */}
+          <Box
+            position="absolute"
+            top="0"
+            left="0"
+            w="full"
+            h="full"
+            bg="blackAlpha.600" // Semi-transparent black overlay
+            zIndex="1"
+          />
+
           <VStack
             w="full"
             justify="center"
             px={{ base: 4, md: 8 }}
             align="flex-start"
+            position="relative"
+            zIndex="2" // Ensure content is above the overlay
           >
             <Stack
               maxW={isLargerThan980 ? '6xl' : isLargerThan600 ? '4xl' : '2xl'}
@@ -39,7 +53,7 @@ const Banner = () => {
                 }}
                 color="white"
               >
-                Elevate your business marketing game
+                Elevate your Business Marketing Game
               </Text>
               <Text
                 fontWeight={700}

@@ -8,7 +8,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
    return (
       <ChakraProvider>
 
-         <Box width={'100%'} height={'auto'} position={'relative'} backgroundColor={'#f4f0f8'} padding="0 10%">
+         <Box width={'100%'} height={'auto'} position={'relative'} backgroundColor={'white'} padding="0 5%">
             {/* Top Banner Section */}
 
 		<Box margin={"auto"} p={4}>
@@ -21,25 +21,28 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 				</Box>
     
 				<Box>
-					<Text  mt={20} fontSize={20} textAlign= 'justify'>
+					<Text  mt={isLargerThan980  ? 20 : 0} fontSize={isLargerThan980  ? 20 : 16} textAlign= 'justify'>
 						Cavite Association of Producers and Entrepreneurs is a high-quality support network of entrepreneurs with like-minded leaders from different municipalities of Cavite. We aim to help entrepreneurs achieve their full potential through the power of life-enhancing connections, shared experiences, and collaborative learning.
 					</Text>
 				</Box>
 			</Grid>
 		</Box>
 
-		<Box mt={4} width="100%" height={ isLargerThan980  ? "auto" : ""} margin="auto">
+		<Box mt={4} width="100%" height={ isLargerThan980  ? "100%" : ""} margin="auto">
                <Image
-                  src="about-us-banner.png"  // Make sure the image path is correct for your setup
+                  src={ isLargerThan980  ? "about-us-banner.png" : "about-us-banner-mobile.png" } // Make sure the image path is correct for your setup
                   alt="About Us Banner"
                   objectFit="cover"
                   height="100%"
                   width="100%"
+					 border="2px solid"
+    borderColor="black"
+	borderRadius={15}
                />
          </Box>
 	
     <Box mt={6}>
-		<Text  mt={isLargerThan980  ? 4 : 0} fontSize={22} textAlign= 'center'>
+		<Text  mt={isLargerThan980  ? 4 : 0} fontSize={isLargerThan980  ? 20 : 16} textAlign= 'center'>
 		Gain access to the country's top experts in social entrepreneurship. Grow beyond our personal limits. Make breakthroughs as redefine and realize your goals in life and in business. To help entrepreneurs achieve their full potential. Enable transformational growth in our members' lives.
       </Text>
     </Box>
@@ -50,7 +53,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		<Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}  paddingLeft={ isLargerThan980 ? 20 : ""}  paddingRight={isLargerThan980 ? 20 : ""}  paddingTop={isLargerThan980 ? 20 : ""}>
 			<Box>
 				<Text  fontSize={isLargerThan980 ? '50px' : '30px'}  mb={2}>Our Ambition</Text>
-					<Text  mt={4} fontSize={20} textAlign= 'justify'>
+					<Text  mt={4} fontSize={isLargerThan980  ? 20 : 16} textAlign= 'justify'>
 					We are connected and we are better for knowing one another. Our members thrive and grow during pandemic because of the connections we make and the relationships we develop.
 					CAPE creates a space where members can have real conversations and learn from one another by sharing their experiences, successes and failures. As individuals, as members, we are invested in one another’s growth and success. 
 					<br></br>	<br></br>	
@@ -62,7 +65,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		<Box>
 			<Text  fontSize={isLargerThan980 ? '50px' : '30px'}  mb={2}>Our Core Values
 			</Text>
-				<Text  mt={4} fontSize={20} textAlign= 'justify'>
+				<Text  mt={4} fontSize={isLargerThan980  ? 20 : 16} textAlign={isLargerThan980  ? 'justify' : 'left'}>
 				C - Committed to delivering our best in all we do, maintaining honesty, integrity, and quality in products, services, and community involvement. <br></br><br></br>
 				A - Authentic, practicing truthfulness and dependability, with a passion for global competitiveness and business integrity. <br></br><br></br>
 				P - Progressive, thinking beyond the present, acting with urgency to meet the needs of customers and members, and inspiring others toward success.<br></br><br></br>
@@ -71,11 +74,6 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 		</Box>
   </Grid>
 </Box>
-
-
-
-
-
 
          </Box>
       </ChakraProvider>

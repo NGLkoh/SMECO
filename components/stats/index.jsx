@@ -84,13 +84,15 @@ export default function BasicStatistics({ user }) {
   const getTemplate = async () => {
     let checking = user.ids ? user.ids : user._id
     const res = await axios.post('/api/template/search', { id: checking })
-    let commentCount = 0
+    let commentCount = 0 
+    let likesCount = 0
     const posts = res.data.result.length
     for (const row of res.data.result) {
+      likesCount += row.likes ?  row.likes : 0
       const commentRes = await axios.post('/api/comment/search', { id: row._id })
       commentCount += commentRes.data.result.length
     }
-
+    setLikes(likesCount)
     setPost(posts)
     setComment(commentCount)
     setTemplateState(res.data.result)

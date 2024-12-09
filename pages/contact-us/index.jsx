@@ -16,6 +16,7 @@ import {
   Textarea,
   ChakraProvider,
   Link,
+  Image,  // Import Image from Chakra UI
 } from '@chakra-ui/react';
 import Navbar from '../../components/nabvar';
 import Footer from '../../components/footer';
@@ -48,6 +49,15 @@ const ContactPage = () => {
             <Box p={4}>
               {/* Header */}
               <Box color="#000000" p={6} textAlign="center">
+                {/* Add the logo image above the heading */}
+                <Image
+                  src="cape-logo.png" // Path to your logo image
+                  alt="CAPE Logo"
+				  margin={'auto'}
+                  boxSize="150px" // Adjust the size as needed
+                  objectFit="contain"
+                  mb={4} // Margin at the bottom of the logo
+                />
                 <Heading size="2xl">CONTACT US</Heading>
                 <Text fontSize="lg" mt={4}>
                   Cavite Association of Producers & Entrepreneurs - CAPE
@@ -70,11 +80,11 @@ const ContactPage = () => {
               <Box mt={8} ml={8} mr={8} color="#0B0E3F">
                 <VStack spacing={5}>
                   <Button
-                     to='bdmpkitsolution24@gmail.com'
-					onClick={(e) => {
-						window.location.href = "mailto:bdmpkitsolution24@gmail.com";
-						e.preventDefault();
-					}}
+                    to='bdmpkitsolution24@gmail.com'
+                    onClick={(e) => {
+                      window.location.href = "mailto:bdmpkitsolution24@gmail.com";
+                      e.preventDefault();
+                    }}
                     variant="solid"
                     width="100%"
                     bg="#ffb509"
@@ -88,8 +98,8 @@ const ContactPage = () => {
             </Box>
           </Box>
         </Container>
-       
-      </ChakraProvider> <Footer />
+      </ChakraProvider>
+      <Footer />
     </>
   );
 };

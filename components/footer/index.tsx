@@ -41,7 +41,7 @@ const DetailFooter = () => {
 
    {/* Right Section - Links */}
 <Box maxW="1200px" mx="auto" px={4} paddingBottom={20}>
-          <Flex justify={["center", "flex-end"]} align="center" paddingRight={isLargerThan980 ? 0 : 5} >
+          <Flex justify={["center", "flex-end"]} align="center" paddingRight={isLargerThan980 ? 0 : 26} >
             <HStack spacing={20} fontSize={ isLargerThan980  ? "" : "13px"}>
               <Link href="/../homepage">Home</Link>
               <Link href="/../blog">Blog</Link>
@@ -71,7 +71,7 @@ const DetailFooter = () => {
 				</Flex>
 		</GridItem>
   
-		<GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 20} mt={10} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
+		<GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 28} mt={10} paddingRight={isLargerThan980 ? '50' : '' } textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
 				<InputGroup>
 					<Input
 					placeholder="Enter Your Email"
@@ -103,7 +103,7 @@ const DetailFooter = () => {
         {/* Social Media Icons */}
         <Flex justify={["center", "space-between"]} align="center" mt={8} display={isLargerThan980 ? 'flex' : 'block'}>
           <Text fontSize="sm" textAlign={isLargerThan980 ? 'left' : 'center'}>© 2024 Cavite Association of Producers & Entrepreneurs - CAPE. All rights reserved.</Text>
-          <HStack spacing={4} paddingTop={isLargerThan980 ? '' : '20px'} paddingLeft={isLargerThan980 ? '' : '40%'}>
+          <HStack spacing={4} paddingTop={isLargerThan980 ? '' : '20px'} paddingLeft={isLargerThan980 ? '' : '43%'}>
             <IconButton
               as="a"
               href="https://www.facebook.com/profile.php?id=100065009122013"

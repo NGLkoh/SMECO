@@ -34,7 +34,7 @@ const [user, setUsers] = useState([])
 
   return (
     <ChakraProvider>
-	<Box width={'100%'} height={isLargerThan980 ? "523px" : "auto"} w={'100%'} >
+	<Box width={'100%'} height={isLargerThan980 ? "523px" : "auto"} w={'auto'} >
 		<Box m={'10%'}>  
 		<Box width={'80%'}  margin={'auto'} >
 	    <Text align="center" fontSize='30px' fontFamily="sans-serif" fontWeight={600} marginBottom={10}>List of Authors</Text>

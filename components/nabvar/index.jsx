@@ -72,12 +72,23 @@ export default function Simple() {
                 <Link href='/../about-us'>About Us</Link>
                 <Link href='/../contact-us'>Contact Us</Link>
 
-            <InputGroup w="150px" display="inline-block" backgroundColor={"white"} borderRadius={5}>
-					<Input placeholder='Search' height={6} fontSize={14} paddingBottom={1} textColor={'black'}/>
-					<InputRightElement>
-					<Search2Icon color='gray.500' position={'relative'} top={'-7px'} height={16} left={1} />
-					</InputRightElement>
-				</InputGroup>
+            <InputGroup w="150px" display="inline-block" backgroundColor="white" borderRadius={15} boxShadow="md">
+			<Input
+				placeholder="Search"
+				height="35px"
+				fontSize="16px"
+				padding="0 10px"
+				borderColor="gray.300"
+				borderWidth={1}
+				_focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px #3182CE" }}
+				textColor="gray.700"
+				_placeholder={{ color: "gray.500" }}
+			/>
+			<InputRightElement>
+				<Search2Icon color="gray.500" />
+			</InputRightElement>
+			</InputGroup>
+
             </HStack>
               <MenuButton
                 as={Button}

@@ -67,7 +67,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                
                 zIndex: -1,
               }}>
-              Hey there, I’m {name} and welcome to my Blog
+              Hey there, I’m {name} and Welcome to my Blog
             </Text>
           </Heading>
           <Text  color={'white'}>
@@ -115,11 +115,58 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 </Stack>
 
   : 
-         <Box textAlign={'center'} position={'relative'} mt={2} w={'100%'} color={'white'}>
-						<Text display={'inline-block'} m={1}> <FaFacebook fontSize={25}/></Text>  
-						<Text display={'inline-block'} m={1}> <FaInstagram  fontSize={25}/></Text>
-						<Text display={'inline-block'} m={1}> <FaLinkedin fontSize={25}/></Text>
-                </Box> }
+        <Flex
+  color="white"
+  spacing={{ base: 4, sm: 6 }}
+  position="relative"
+  direction="row"
+m="auto"
+  align="center" // Vertically center items
+  gap={4} // Add spacing between items
+>
+  <Link href={profile ? profile.facebook : ""}>
+    <Image
+      src="../fb.png"
+      alt="FB Logo"
+      boxSize="30px"
+    />
+  </Link>
+  <Link href={profile ? profile.instagram : ""}>
+    <Image
+      src="../IG.png"
+      alt="IG Logo"
+      boxSize="30px"
+    />
+  </Link>
+
+  {/* Shopee */}
+  <Link href={profile ? profile.shopee : ""}>
+    <Image
+      src="https://static.vecteezy.com/system/resources/previews/028/766/369/non_2x/shopee-icon-symbol-free-png.png"
+      alt="Shopee Logo"
+      boxSize="30px"
+    />
+  </Link>
+
+  {/* Lazada */}
+  <Link href={profile ? profile.lazada : ""}>
+    <Image
+      src="https://safetyware.com/wp-content/uploads/2022/03/Lazada-Icon-Circle.png"
+      alt="Lazada Logo"
+      boxSize="30px"
+    />
+  </Link>
+
+  {/* TikTok */}
+  <Link href={profile ? profile.tiktok : ""}>
+    <Image
+      src="../tiktok.png"
+      alt="TikTok Logo"
+      boxSize="30px"
+    />
+  </Link>
+</Flex>
+ }
         </Stack>
       </Stack>
     </Container>

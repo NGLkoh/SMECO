@@ -60,7 +60,7 @@ const fetchIntialBlog = async() => {
 
    return (<Box><ChakraProvider>
      <Navbar page='homepage' />
-      <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh" p={isLargerThan980 ? 20 : 0}>
+      <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh" p={isLargerThan980 ? 0 : 0}>
     
         { profileList ? profileList.map((row, key) => (<Box key={key} width={'100%'} height={'auto'} w={'100%'}  position={'relative'} backgroundSize={'cover'} backgroundImage={`linear-gradient(rgb(0 0 0 / 46%), rgb(0 0 0 / 35%)), url(https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.backgroundImage})`} >
 
