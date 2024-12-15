@@ -20,6 +20,7 @@ const AddNewImageSection = ({user}) => {
   const [media, setMedia ] = useState([])
   const [file, setFile ] = useState()
   const [fileName, setFileName ] = useState()
+  const [seleted, setSelected ] = useState()
 	const toast = useToast()
 
 	useEffect(() => {
@@ -47,7 +48,7 @@ const AddNewImageSection = ({user}) => {
 		})
 	};
 
-  const 	uploadS3 = async () => {
+  const uploadS3 = async () => {
         await axios.post('/api/s3/upload', {filename: fileName, base64: file})
         const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
         toast({
@@ -60,7 +61,34 @@ const AddNewImageSection = ({user}) => {
          getMedia()
         console.log(store)
    }
+  const handleSelect = (id) => {
+      setSelected(id)
+  }
 
+  const handleDelete = async () => {
+    if(seleted) {
+
+   const remove = await axios.post('/api/s3/remove', {id: seleted})
+        toast({
+          title: 'Remove Success',
+          status: 'success',
+	      position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        }) 
+     getMedia()
+     setSelected("")
+   } else {
+    toast({
+          title: 'Please select image to delete',
+          status: 'warning',
+	      position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        })
+  }
+        
+  }
   return (	
     <>
       <Box bg={'gray.100'} px={4}>
@@ -99,14 +127,25 @@ const AddNewImageSection = ({user}) => {
      {
 		media ?  media.map((rows) =>  <Image
 			height="200px"
-             ml={2}
+             m={2}
+            onClick={() => handleSelect(rows._id)}
+            border={seleted == rows._id ? "2px solid blue" : ""}
             display={'inline-block'}
 			key={rows.ids}
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${rows.key}`}
 			/> ) : ""
 		}
      </Box>
-     
+              <Button
+              bg={'#232536'} variant='solid'
+			  color={'#ffffff'}
+			  size={'md'}
+              mt={2}
+              ml={2}
+              onClick={() => handleDelete()}
+              mr={4}>
+              Delete
+            </Button> 
     </>
   )
 }
