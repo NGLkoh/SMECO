@@ -1,6 +1,6 @@
-.sc-bcXHqe.bncmtB.react-search-box-dropdown {
+.react-search-box-dropdown {
     position: absolute;
-    top: 30px;
+    margin-top: 40px!important;
     z-index: 225;
     width: 257px;
 }
@@ -15,9 +15,9 @@
 
 @media (max-width:961px)  { 
 
-.sc-bcXHqe.bncmtB.react-search-box-dropdown {
+.react-search-box-dropdown {
     position: absolute;
-    top: 51px;
+    margin-top: 51px!important;
     z-index: 45;
     width: 360px!important;
 }
