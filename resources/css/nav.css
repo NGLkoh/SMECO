@@ -1,7 +1,7 @@
 .sc-bcXHqe.bncmtB.react-search-box-dropdown {
     position: absolute;
-    top: 51px;
-    z-index: 5;
+    top: 30px;
+    z-index: 225;
     width: 257px;
 }
 
@@ -18,8 +18,8 @@
 .sc-bcXHqe.bncmtB.react-search-box-dropdown {
     position: absolute;
     top: 51px;
-    z-index: 5;
-    width: 92%!important;
+    z-index: 45;
+    width: 360px!important;
 }
 
 
