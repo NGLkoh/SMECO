@@ -59,6 +59,8 @@ const FeaturedPost = () => {
                             src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`}
                             alt={row.title}
                             boxSize="100%"
+                            width={'100%'}
+                            height={'500px'}
                             objectFit="cover"
                             borderRadius="lg"
                           />

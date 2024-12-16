@@ -64,10 +64,10 @@ export const MessageGuest = ({ user}) => {
         userId: user._id,
         message: newMessage,
         messageId: selectedChat._id
-        
       });
+      console.log(selectedChat.convo[0].id)
       setNewMessage('');
-      socket.emit('add-chat', {result: res.result})
+      socket.emit('add-chat', selectedChat.convo[0].id)
    }
    
   };
@@ -121,7 +121,7 @@ export const MessageGuest = ({ user}) => {
             </Box>
             <Flex align="center" p={4} borderTop="1px solid gray">
               <Textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type a message..." bg="white" resize="none" mr={2} />
-              <Button colorScheme="blue" onClick={sendMessage}>Send</Button>
+              <Button colorScheme="blue" onClick={() => sendMessage()}>Send</Button>
             </Flex>
           </>
         ) : (

@@ -494,7 +494,7 @@ export const SidebarWithHeader = () => {
                 <Text mb={2}>Blog Profile Image:</Text>
 				<FileUploader name="file" handleChange={(e) => handleChange(e)} types={fileTypes} />
 				<Text mt={2} mb={2}>Blog Profile Description:</Text>
-                <Textarea  onChange={(e) => setDescription(e.target.value)}/>
+                <Textarea  maxLength={250} onChange={(e) => setDescription(e.target.value)}/>
                 <Text mt={2} mb={2}>Facebook:</Text>
                 <Input onChange={(e) => setFacebook(e.target.value)}/>
                 <Text mt={2} mb={2}>Instagram:</Text>

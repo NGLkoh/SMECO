@@ -105,7 +105,7 @@ initialGetUset()
         <Text mb={2}>Background Image:</Text>
         <FileUploader name="file" handleChange={(e) => handleChange(e, "bg")} types={fileTypes} />
         <Text mt={2} mb={2}>Blog Profile Description:</Text>
-        <Textarea onChange={(e) => setDescription(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].description : "" : ""}/>
+        <Textarea maxLength={250} onChange={(e) => setDescription(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].description : "" : ""}/>
         
         <Text mt={2} mb={2}>Facebook:</Text>
         <Input onChange={(e) => setFacebook(e.target.value)} defaultValue={userData ? userData.profile ? userData.profile[0].facebook  : "" : ""}/>

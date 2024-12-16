@@ -209,7 +209,22 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   const onChangeRecapcha = () => {
  setRecaptchaVerified(true); 
  }
+  const handleNext = async() => {
+      	 const res = await axios.post('/api/users/checker', {email : email})
+    console.log(res.data.message , "TANGINA MU CHECKER")
 
+     if(res.data.message !== 'true') { 
+      setNext(2)
+    } else {
+	toast({
+			title: 'Email already existed!',
+			status: 'warning',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+           })
+   }
+  }
    return (<StrictMode> <GoogleOAuthProvider clientId={CLIENT_ID}> <Box><ChakraProvider>
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
 	   <Navbar page='register'/>
@@ -238,7 +253,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 		isClosable: true,
 		});
       return;
-    } else { setNext(2)}}}>
+    } else { handleNext()}}}>
 						Next
 				</Button>
              <Box  className="google-container"

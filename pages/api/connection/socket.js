@@ -9,7 +9,8 @@ const SocketHandler = ( req, res ) => {
     res.socket.server.io = io
 
     io.on('connect', socket => {
-      socket.on('add-chat', payload=> {
+      socket.on('add-chat', payload => {
+         console.log(payload, "IOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
 		socket.broadcast.emit('refresh-chat', payload)
      })
        socket.on('add-comment', payload=> {

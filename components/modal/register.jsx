@@ -79,7 +79,9 @@ const handleChangeBarangayClearance = async (file)  => {
          catch(e) { console.log(e)}
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
          catch(row) {console.log(row) }
-
+          const res = await axios.post('/api/users/checker', {email : decodeCredentials.email})
+  
+     if(res.data.message !== 'true') { 
 		 const res = await axios.post('/api/users/create', 
 		{   username: decodeCredentials.email,
             password: 'google',
@@ -98,6 +100,15 @@ const handleChangeBarangayClearance = async (file)  => {
           isClosable: true,
         })
          window.location.href = "/dashboard"
+      } else {
+				toast({
+						title: 'Email already existed!',
+						status: 'warning',
+						position: 'top-right',
+						duration: 9000,
+						isClosable: true,
+					})
+			}
          } else {
 	       toast({
           title: 'Fill up all',

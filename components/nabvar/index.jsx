@@ -187,7 +187,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 
 <Slide direction="right" in={isSearchOpen} style={{ zIndex: 20 }}>
   <Box
-    bg="white"
+    bg="#232536"
     p={4}
     w="100%"
     position="absolute"

@@ -26,9 +26,10 @@ const Template = ({ user }) => {
   const [modalEditTemplate, setModalEditTemplate] = useState(false)
   const [templateId, setTemplateId] = useState('')
   const [editorState, setEditorState] = useState('<p>My initial content.</p>')
-   const [editState, setEditState] = useState({})
+  const [editState, setEditState] = useState({})
   const [templateState, setTemplateState] = useState()
-   const [imageModal, setImageModal] = useState(false)
+  const [imageModal, setImageModal] = useState(false)
+ 
   useEffect(() => {
     getTemplate()
     getCategory()
@@ -47,23 +48,18 @@ const Template = ({ user }) => {
   }
 
   
- const handleInset = () => {
-        //  let data = <img src="https://www.yttags.com/blog/wp-content/uploads/2023/02/image-urls-for-testing.webp" alt="" style="height: auto;width: auto"/>
+  const handleInset = () => {
         let imageString = ''
         image.map(row => {
-        imageString += `<img src="https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row}"  alt="test" style="height: 100%;width: 100%"/>`
-                
-       })
-        console.log(html)
-        let res =  imageString.concat(html);
-        console.log(res)
-        setEditorState(res + editorState)
-
-      setImage([])
-     setImageModal(false)
-        console.log(res, "insert")
-       console.log(image, "insert")
+        imageString = `<img src="https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row}"  alt="test" style="height: 20%;width: 20%"/>`
+        })
+        
+        const newHtml = imageString + editorState
+        setEditorState(newHtml)
+        setImage([])
+        setImageModal(false)
    }
+
   const handleEditDescription = (data) => {
    setModalEditTemplate(true)
     setEditState(data)
@@ -94,7 +90,6 @@ const Template = ({ user }) => {
   }
 
   const onEditorStateChange = (e) => {
-   console.log(e.target.getContent())
     setRawHtml(e.target.getContent());
     setEditorState(e.target.getContent())
   }
@@ -384,7 +379,7 @@ const Template = ({ user }) => {
             height: '670px',
 			selector: 'textarea#file-picker',
 			plugins: 'image code',
-			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
+			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | removeformat ',
 			/* enable title field in the Image dialog*/
 			image_title: true,
 			/* enable automatic uploads of images represented by blob or data URIs*/

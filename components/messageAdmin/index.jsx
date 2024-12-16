@@ -65,18 +65,19 @@ const socketInitialize = async () => {
 
   const createMessage = async () =>{
     setIsOpen(true)
-  if(message[0]) {
-
-  } else {
-  const checking = user.ids ? user.ids : user._id;
+    console.log(message)
+   const checking = user.ids ? user.ids : user._id;
+   let res = await axios.post('/api/message/checker', { id:checking });
+   console.log(res.data.message)
+   if(res.data.message !== 'true') {
          await axios.post('/api/message/create', {
-        userId: "672ff29e19abf9597c2544f6",
-        message: "Hi",
-        name: `${user.firstName} ${user.lastName}`,
-        id: checking
+			userId: "672ff29e19abf9597c2544f6",
+			message: "Hi",
+			name: `${user.firstName} ${user.lastName}`,
+			id: checking
         });
-  getMessage()
-  }
+      getMessage()
+    }
   }
 
   return (

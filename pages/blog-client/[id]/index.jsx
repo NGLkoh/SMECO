@@ -21,6 +21,7 @@ import io from 'socket.io-client'
 import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 import GridBlurredBackdrop from '../../../components/author'
 import '../../../resources/css/style.css'
+import '../../../resources/css/blog-client.css'
 import {publicIpv4} from 'public-ip';
 let socket;
 
@@ -165,7 +166,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
                 paddingX={8}  // Left and right padding
               >
                 {template.map((row, key) => (
-                  <Box paddingLeft={isLargerThan980? '200px': ""}key={key} paddingRight={isLargerThan980 ? '200px' : ""}> <div key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
+                  <Box paddingLeft={isLargerThan980? '200px': ""}key={key} paddingRight={isLargerThan980 ? '200px' : ""}> <div className="container-blog" key={row.title} dangerouslySetInnerHTML={{ __html: row.data }} /> </Box>
                 ))}
               </Box>
             </Box>

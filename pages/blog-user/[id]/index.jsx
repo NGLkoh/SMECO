@@ -59,6 +59,8 @@ const fetchIntialBlog = async() => {
   }
 
    return (<Box><ChakraProvider>
+
+
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh" p={isLargerThan980 ? 0 : 0}>
     
@@ -96,7 +98,11 @@ const fetchIntialBlog = async() => {
                   `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`
                 }
                 alt="some good alt text"
-                objectFit="contain"
+                 boxSize="100%"
+				width={ '100%'}
+				height={isLargerThan980 ? '500px' : '250px'}
+				objectFit="cover"
+				paddingTop={isLargerThan980 ? '' : '25px'}
               />
             </Box>
           </Box>

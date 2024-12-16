@@ -79,8 +79,11 @@ const FeaturedSecond = () => {
                 src={
                   `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`
                 }
+               boxSize="100%"
+                            width={'100%'}
+                            height={'500px'}
+                            objectFit="cover"
                 alt="some good alt text"
-                objectFit="contain"
               />
             </Box>
           </Box>

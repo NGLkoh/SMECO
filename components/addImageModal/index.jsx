@@ -53,12 +53,12 @@ const AddNewImageSection = ({user, image, setImage}) => {
 		console.log(key)
       let imageNew= []
      if(image.length == 0) {
-     console.log("first")
+         setImage([]) 
           imageNew.push(key)
           setImage(imageNew)  
     } else {
      console.log('second')  
-
+      setImage([]) 
 		if(image.includes(key)) {
           image.map((row) => {
             if(row !== key)
@@ -72,7 +72,6 @@ const AddNewImageSection = ({user, image, setImage}) => {
 
      
       }
-    setImage(imageNew)  
 		// setImage(oldState => [{...oldState, key }])
  
     }

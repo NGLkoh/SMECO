@@ -1,13 +1,5 @@
    
 import axios from "axios";
-export const config = {
-
-  api: {
-     bodyParser:{ 
-      sizeLimit: "50mb"
-     }
-  }
-}
 
 export default async function handler(req, res) {
 const UAT_URL = process.env.UAT_URL;
@@ -16,8 +8,7 @@ const UAT_URL = process.env.UAT_URL;
      try {
        const response = await axios.post(`${UAT_URL}/message/create`, {
 		"convo": [
-			{message: message, id:  id, name : name},
-            {message: "Admin will reply soon.", id:  "123", name : "System"}
+			{message: message, id:  id, name : name}
 		],
 		"users": [
 			 id, userId

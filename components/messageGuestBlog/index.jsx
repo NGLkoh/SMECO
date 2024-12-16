@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Text, Box, Textarea, Button, IconButton, Input  } from '@chakra-ui/react';
+import { Text, Box, Textarea, Button, IconButton, Input, useToast } from '@chakra-ui/react';
 import { ChatIcon, CloseIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import io from 'socket.io-client'
+import ReCAPTCHA from "react-google-recaptcha";
 
 let socket;
 
@@ -17,13 +18,17 @@ const GuestBlogMessage = ({userId }) => {
   const [newMessage, setNewMessage] = useState(''); // State for new message input
   const [open, setOpen] = useState(false);
   const [messageId, setMessageId] = useState();
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
       getMessage();
       socketInitialize()
-    }
-  }, [isOpen]);
+  }, []);
+
+const onChangeRecapcha = () => {
+ setRecaptchaVerified(true); 
+ }
+ 
 
   const getMessage = async (id) => {
 
@@ -44,10 +49,7 @@ const GuestBlogMessage = ({userId }) => {
         socket.on('connect', () => {
              console.log('connected')
         })
-
-	  socket.on("refresh-chat", payload => {
-        console.log(payload)
-      });
+        socket.on('refresh-chat', m => console.log('Received broadcast:',  getMessage(m)));
 }
   const sendMessage = async () => {
 	socket = io()
@@ -60,18 +62,31 @@ const GuestBlogMessage = ({userId }) => {
       });
 
       setNewMessage('');
-      getMessage(guestId)
-      socket.emit('add-chat', {result: res.result})
-
+     
+      socket.emit('add-chat', guestId)
   };
    
+ 
+const toast = useToast()
   const handleOpenChat =  async () => {
-//   console.log(userId)
+
+
+ if (!recaptchaVerified) {
+    toast({
+      title: "Please complete the reCAPTCHA.",
+      description: "Warning",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    });
+    return;
+} else {
+  console.log(userId)
     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     var uniqid = randLetter + Date.now();
     setGuestId(uniqid)
 
-      let res = await axios.post('/api/message/create', {
+      let res = await axios.post('/api/message/create-guest', {
         userId: userId,
         message: "Hi",
         name: name,
@@ -80,10 +95,12 @@ const GuestBlogMessage = ({userId }) => {
       });
     setMessageId(res.data.result._id)
     getMessage(uniqid)
-    setOpen(true)
+    setOpen(true);
   }
+  };
 
   return (
+
     <Box position="fixed" bottom="20px" right="20px" zIndex={1000}>
       {/* Chat Toggle Button */}
       {!isOpen && (
@@ -161,12 +178,19 @@ const GuestBlogMessage = ({userId }) => {
 			/>
           <Button color="white" bg="#232536" onClick={() => sendMessage()} w="100%">
             Send
-          </Button></> : <> <Text fontSize={'18px'}> Hi Guest, Welcome to SMECO! </Text>
-            <Text fontSize={'14px'}> Please fill up information to indetify yourself. </Text>
+          </Button></> : <> <Text fontSize={'18px'}> 
+			 Welcome to Markadong Pinoy! </Text>
+            <Text fontSize={'14px'}> Please enter an email address to indetify yourself. </Text>
             <Box m={4}>
-            <Text> Name: </Text>
+            <Text> Email: </Text>
             <Input htmlSize={4} onChange={(e) => setName(e.target.value)} width='100%' />
-            <Button mt={2} onClick={(e) => handleOpenChat(e)}> Start Chat</Button>
+<Box mt={"25px"} ml={"-6px"}>
+	<ReCAPTCHA
+        sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
+        onChange={ () => onChangeRecapcha()}
+      /></Box>
+            <Button mt={2} onClick={(e) => handleOpenChat(e)}>
+ Start Chat</Button>
            </Box></> }
         </Box>
       )}

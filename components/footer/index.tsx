@@ -3,7 +3,7 @@ import { Box, Flex, Text, Input, Button, Link, useToast, HStack, useMediaQuery, 
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { Grid, GridItem } from '@chakra-ui/react';
 import axios, { AxiosResponse } from 'axios';
-
+import '../../resources/css/footer-style.css'
 const DetailFooter = () => {
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)');
   const [email, setEmail] = useState("");
@@ -64,38 +64,80 @@ const DetailFooter = () => {
         </Flex>
       </Box>
 
-      {/* Subscribe Section */}
-      <Box bg="#2e303f" py={isLargerThan980 ? 100 : 20} height={isLargerThan980 ? 'auto' : '200px'} px={isLargerThan980 ? 100 : 20} maxW="1200px" mx="auto" mb='80px'>
-        <Box className='continer-footer'>
-          <Grid h='70px' templateColumns='repeat(5, 2fr)' gap={4} display={isLargerThan980 ? 'flex' : 'block !important'} textAlign={'center'}>
-            <GridItem colSpan={3} display={isLargerThan980 ? 'flex' : 'block !important'}>
-              <Flex direction="column" align="center" maxW="1200px" mx="auto" display={isLargerThan980 ? 'flex' : 'block !important'}>
-                <Text fontSize={isLargerThan980 ? '2em' : '15px'} fontWeight="bold" textAlign="center" mb={4} paddingLeft={20}>
-                  Subscribe to our newsletter to get latest updates and news
-                </Text>
-              </Flex>
-            </GridItem>
+  {/* Subscribe Section */}
+<Box 
+  bg="#2e303f" 
+  py={isLargerThan980 ? 100 : 20} 
+  height={isLargerThan980 ? 'auto' : '200px'} 
+  px={isLargerThan980 ? 100 : 20} 
+  maxW="1200px" 
+  mx="auto" 
+  mb="80px"
+  display="flex" 
+  flexDirection="column" 
+  alignItems="center"
+  justifyContent="center"
+>
+  <Box className="container-footer" width="100%">
+    <Grid 
+      templateColumns={isLargerThan980 ? 'repeat(5, 2fr)' : '1fr'} 
+      gap={4} 
+      alignItems="center" 
+      textAlign="center"
+    >
+      {/* Subscription Text */}
+      <GridItem colSpan={isLargerThan980 ? 3 : 5}>
+        <Flex 
+          direction="column" 
+          align="center" 
+          maxW="1200px" 
+          mx="auto"
+        >
+          <Text 
+            fontSize={isLargerThan980 ? '2em' : '15px'} 
+            fontWeight="bold" 
+            textAlign="center" 
+            mb={4}
+          >
+            Subscribe to our newsletter to get the latest updates and news
+          </Text>
+        </Flex>
+      </GridItem>
 
-            <GridItem colSpan={2} paddingLeft={isLargerThan980 ? '' : 28} mt={10} paddingRight={isLargerThan980 ? '50' : ''} textAlign={'center'} display={isLargerThan980 ? 'flex' : 'block'}>
-              <InputGroup>
-                <Input
-                  placeholder="Enter Your Email"
-                  bg="white"
-                  borderColor="gray.600"
-                  onChange={(e) => setEmail(e.target.value)}
-                  _placeholder={{ color: 'gray.400' }}
-                  color="black!important"
-                  _hover={{ borderColor: 'gray.500' }}
-                  size={'sm'}
-                  p={10}
-                />
+      {/* Input and Button */}
+      <GridItem 
+        className="newsletter-box" 
+        colSpan={isLargerThan980 ? 2 : 5} 
+        mt={isLargerThan980 ? 0 : 10}
+      >
+        <InputGroup justifyContent="center" alignItems="center">
+          <Input
+            placeholder="Enter Your Email"
+            bg="white"
+            borderColor="gray.600"
+            onChange={(e) => setEmail(e.target.value)}
+            _placeholder={{ color: 'gray.400' }}
+            color="black"
+            _hover={{ borderColor: 'gray.500' }}
+            size="sm"
+            p={6}
+          />
+          <Button 
+            ml={2} 
+            backgroundColor="#ffcf4f" 
+            color="black" 
+            size="md" 
+            p={6} 
+            onClick={handleAddSubscribe}
+          >
+            Subscribe
+          </Button>
+        </InputGroup>
+      </GridItem>
+    </Grid>
+  </Box>
+</Box>
 
-                <Button ml={2} backgroundColor={'#ffcf4f'} color="black" size={'lg'} p={10} onClick={handleAddSubscribe}>Subscribe</Button>
-              </InputGroup>
-            </GridItem>
-          </Grid>
-        </Box>
-      </Box>
 
       {/* Footer Information */}
       <Box maxW="1200px" mx="auto" textAlign={isLargerThan980 ? 'left' : 'center'} px={isLargerThan980 ? 4 : 2} mt={isLargerThan980 ? 10 : "-50"}>

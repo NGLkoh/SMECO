@@ -12,3 +12,15 @@
 .dAZYal {
     width: 179%!important;
 }
+
+@media (max-width:961px)  { 
+
+.sc-bcXHqe.bncmtB.react-search-box-dropdown {
+    position: absolute;
+    top: 51px;
+    z-index: 5;
+    width: 92%!important;
+}
+
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */ }

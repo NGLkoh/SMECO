@@ -19,7 +19,7 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
 	        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
 			const blog = await axios.post('/api/template/create', { id: checking, data: html , title: title, fileName: fileName, description: description})
             console.log(blog)
-               await axios.post('/api/search/create', { title: title, details: description , link: `/blog-user/${blog.data.result._id}`	})
+               await axios.post('/api/search/create', { title: title, details: description , link: `/blog-client/${blog.data.result._id}`	})
 
 			refresh()
             back(false)

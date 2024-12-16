@@ -24,7 +24,7 @@ export const MessageGuestToAdmin = ({ user}) => {
   useEffect(() => {
       getMessage();
       socketInitialize()
-  }, [newMessage]);
+  }, []);
 
    const socketInitialize = async () => {
         socket = io()
@@ -76,11 +76,14 @@ export const MessageGuestToAdmin = ({ user}) => {
         
       });
       setNewMessage('');
-      socket.emit('add-chat', {result: res.result})
+      socket.emit('add-chat', user._id)
    }
-   
   };
-   console.log(message, 'message')
+
+
+  const handleTextArea = (e) => {
+    setNewMessage(e.target.value);
+  }
   return (
     <Flex h="85vh" bg="white">
       <Box w="30%" bg="white" p={4} color="black" overflowY="auto">
@@ -119,18 +122,18 @@ export const MessageGuestToAdmin = ({ user}) => {
               </Flex>
             </Flex>
             <Box h="calc(100% - 120px)" overflowY="auto" p={4}>
-              {message ? (message.find(o => o._id ===  selectedChat._id).convo).map((msg, index) => (
+              {message ? message[0] ? (message.find(o => o._id ===  selectedChat._id).convo).map((msg, index) => (
                 <Flex key={index} justify={msg.id === user._id ? 'flex-end' : 'flex-start'} mb={4}>
                   <Box bg={msg.id === user._id ? 'blue.100' : 'gray.200'} p={3} borderRadius="md" maxW="70%">
                     <Text>{msg.message}</Text>
                     <Text fontSize="xs" color="gray.500">{msg.time}</Text>
                   </Box>
                 </Flex>
-              )) : ""}
+              )) :"" : ""}
             </Box>
             <Flex align="center" p={4} borderTop="1px solid gray">
-              <Textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type a message..." bg="white" resize="none" mr={2} />
-              <Button colorScheme="blue" onClick={sendMessage}>Send</Button>
+              <Textarea value={newMessage} onChange={(e) => handleTextArea(e)} placeholder="Type a message..." bg="white" resize="none" mr={2} />
+              <Button colorScheme="blue" onClick={() => sendMessage()}>Send</Button>
             </Flex>
           </>
         ) : (
