@@ -5,6 +5,11 @@
     width: 257px;
 }
 
+.bjMFWr > ul > li {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: auto!important;
+}
 
 .bncmtB > ul > li {
   height: auto !important;
@@ -22,5 +27,33 @@
     width: 360px!important;
 }
 
+.bjMFWr > ul > li {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: auto!important;
+}
 
+
+.iiTrXQ {
+    font-size: 14px;
+    padding: 10px 20px;
+    height: 40px;
+    border: 1px solid rgba(202, 202, 202, 0.59);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    width: 180%!important;
+}
+
+.bjMFWr > ul > li {
+    padding: 10px 20px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(202, 202, 202, 0.59);
+    height: 40px;
+    display: flex
+;
+    -webkit-box-align: center;
+    align-items: center;
+    height: auto!important;
+}
 /* tablet, landscape iPad, lo-res laptops ands desktops */ }

@@ -145,7 +145,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 
                     }}
                     dropdownBoxStyles={{
-                      maxHeight: '200px',
+                      Height: 'auto',
                       overflowY: 'auto',
                       position: 'absolute',
                       top: '50px',
