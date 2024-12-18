@@ -142,7 +142,8 @@ const DetailFooter = () => {
       {/* Footer Information */}
       <Box maxW="1200px" mx="auto" textAlign={isLargerThan980 ? 'left' : 'center'} px={isLargerThan980 ? 4 : 2} mt={isLargerThan980 ? 10 : "-50"}>
         <Box>
-          <Text>InBox FoodHub, Bayan Luma 8, Emilio Aguinaldo Hi-way, City of Imus</Text>
+          <Text>The District Imus
+2/F Alagang Ayala Land Center, E.Aguinaldo Highway cor. Daang Hari Road, Anabu II-D, Imus, Cavite 4103</Text>
         </Box>
 
         {/* Social Media Icons */}

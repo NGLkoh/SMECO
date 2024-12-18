@@ -211,8 +211,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
  }
   const handleNext = async() => {
       	 const res = await axios.post('/api/users/checker', {email : email})
-    console.log(res.data.message , "TANGINA MU CHECKER")
-
+  
      if(res.data.message !== 'true') { 
       setNext(2)
     } else {

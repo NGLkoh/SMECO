@@ -63,7 +63,8 @@ const ContactPage = () => {
                   Cavite Association of Producers & Entrepreneurs - CAPE
                 </Text>
                 <Text mt={4}>
-                  <b>Address:</b> InBox FoodHub, Bayan Luma 8, Emilio Aguinaldo Hi-way, City of Imus <br />
+                  <b>Address:</b> The District Imus
+2/F Alagang Ayala Land Center, E.Aguinaldo Highway <br />cor. Daang Hari Road, Anabu II-D, Imus, Cavite 4103 <br />
                   <b>Mobile:</b> +63936 9940234 <br />
                   <b>Email:</b> capeest.2021@gmail.com <br />
                   <b>Facebook:</b>{' '}

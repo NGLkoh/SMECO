@@ -83,7 +83,7 @@ Dive into our posts to explore the artistry behind Filipino goods, the people wh
               w={'100%'}
               h={'100%'}
               src={
-                '/man-in-white-dress-shirt-sitting-on-black-rolling-chair-while-facing-black-computer-set-and-smiling-840996.png'
+                'BANNER2.png'
               }
             />
           </Box>
