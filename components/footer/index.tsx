@@ -11,6 +11,7 @@ const DetailFooter = () => {
 
   const handleAddSubscribe = async () => {
     try {
+      if(email){ 
       const checker: AxiosResponse<{ message: string }> = await axios.post("/api/subscribe/searchByEmail", { email });
       console.log(checker, "checker");
 
@@ -22,8 +23,19 @@ const DetailFooter = () => {
           duration: 9000,
           isClosable: true,
         });
+	  } else {
+
+          toast({
+          title: 'Enter Email please',
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       } else {
         try {
+ if(email){ 
           const res = await axios.post("/api/subscribe/create", { email, sub: 1 });
           toast({
             title: 'Successfully Subscribed to Newsletter',
@@ -32,6 +44,16 @@ const DetailFooter = () => {
             duration: 9000,
             isClosable: true,
           });
+  } else {
+
+          toast({
+          title: 'Enter Email please',
+          status: 'warning',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
         } catch (e) {
           console.log(e);
         }

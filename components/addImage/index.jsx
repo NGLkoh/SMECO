@@ -49,7 +49,9 @@ const AddNewImageSection = ({user}) => {
 	};
 
   const uploadS3 = async () => {
-        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
+        try {
+         
+    await axios.post('/api/s3/upload', {filename: fileName, base64: file})
         const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
         toast({
           title: 'Upload Success',
@@ -59,7 +61,16 @@ const AddNewImageSection = ({user}) => {
           isClosable: true,
         })
          getMedia()
-        console.log(store)
+        }catch(e) {
+         toast({
+          title: 'Upload  unsuccessful exceed 100mb',
+          status: 'warning',
+	      position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        })
+     }
+    
    }
   const handleSelect = (id) => {
       setSelected(id)

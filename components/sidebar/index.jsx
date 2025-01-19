@@ -396,7 +396,7 @@ const  handleLogout = async () => {
   <MenuItem onClick={handleChangePassword}>Change password</MenuItem>
   <MenuItem onClick={handleLogout}>Sign out</MenuItem>
 
-  <ChangePasswordModal  openPassword={isPassOpen}  closeEditEventModal={closeModalPassword} />
+  <ChangePasswordModal  openPassword={isPassOpen} username={user ? user._id: ""} closeEditEventModal={closeModalPassword} />
 </MenuList>
           </Menu>
         </Flex>
