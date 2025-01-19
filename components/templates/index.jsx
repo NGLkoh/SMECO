@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import {
   TableContainer, Table, Select, useDisclosure, Flex, useToast,
    Thead, IconButton, HStack, Box, Tr, Th, Button, 
-  ChakraProvider, Tbody, Td
+  ChakraProvider, Tbody, Td, Text, Grid,GridItem
 } from '@chakra-ui/react'
+import { FileUploader } from "react-drag-drop-files";
 import { Editor } from '@tinymce/tinymce-react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { FaPen, FaTrash, FaEye, FaDotCircle, FaImage , FaHamburger, FaDonate, FaEllipsisH } from 'react-icons/fa';
@@ -15,7 +16,7 @@ import moment from 'moment'
 import HtmlModalTemplate from '../modal/htmlCode'
 import EditTemplate from '../modal/editTemplateDescription'
 import ImageInsertTemplate from '../modal/ImageTemplate'
-
+const fileTypes = ["JPG", "PNG", "GIF"];
 const Template = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [category, setCategoryState] = useState([])
@@ -435,7 +436,14 @@ const Template = ({ user }) => {
         
         </Box>
       )}
-
+      <Text>Grid Image</Text>
+      <Box>
+         <Grid templateColumns='repeat(3, 1fr)' gap={2}>
+			<GridItem w='100%' h='400' bg='white.500' textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text p={12}>  <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} height={'500px'}/></Text></GridItem>
+			<GridItem w='100%' h='400' bg='white.500' textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text> <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} /></Text></GridItem>
+			<GridItem w='100%' h='400' bg='white.500'  textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text> <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} /></Text></GridItem>
+		</Grid>
+      </Box>
       <HtmlModalTemplate modalHtmlTemplate={modalHtmlTemplate} setRawHtml={setRawHtml} html={html} handleSaveHtml={handleSaveHtml} closeModalHtml={closeModalHtml} />
       <SaveTemplate closeModal={closeModal} refresh={getTemplate} back={setAdd} html={html} user={user} modalTemplate={modalTemplate} />
      <EditTemplate editState={editState} refresh={getTemplate} modalEditTemplate={modalEditTemplate} closeEditModal={closeEditModal}/>
