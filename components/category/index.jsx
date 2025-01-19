@@ -41,13 +41,12 @@ const Category = () => {
   return (
     <ChakraProvider>
       <Box width="100%" height={isLargerThan980 ? "523px" : "auto"} w="100%">
-        <Box m="10%">
+        <Box m="7%">
           <Box width="80%" margin="auto">
             <Text
               align="center"
-              fontSize="30px"
-              fontFamily="sans-serif"
-              fontWeight={600}
+              fontSize="35px"
+              fontWeight={700}
               marginBottom={10}
             >
               List of Categories
@@ -83,10 +82,10 @@ const Category = () => {
                           onClick={() => redirectToCategoryPage(category._id)} // Use onClick to redirect to category page
                         >
                           <CardBody>
-                            <Heading mb={2} fontSize="25px" size="lg" fontWeight={600}>
+                            <Heading mb={2} fontSize="25px" size="lg" fontWeight={500}>
                               {category.title}
                             </Heading>
-                            <Button mt={4} colorScheme="yellow">
+                            <Button mt={4} colorScheme="yellow"  fontWeight={500}>
                               View Posts
                             </Button>
                           </CardBody>

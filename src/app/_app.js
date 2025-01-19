@@ -5,7 +5,6 @@ import { Box, ChakraProvider, extendTheme} from '@chakra-ui/react'
 import '../resources/css/style.css'
 import Header from '../../components/header/index'
 
-
 const theme = extendTheme({
 	styles: {
 	 global: () => ({
@@ -21,6 +20,7 @@ App.prototype = {
 }
 
 function App({pageProps}) {
+	<GlobalStyle />
   const Layout = Component.Layout || EmptyLayout
  return (<ChakraProvider theme={theme}> <Box><Layout> <Header/><Component {...pageProps} /> 
 

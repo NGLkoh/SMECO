@@ -12,6 +12,7 @@ const ImageBanner = () => {
       align="center"
       justify="space-between"
       bg="white"
+      marginTop={-120}
       p={{ base: 6, md: 10 }}
       mx="auto"
 	  pt={isLargerThan980 ? '' : 70}	
@@ -43,7 +44,7 @@ const ImageBanner = () => {
       <Box
         flex="1"
         bg="yellow.300"
-        p={8}
+        p={50}
         borderRadius="lg"
         boxShadow="xl"
       >
@@ -53,21 +54,24 @@ const ImageBanner = () => {
         <Heading fontSize={isLargerThan980 ? '1.5em' : 15} mb={isLargerThan980 ? '' : 7 } color="gray.800" pb={10} pr={isLargerThan980 ? '' : 15} pl={isLargerThan980 ? '' : 15}>
           It started out as a simple idea and evolved into passion
         </Heading>
-        <Text fontSize="md" color="gray.700" mb={isLargerThan980 ? '' : 20} textAlign={'justify'} pr={isLargerThan980 ? '' : 15} pl={isLargerThan980 ? '' : 15}>
+        <Text fontSize="md" color="gray.700" mb={isLargerThan980 ? '' : 20} textAlign={'justify'} pr={isLargerThan980 ? '' : 15} pl={isLargerThan980 ? '' : 15} paddingBottom={20}>
           Founded in the heart of the Philippines, Ollocal PH started with a simple yet powerful vision: to empower local businesses, artisans, and service providers by giving them a digital space to shine. Recognizing the untapped potential in neighborhoods across the country, the team behind Ollocal PH sought to create a platform that not only showcased local talents but also fostered meaningful connections between businesses and their communities.
         </Text>
         <Link
           href="/blog"
-          fontSize="lg"
-          fontWeight="bold"
+          fontSize="18px"
+          fontWeight="600"
           textDecoration="none"
-          bg="yellow.400"
+          bg="#ffd050"
           color="gray.800"
           px={6}
           py={3}
 pr={isLargerThan980 ? '' : 15} pl={isLargerThan980 ? '' : 15}
-          borderRadius="full"
-          _hover={{ bg: 'yellow.500', textDecoration: 'none' }}
+          _hover={{ bg: '#ffd050.500', textDecoration: 'none' }}
+          paddingTop="10px" 
+          paddingBottom="10px"
+          paddingRight="20px"
+          paddingLeft="20px"
         >
           Discover More Story
         </Link>

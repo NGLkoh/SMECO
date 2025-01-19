@@ -12,7 +12,7 @@ const Banner = () => {
       <Box w="100%" backgroundSize="cover">
         <Flex
           w="full"
-          h={isLargerThan980 ? '100vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
+          h={isLargerThan980 ? '85vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
           backgroundImage="url('BANNER2.png')"
           backgroundSize="cover"
           backgroundPosition="center"
