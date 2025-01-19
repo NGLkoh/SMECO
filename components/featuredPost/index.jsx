@@ -108,10 +108,12 @@ const FeaturedPost = () => {
                     <Text fontSize="2xl" fontFamily="sans-serif" ml={2} mb={6} fontWeight={600}>
                       All Posts
                     </Text>
-                    <Stack spacing="4" className="feature-scroll">
+                    <Stack spacing="4" className="feature-scroll" >
                       {template.map((row, key) => (
                         <Box
                           cursor="pointer"
+                     
+                       
                           p={4}
                           background={key === selectedKey ? '#f7f7f7' : ''}
                           key={row._id}
@@ -134,7 +136,7 @@ const FeaturedPost = () => {
                           >
                             {row.title}
                           </Text>
-                          <Text pt="2" fontSize="14"  fontWeight="normal" color="gray.600" >
+                          <Text pt="2" fontSize="14"  fontWeight="normal" color="gray.600" height={'76px'} overflow={'hidden'}>
                             {row.description}
                           </Text>
                         </Box>

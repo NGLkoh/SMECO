@@ -59,7 +59,7 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 import { BsFillCalendarEventFill, BsNewspaper } from 'react-icons/bs';
 import { FiPocket } from 'react-icons/fi';
-
+import ChangePasswordModal from '../modal/changepassword'
 
 
 const LinkItems = [
@@ -220,6 +220,7 @@ const NavItem = ({
   selectedId, 
   setSelectedId}) => {
   const [isOpen, setIsOpen] = useState(false);
+ 
 
   // Handle toggling of sublinks
   const toggleSubLinks = (linkId) => {
@@ -233,6 +234,9 @@ const NavItem = ({
       setNav(linkId);        // Update navigation state
     }
   };
+
+
+
 
   return (
     <Box>
@@ -312,7 +316,14 @@ const NavItem = ({
 
 
 const MobileNav = ({ user, onOpen }) => {
+  const [isPassOpen, setPassword] = useState(false);
+    const closeModalPassword = () => {
+    setPassword(false)
+  }
 
+  const handleChangePassword = () => {
+  setPassword(true)
+ }
 const  handleLogout = async () => {
 	 await axios.post('/api/users/logout')
 	 let origin = window.location.origin
@@ -382,7 +393,10 @@ const  handleLogout = async () => {
     <MenuItem isDisabled>Profile</MenuItem> // Optional fallback if user._id is not available
   )}
   <MenuDivider />
+  <MenuItem onClick={handleChangePassword}>Change password</MenuItem>
   <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+
+  <ChangePasswordModal  openPassword={isPassOpen}  closeEditEventModal={closeModalPassword} />
 </MenuList>
           </Menu>
         </Flex>

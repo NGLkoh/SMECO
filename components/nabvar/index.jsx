@@ -70,7 +70,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
     res.map((row) =>
       setRecords((oldState) => [
         ...oldState,
-        { key: row.title, value: `${row.title} : ${row.details}`, link: row.link },
+        { key: row.title, value: `${row.title} : ${row.details.split(" ").splice(0,10).join(" ") + "..."}`, link: row.link },
       ])
     );
   };
@@ -147,6 +147,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                     dropdownBoxStyles={{
                       Height: 'auto',
                       overflowY: 'auto',
+                      display: 'none',
                       position: 'absolute',
                       top: '50px',
                       width: isLargerThan980 ? '100%' : '140%',

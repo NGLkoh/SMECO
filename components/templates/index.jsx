@@ -439,7 +439,7 @@ const Template = ({ user }) => {
       <Text>Grid Image</Text>
       <Box>
          <Grid templateColumns='repeat(3, 1fr)' gap={2}>
-			<GridItem w='100%' h='400' bg='white.500' textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text p={12}>  <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} height={'500px'}/></Text></GridItem>
+			<GridItem w='100%' h='400' bg='white.500' textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text p={12}>  <FileUploader xxxxxxxxxx  name="file" types={fileTypes} height={'500px'}/></Text></GridItem>
 			<GridItem w='100%' h='400' bg='white.500' textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text> <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} /></Text></GridItem>
 			<GridItem w='100%' h='400' bg='white.500'  textAlign={'center'} paddingTop={'35%'} border={'2px dotted #d7d7d7'}><Text> <FileUploader  classes="custom-fileUploader"  name="file" types={fileTypes} /></Text></GridItem>
 		</Grid>
