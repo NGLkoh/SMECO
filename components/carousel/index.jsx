@@ -58,7 +58,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
       text: " CAPE creates a space where members can have real conversations and learn from one another by sharing their experiences, successes, and failures.",
       image:
         'https://www.freepik.com/free-photos-vectors/pastel-yellow-background',
-      link: '/homepage', // Define the link here
+      link: '/', // Define the link here
     },
   ];
 

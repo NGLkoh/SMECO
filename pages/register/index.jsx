@@ -199,7 +199,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			isClosable: true,
 			})
 
-	      isLargerThan980 ? router.push('/dashboard') :  router.push('/homepage')
+	      isLargerThan980 ? router.push('/dashboard') :  router.push('/')
          } else {
   			toast({
 			title: 'Incorrect Code!',

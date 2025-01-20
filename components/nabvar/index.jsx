@@ -99,7 +99,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
           <HStack spacing={8} alignItems={'center'}>
             <Box display={isSearchOpen ? 'none' : 'block'}>
               {/* Hide logo when search bar is open */}
-              <Link href="/../homepage">
+              <Link href="/">
                 <Image src="/logo.png" className="logo" w="150px" />
               </Link>
             </Box>
@@ -112,7 +112,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                 spacing={4}
                 display={{ base: 'none', md: 'flex' }}
               >
-                <Link href="/../homepage">Home</Link>
+                <Link href="/">Home</Link>
                 <Link href="/../blog">Blog</Link>
                 <Link href="/../about-us">About Us</Link>
                 <Link href="/../contact-us">Contact Us</Link>
@@ -237,7 +237,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4} color={'white'}>
               <NavLink color={'white'}>
-                <Link href="/../homepage">Home</Link>
+                <Link href="/">Home</Link>
               </NavLink>
               <NavLink color={'white'}>
                 <Link href="/../blog">Blog</Link>

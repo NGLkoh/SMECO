@@ -77,7 +77,7 @@ const DetailFooter = () => {
       <Box maxW="1200px" mx="auto" px={4} paddingBottom={20}>
         <Flex justify={["center", "flex-end"]} align="center" paddingRight={isLargerThan980 ? 0 : 26}>
           <HStack spacing={20} fontSize={isLargerThan980 ? "" : "13px"}>
-            <Link href="/../homepage">Home</Link>
+            <Link href="/">Home</Link>
             <Link href="/../blog">Blog</Link>
             <Link href="/../about-us">About us</Link>
             <Link href="/../contact-us">Contact us</Link>
