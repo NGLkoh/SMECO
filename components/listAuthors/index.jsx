@@ -48,9 +48,6 @@ const [user, setUsers] = useState([])
 				<Heading mb={2} size='md' fontWeight={600}> {e.firstName}  {e.lastName}</Heading>
 				{/* <Text fontSize={'10px'} >{e.sub}</Text>  */}
 				<Box textAlign={'center'} position={'relative'} mt={2} w={'100%'}>
-						<Text display={'inline-block'} m={1}> <FaFacebook/></Text>  
-						<Text display={'inline-block'} m={1}> <FaInstagram/></Text>
-						<Text display={'inline-block'} m={1}> <FaLinkedin/></Text>
                 </Box>
 				</CardBody>
 			</Card></Link>

@@ -51,12 +51,12 @@ const FeaturedSecond = () => {
 
   return (
  <ChakraProvider>
-    <Container maxW={'7xl'} p="12">
+    <Container maxW={'7xl'} p="12" mb={20}>
        
       <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts</Heading>
        {
              templateState ?   templateState.map(row => (
-      <Link color='teal.500' key={row._id} href={`/blog-client/${row._id}`}>  
+      <Link color='black' key={row._id} href={`/blog-client/${row._id}`}>  
       <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
