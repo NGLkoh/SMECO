@@ -40,14 +40,14 @@ const Category = () => {
 
   return (
     <ChakraProvider>
-      <Box width="100%" height={isLargerThan980 ? "523px" : "auto"} w="100%">
-        <Box m="7%">
+      <Box marginBottom={90} width="100%" height={isLargerThan980 ? "523px" : "auto"} w="100%">
+        <Box m="7%"  >
           <Box width="80%" margin="auto">
             <Text
               align="center"
               fontSize="35px"
               fontWeight={700}
-              marginBottom={10}
+              marginBottom={30}
             >
               List of Categories
             </Text>
