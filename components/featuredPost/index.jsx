@@ -14,7 +14,7 @@ import {
 import axios from 'axios';
 import '../../resources/css/featured.css';
 import TemplateMobile from './featured/index';
-
+import LazyLoad from 'react-lazyload';
 const FeaturedPost = () => {
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)');
   const [template, setTemplateState] = useState([]);
@@ -52,6 +52,7 @@ const FeaturedPost = () => {
                   {template.map((row, key) =>
                     key === selectedKey ? (
                       <Box key={key} p={4}>
+                        <LazyLoad height={500}>
                        <Image
                         src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`}
                         alt={row.title}
@@ -60,7 +61,7 @@ const FeaturedPost = () => {
                         maxHeight="500px"  // Set a maximum height so it doesn’t stretch
                         objectFit="cover"  // Ensures proper aspect ratio without blank space
                         borderRadius="lg"
-                      />
+                      /></LazyLoad>
                         <Text
                           mt={4}
                           fontSize="lg"

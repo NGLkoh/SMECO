@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Box, Text, Avatar, Link, Button, Image, useMediaQuery} from '@chakra-ui/react'
 import axios from "axios";
-
+import LazyLoad from 'react-lazyload';
 const TemplateMobile = () => {
 
 const [template, setTemplate] = useState([])
