@@ -57,11 +57,10 @@ import NewsLetter from '../newletter/index'
 import MessageGuestToAdmin from '../messageGuestToAdmin/index'
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
-import { BsFillCalendarEventFill, BsNewspaper } from 'react-icons/bs';
+import { BsBook, BsFillCalendarEventFill, BsNewspaper } from 'react-icons/bs';
 import { FiPocket } from 'react-icons/fi';
 import ChangePasswordModal from '../modal/changepassword'
-
-
+import Subscribe from '../list-of-subscribe/index'
 const LinkItems = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard' },
   {
@@ -105,6 +104,7 @@ const LinkAdmin = [
   { name: 'Message', icon: FiMessageSquare, id: 'guestToAdminMessage'},
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
  { name: 'Newsletter', icon: BsNewspaper,  id: 'admin-newletter' },
+ { name: 'List of Subscribers', icon:  BsBook,  id: 'subscribe-list' },
 ];
 
 const SidebarContent = ({ onClose, user, count, setNav }) => {
@@ -558,6 +558,8 @@ export const SidebarWithHeader = () => {
         { nav === 'comment' && (<Comments user={user}/>)}
         { nav ==='admin-newletter' && (<NewsLetter user={user}/>)}
         { nav ==='guestToAdminMessage' && (<MessageGuestToAdmin user={user}/>)}
+        { nav ==='subscribe-list' && (<Subscribe user={user}/>)}
+
       </Box>
 
        { user ? user.userType == "user" && nav !== 'guestMessage' && (<ContactAdmin user={user}/>) : ""}

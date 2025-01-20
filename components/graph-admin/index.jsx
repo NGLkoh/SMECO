@@ -63,7 +63,7 @@ export default function ContainerGraph() {
       </GridItem>
         <GridItem  w='100%'>
 			<Box width={'100%'}  overflow={'scroll'} height={'400px'} border={'1px solid #d5d4d4'} p={4} position={'relative'}> 
-			{templateState.map((data) => (<Link href={`/blog-client/${data._id}`} key={data._id}><Box   width={'500px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
+			{templateState.map((data) => (<Link href={`/blog-client/${data._id}`} key={data._id}><Box   width={'750px'}  borderTop={'1px solid #b2afaf'} borderBottom={'1px solid #b2afaf'} p={2}>
 				<Box position={'absolute'}> 
                  <Box fontWeight={600}>{moment(data.date).format("Do")}</Box>	   
 				 <Box  opacity={0.8}>{moment(data.date).format("MMM")}</Box>	 

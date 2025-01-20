@@ -70,7 +70,7 @@ const AdminEvents = ({user}) => {
 		</HStack>
 
   
-    <TableContainer mt={6}>
+    <TableContainer ml={5} mr={5} mt={6} width={'97%'} whiteSpace={'normal'}>
      	<Table variant='simple' border={'2px solid #dddddd'}>
 			<Thead border={'2px solid #dddddd'}>
 			<Tr border={'2px solid #dddddd'}>
