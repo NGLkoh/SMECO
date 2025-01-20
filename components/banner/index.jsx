@@ -13,7 +13,7 @@ const Banner = () => {
         <Flex
           w="full"
           h={isLargerThan980 ? '85vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
-          backgroundImage="url('BANNER2.png')"
+          backgroundImage="url('BANNER2.webp')"
           backgroundSize="cover"
           backgroundPosition="center"
           position="relative" // Enable positioning for the overlay
