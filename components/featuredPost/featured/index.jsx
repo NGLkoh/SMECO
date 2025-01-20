@@ -38,8 +38,10 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
         
 		  { template.map((row, key) =>  <div key={key}>
             <Box  margin={"auto"} p={2} >  
+           	 <LazyLoad height={300}>
 				<Image src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${row.fileName}`} width={'100%'}
                             height={'300px'}/>
+             </LazyLoad>
 				{/* <Text fontSize={9} mt={4}>  By Juan Dela Cruz   l   May 23, 2024 </Text> */}
 				<Text fontWeight={600} mt={4}> 	{row.title} </Text>
 				<Text mt={4} fontSize={10}>     {row.description} </Text>
