@@ -20,7 +20,6 @@ App.prototype = {
 }
 
 function App({pageProps}) {
-	<GlobalStyle />
   const Layout = Component.Layout || EmptyLayout
  return (<ChakraProvider theme={theme}> <Box><Layout> <Header/><Component {...pageProps} /> 
 
