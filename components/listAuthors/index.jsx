@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Box, Text, ChakraProvider, Avatar, Card, Heading, CardBody, useMediaQuery, Link} from '@chakra-ui/react'
+import {Box, Text, Avatar, Card, Heading, CardBody, useMediaQuery, Link} from '@chakra-ui/react'
 import { FaFacebook, FaInstagram , FaLinkedin} from 'react-icons/fa'; 
 
 import axios from "axios";
@@ -33,7 +33,7 @@ const [user, setUsers] = useState([])
   };
 
   return (
-    <ChakraProvider>
+    <>
 	<Box width={'100%'} height={isLargerThan980 ? "523px" : "auto"} w={'auto'} >
 		<Box m={'10%'}>  
 		<Box width={'80%'}  margin={'auto'} >
@@ -58,7 +58,7 @@ const [user, setUsers] = useState([])
 	  </Box>
 	  </Box>
 	</Box>
-</ChakraProvider>
+</>
   );
 }
 

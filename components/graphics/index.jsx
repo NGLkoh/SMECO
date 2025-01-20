@@ -1,9 +1,9 @@
 'use client';
 import FeaturedPost from '../../components/featuredPost/index'
 import React from 'react';
-import { Image, Box, ChakraProvider, Icon, Text, SimpleGrid, Heading } from '@chakra-ui/react';
-import { FaLightbulb, FaHandshake, FaBullhorn, FaRocket, FaUsers, FaChartLine, FaPen, FaPaperPlane, FaCheckCircle, FaShareAlt } from 'react-icons/fa';
-
+import { Image, Box, Icon, Text, SimpleGrid, Heading } from '@chakra-ui/react';
+import { FaLightbulb, FaHandshake, FaBullhorn, FaPen, FaPaperPlane, FaCheckCircle, FaShareAlt } from 'react-icons/fa';
+import LazyLoad from 'react-lazyload';
 const Graphics = () => {
   const featuresSmall = [
     {
@@ -49,7 +49,7 @@ const Graphics = () => {
   ];
 
   return (
-    <ChakraProvider>
+    <>
       <Box width={"100%"} height={"auto"} position={"relative"} padding="2% 0 0 0">
         {/* Heading Section */}
         <Box textAlign="center" py={10}>
@@ -144,7 +144,9 @@ const Graphics = () => {
       justifyContent={["center", null, null]}  // Add this to center the content on mobile
     >
       <Box flex={1} textAlign="center">
-        <Image src={feature.image} alt={feature.title} boxSize="90%" marginBottom={4} />
+         <LazyLoad height={200}>
+            <Image src={feature.image} alt={feature.title} boxSize="90%" marginBottom={4} />
+         </LazyLoad>
       </Box>
       <Box flex={1} padding={4} textAlign="center">
         <Heading as="h2" size="lg" marginBottom={4}>
@@ -158,7 +160,7 @@ const Graphics = () => {
 
        
       </Box>
-    </ChakraProvider>
+    </>
   );
 };
 

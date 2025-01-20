@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Box, Stack, Flex, Button, Text, VStack, ChakraProvider, Link, useMediaQuery } from '@chakra-ui/react';
-
+import { Box, Stack, Flex, Button, Text, VStack, Link, useMediaQuery } from '@chakra-ui/react';
+import LazyLoad from 'react-lazyload';
 const Banner = () => {
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)');
   const [isLargerThan600] = useMediaQuery('(min-width: 600px)'); // Added for better handling on smaller screens
 
   return (
-    <ChakraProvider>
       <Box w="100%" backgroundSize="cover">
+        <LazyLoad height={1200}>
         <Flex
           w="full"
           h={isLargerThan980 ? '85vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
@@ -116,8 +116,8 @@ const Banner = () => {
             </Stack>
           </VStack>
         </Flex>
+       </LazyLoad>
       </Box>
-    </ChakraProvider>
   );
 };
 

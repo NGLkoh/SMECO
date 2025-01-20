@@ -9,21 +9,22 @@ import Graphics from '../../components/graphics/index'
 import ImageBanner from '../../components/imagebanner'
 import ListAuthor from '../../components/listAuthors'
 import Footer from '../../components/footer'
+import Head from 'next/head'
 
+import {
+  ChakraProvider
+} from '@chakra-ui/react'
 export default class index extends Component  {
   render () {
-		return (<> 
-		
+	return (<ChakraProvider> 	
 	<Navbar page='homepage' />
 	<Banner/>
 	<Graphics/>
-
 	<Category/>
 	<ImageBanner/>
 	<ListAuthor/>
 	<Footer/>
-	
-	</>)
+	</ChakraProvider>)
   }
 }
 

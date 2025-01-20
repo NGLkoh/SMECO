@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Text, Card, ChakraProvider, Heading, CardBody, Button, useMediaQuery, Spinner, Alert, AlertIcon, Link } from "@chakra-ui/react";
+import { Box, Text, Card, Heading, CardBody, Button, useMediaQuery, Spinner, Alert, AlertIcon, Link } from "@chakra-ui/react";
 import axios from "axios";
 
 const Category = () => {
@@ -39,7 +39,7 @@ const Category = () => {
   };
 
   return (
-    <ChakraProvider>
+    <>
       <Box marginBottom={90} width="100%" height={isLargerThan980 ? "523px" : "auto"} w="100%">
         <Box m="7%"  >
           <Box width="80%" margin="auto">
@@ -100,7 +100,7 @@ const Category = () => {
           </Box>
         </Box>
       </Box>
-    </ChakraProvider>
+    </>
   );
 };
 

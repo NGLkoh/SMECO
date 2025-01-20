@@ -11,7 +11,7 @@ const Header = () => {
 		<meta property="og:title" content="Elevate your Business Marketing Game"/> 	
 		<meta property="og:description" content="Discover innovative strategies and tools to boost your brand's visibility and engagement."/> 	
 		<meta property="og:url" content="https://www.markadongpinoy.com/"/> 	
-		<meta property="og:site_name" content="Prosperna Marketing Site"/> 	
+		<meta property="og:site_name" content="Markadongpinoy Site"/> 	
 		<meta property="article:modified_time" content="2024-11-07T04:07:00+00:00"/> 
 		<meta property="og:image" content="https://www.markadongpinoy.com/BANNER2.png"/> 
 		<meta property="og:image:width" content="1111"/> 	

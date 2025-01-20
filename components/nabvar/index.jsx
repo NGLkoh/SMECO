@@ -32,7 +32,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { FaSearch } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import LazyLoad from 'react-lazyload';
 const NavLink = (props) => {
   const { children } = props;
 
@@ -76,8 +76,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   };
 
   return (
-
-    <ChakraProvider>
+  
       <Box
         bg={useColorModeValue('#232536', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -100,7 +99,9 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
             <Box display={isSearchOpen ? 'none' : 'block'}>
               {/* Hide logo when search bar is open */}
               <Link href="/">
+                  <LazyLoad height={150}>
                 <Image src="/logo.png" className="logo" w="150px" />
+               </LazyLoad>
               </Link>
             </Box>
           </HStack>
@@ -252,6 +253,5 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
           </Box>
         ) : null}
       </Box>
-    </ChakraProvider>
   );
 }

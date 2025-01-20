@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Flex, Image, Text, Heading, Link, useMediaQuery } from '@chakra-ui/react';
-
+import LazyLoad from 'react-lazyload';
 const ImageBanner = () => {
   // Use Chakra's useMediaQuery hook to detect screen size
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)');
@@ -23,6 +23,7 @@ const ImageBanner = () => {
     >
       {/* Left Section - Image */}
       <Box flex="1" overflow="hidden" borderRadius="lg">
+        <LazyLoad height={1200}>
         <Image
           src="ollocal.JPG" // Replace with the actual image URL
           alt="Description"
@@ -38,6 +39,7 @@ const ImageBanner = () => {
             borderRadius: '10',
           }}
         />
+    </LazyLoad>
       </Box>
 
       {/* Right Section - Text */}
