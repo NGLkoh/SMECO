@@ -70,7 +70,6 @@ const onChangeRecapcha = () => {
 const toast = useToast()
   const handleOpenChat =  async () => {
 
-
  if (!recaptchaVerified) {
     toast({
       title: "Please complete the reCAPTCHA.",
@@ -80,7 +79,10 @@ const toast = useToast()
       isClosable: true,
     });
     return;
+
+
 } else {
+ if(name) {
   console.log(userId)
     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     var uniqid = randLetter + Date.now();
@@ -96,7 +98,17 @@ const toast = useToast()
     setMessageId(res.data.result._id)
     getMessage(uniqid)
     setOpen(true);
-  }
+  } else {
+
+  toast({
+      title: "Please add email.",
+      description: "Warning",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    });
+ }
+}
   };
 
   return (
