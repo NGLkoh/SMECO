@@ -42,10 +42,10 @@ const Graphics = () => {
   ];
 
   const steps = [
-    { icon: FaPen, title: "Write" },
-    { icon: FaPaperPlane, title: "Post" },
-    { icon: FaCheckCircle, title: "Review" },
-    { icon: FaShareAlt, title: "Share" },
+    { icon: FaPen, title: "Write", description: "Start by sharing your unique value with the world. This one step will help you clearly communicate what makes your business stand out." },
+    { icon: FaPaperPlane, title: "Post", description: "Regularly post about what you do and how it benefits your audience. Consistency is key to keeping your business top of mind." },
+    { icon: FaCheckCircle, title: "Review", description: "Take time to review your marketing efforts. See what’s working and what’s not, so you can refine your strategy and keep growing your reach." },
+    { icon: FaShareAlt, title: "Share", description: "Don’t hesitate to share your success stories, tips, and updates. The more you share, the more your business will grow through word of mouth and increased visibility." },
   ];
 
   return (
@@ -61,15 +61,13 @@ const Graphics = () => {
           </Text>
         </Box>
 
-
-	
         {/* Features Small Section */}
         <section>
           <Box paddingY={20} paddingX={20} padding={["0 5%", "0 10%", "0 20%"]}>
             <SimpleGrid columns={[1, 2, 3]} spacing={8}>
               {featuresSmall.map((feature, index) => (
                 <Box
-				 marginBottom={5}
+                  marginBottom={5}
                   key={index}
                   backgroundColor="white"
                   padding={6}
@@ -94,9 +92,10 @@ const Graphics = () => {
           </Box>
         </section>
 
-		<FeaturedPost/>
-		 {/* Work Process Section */}
-		 <section className="mini" id="work-process" style={{ backgroundColor: '#ffd050', width: '100%' }}>
+        <FeaturedPost />
+
+        {/* Work Process Section */}
+        <section className="mini" id="work-process" style={{ backgroundColor: '#ffd050', width: '100%' }}>
           <Box textAlign="center" py={10} px={["10%", "10%", "15%"]}>
             <Heading as="h1" size="xl" marginBottom={4} color="gray.700">
               Work Process
@@ -121,7 +120,7 @@ const Graphics = () => {
                     {step.title}
                   </Text>
                   <Text fontSize="sm" color="gray.600">
-                    Streamline your efforts with this key step designed for success in business.
+                    {step.description}
                   </Text>
                 </Box>
               ))}
@@ -129,36 +128,32 @@ const Graphics = () => {
           </Box>
         </section>
 
-
-
-		{featuresBig.map((feature, index) => (
-  <section key={index}>
-    <Box 
-      display="flex" 
-      flexDirection={feature.reverse ? "row-reverse" : "row"} 
-      alignItems="center" 
-      py={10} 
-      paddingTop={'20px'}
-	  paddingBottom={'20px'}
-      padding={["0 10%", "0 15%", "0 20%"]}
-      justifyContent={["center", null, null]}  // Add this to center the content on mobile
-    >
-      <Box flex={1} textAlign="center">
-         <LazyLoad height={200}>
-            <Image src={feature.image} alt={feature.title} boxSize="90%" marginBottom={4} />
-         </LazyLoad>
-      </Box>
-      <Box flex={1} padding={4} textAlign="center">
-        <Heading as="h2" size="lg" marginBottom={4}>
-          {feature.title}
-        </Heading>
-        <Text>{feature.description}</Text>
-      </Box>
-    </Box>
-  </section>
-))}
-
-       
+        {featuresBig.map((feature, index) => (
+          <section key={index}>
+            <Box 
+              display="flex" 
+              flexDirection={feature.reverse ? "row-reverse" : "row"} 
+              alignItems="center" 
+              py={10} 
+              paddingTop={'20px'}
+              paddingBottom={'20px'}
+              padding={["0 10%", "0 15%", "0 20%"]}
+              justifyContent={["center", null, null]}
+            >
+              <Box flex={1} textAlign="center">
+                <LazyLoad height={200}>
+                  <Image src={feature.image} alt={feature.title} boxSize="90%" marginBottom={4} />
+                </LazyLoad>
+              </Box>
+              <Box flex={1} padding={4} textAlign="center">
+                <Heading as="h2" size="lg" marginBottom={4}>
+                  {feature.title}
+                </Heading>
+                <Text>{feature.description}</Text>
+              </Box>
+            </Box>
+          </section>
+        ))}
       </Box>
     </>
   );

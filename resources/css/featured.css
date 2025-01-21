@@ -14,3 +14,13 @@
   scrollbar-width: none;  /* Firefox */
 	height: 650px;
 }
+.slick-prev:before, .slick-next:before {
+  font-family: 'slick';
+  font-size: 25px;
+  line-height: 1;
+  margin-left: -5px;
+  opacity: .75;
+  color: #e1d312;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
