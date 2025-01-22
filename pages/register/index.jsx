@@ -254,6 +254,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 				</Box>
 				</Box>
                 <Box textAlign={'center'} mt={4} >
+
 				<Box margin={"auto"} pl={ isLargerThan980 ? '34%' : '6%'} mb={"20px"}>
 					<ReCAPTCHA
 					sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
