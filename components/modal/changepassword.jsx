@@ -3,29 +3,16 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Modal ,useToast, ModalOverlay, Text, ModalContent, ModalHeader, ModalCloseButton,Input,Textarea,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
+import {Modal ,useToast, ModalOverlay, Text,Box , ModalContent, ModalHeader, ModalCloseButton,Input,Textarea,  ModalBody , ModalFooter, Button, InputGroup, InputRightElement} from '@chakra-ui/react'
 import InputCustom from '../inputs/index'
 import axios from 'axios'
+import { FaEye, FaLock } from 'react-icons/fa'
 const ChangePasswordModal =  ({openPassword, closeEditEventModal, username}) => {
  const toast = useToast()
 const [newPassword , setNewPassword] = useState("")
 const [confirmPassword , setConfirmPassword] = useState("")
-
-const fields = [{
-			function: setNewPassword,
-			title: 'Enter New Password',
-			placeholder: 'Enter new password',
-            type: 'password',
-			value: newPassword
-}, 
-{
-			function: setConfirmPassword,
-			title: 'Confirm New Password',
-			placeholder: 'Confirm New Password',
-             type: 'password',
-			value: confirmPassword
-}]
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
 const handleUpdatePassword = async () => {
       if(newPassword == confirmPassword) {
         const params = window.location.href.split('/')
@@ -62,8 +49,52 @@ const handleUpdatePassword = async () => {
           <ModalCloseButton />
            
           <ModalBody>
-            { fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
-  
+  <Box margin={"auto"} p={2}>  
+								<Box mt={2} >
+					<Text mb="8px">Change Password</Text>
+					<InputGroup>
+					 <Input
+						value={newPassword}
+						type={showPassword ? "text" : "password"}
+						onChange={(e) => setNewPassword(e.target.value)}
+						bg="#FFFFFF"
+						color="#4A5568"
+						borderRadius={8}
+						placeholder="******"
+						pt={'3px'}
+						size="sm"
+                        
+						mb={4}
+					/>
+					<InputRightElement pb={'6px'}>
+					 { showPassword ? <FaLock   color='black' onClick={() => setShowPassword(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword(true)}/>}
+					</InputRightElement>
+                </InputGroup>
+                </Box>
+              </Box>
+               <Box margin={"auto"} p={2}>  
+				<Box mt={2} >
+              	<Text mb="8px">Confirm Password</Text>
+					<InputGroup>
+					 <Input
+						value={confirmPassword}
+						type={showPassword1 ? "text" : "password"}
+						onChange={(e) => setConfirmPassword(e.target.value)}
+						bg="#FFFFFF"
+						color="#4A5568"
+						borderRadius={8}
+						placeholder="******"
+						pt={'3px'}
+						size="sm"
+                        
+						mb={4}
+					/>
+					<InputRightElement pb={'6px'}>
+					 { showPassword1 ? <FaLock   color='black' onClick={() => setShowPassword1(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword1(true)}/>}
+					</InputRightElement>
+                </InputGroup>
+                </Box>
+              </Box>
           </ModalBody>
 
           <ModalFooter>
