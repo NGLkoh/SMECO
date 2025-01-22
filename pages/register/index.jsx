@@ -108,13 +108,13 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
 	const handleSendingEmail =  async () => {
 		let val = Math.floor(1000 + Math.random() * 9000);
-		console.log(val);
+
          try{ await axios.post('/api/s3/upload', {filename: filenameBP, base64: businessPermit})}
          catch(e) { console.log(e)}
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
          catch(row) {console.log(row) }
 
-		try{ const res = await axios.post('/api/users/create', 
+		 const res = await axios.post('/api/users/create', 
 		{   username: email,
             password: password,
             email: email, 
@@ -124,8 +124,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
             businessPermit: filenameBP, 
             barangayClearance: filenameBC  })
 
-        setBtn1(true)} 
-         catch(row) {console.log(row) }
+        setBtn1(true)
 		if(res.data.message === 'true') {
            setBtn1(false)
          try{ await axios.post('/api/email/sendEmail', { email:  email, code: val})
@@ -151,7 +150,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
     }
     const handleLoginGoogle = async (credentialRes) => {
     const creds = jwtDecode(credentialRes.credential)
-    try{ const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });} catch(e) { console.log(e)}
+    try{ const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
     if (res.data.message === 'false') {
     setModalRegisterLogin(true)
     setDecodeCredentials(jwtDecode(credentialRes.credential)) 
@@ -175,11 +174,11 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
           isClosable: true,
         });
       }
-	}
+	}} catch(e) { console.log(e)}
   }
 	const handleVerify = async () => {
         try{ const res = await axios.post('/api/users/verify', {code: parseFloat(`${code1}${code2}${code3}${code4}`)})
-		} catch(e){console.log(e)}
+	
 		if(res.data.message === 'true') {
         
           toast({
@@ -199,14 +198,14 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			duration: 9000,
 			isClosable: true,
            })
-		 }
+		 }	} catch(e){console.log(e)}
 	}
 
   const onChangeRecapcha = () => {
  setRecaptchaVerified(true); 
  }
   const handleNext = async() => {
-    try{ const res = await axios.post('/api/users/checker', {email : email})}catch(e){console.log(e)}
+    try{ const res = await axios.post('/api/users/checker', {email : email})
      
      if(res.data.message !== 'true') { 
       setNext(2)
@@ -218,7 +217,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			duration: 9000,
 			isClosable: true,
            })
-   }
+   }}catch(e){console.log(e)}
   }
    return (<StrictMode> <GoogleOAuthProvider clientId={CLIENT_ID}> <Box><ChakraProvider>
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh">
