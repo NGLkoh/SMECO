@@ -85,15 +85,17 @@ const handleChangeBarangayClearance = async (file)  => {
 			code: 1111, 
             businessPermit: filenameBP, 
             barangayClearance: filenameBC  })
+           toast({
+				title: 'Successfully Created your account wait for the admin to verify your account',
+				status: 'success',
+				position: 'top-right',
+				duration: 9000,
+				isClosable: true,
+		   })
+			closeModalRegisterLogin()
+
 		} catch(e) { console.log(e)}
-          toast({
-          title: 'Success',
-          status: 'Successfully created',
-	      position: 'top-right',
-          duration: 9000,
-          isClosable: true,
-        })
-        closeModalRegisterLogin()
+         
       } else {
 				toast({
 						title: 'Email already existed!',
