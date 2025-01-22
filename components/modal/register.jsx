@@ -99,7 +99,7 @@ const handleChangeBarangayClearance = async (file)  => {
           duration: 9000,
           isClosable: true,
         })
-         window.location.href = "/dashboard"
+        closeModalRegisterLogin()
       } else {
 				toast({
 						title: 'Email already existed!',
