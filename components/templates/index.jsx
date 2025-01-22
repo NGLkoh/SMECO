@@ -75,11 +75,28 @@ const Template = ({ user }) => {
   }
 
   const getCategory = async () => {
+
+     const defaultCategory = [
+		{
+			"_id": "FB",
+			"title": "Food and Beverages"		
+		},
+        {
+			"_id": "CPC",
+			"title": "Cosmetics and Personal Care"		
+		},
+        {
+			"_id": "FA",
+			"title": "Fashion and Apparel"		
+		},
+        ]
+
+
     try {
       let checking = user.ids ? user.ids : user._id
       const res = await axios.post('/api/category/search', { id: checking })
-      setCategoryState(res.data.result)
-      console.log(res)
+      setCategoryState([...res.data.result, ...defaultCategory])
+      console.log(res.data.result, category)
     } catch (e) { }
   }
 
