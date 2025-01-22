@@ -22,8 +22,11 @@ const BlogClient = () => {
 
   const fetchIntialComment = async () => {
     let params = window.location.href.split('/')
-    const res = await axios.post('/api/comment/search', { id: params[4] })
+   try{ 
+     const res = await axios.post('/api/comment/search', { id: params[4] })
     setComments(res.data.result)
+    } catch(e) { console.log(e)}
+  
   }
 
 

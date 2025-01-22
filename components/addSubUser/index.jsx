@@ -22,6 +22,7 @@ const AddSubUser = ({user}) => {
  
    const getTemplate = async () => {
 	try {
+      
 		const res = await axios.post('/api/users/subUser', {ids: user._id})
 	   setUsers(res.data.result)
 		console.log(res)

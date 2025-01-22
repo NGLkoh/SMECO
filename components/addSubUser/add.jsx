@@ -40,6 +40,7 @@ const AddSubUserIndex = ({ user, getTemplate, setAdd }) => {
   ];
 
   const handleVerify = async () => {
+    try{
     const res = await axios.post('/api/users/add-subUser', {
       ids: user,
       username: email,
@@ -71,6 +72,7 @@ const AddSubUserIndex = ({ user, getTemplate, setAdd }) => {
         isClosable: true,
       });
     }
+	}catch(e) {console.log(e)}
   };
 
   return (

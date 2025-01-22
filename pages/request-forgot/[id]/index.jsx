@@ -32,8 +32,10 @@ const fields = [{
 const handleUpdatePassword = async () => {
       if(newPassword == confirmPassword) {
         const params = window.location.href.split('/')
-        const res = await axios.post('/api/users/reset-password-update', {token : params[4], password: newPassword})
-        window.location.href = "/login"
+        try{ 
+      const res = await axios.post('/api/users/reset-password-update', {token : params[4], password: newPassword})
+
+      window.location.href = "/login"
           toast({
 			title: "Success",
 			description: "Success reset password",
@@ -41,6 +43,10 @@ const handleUpdatePassword = async () => {
 			duration: 2000,
 			isClosable: true,
 		  });  
+
+      } catch(e) {console.log(e)}
+   
+     
 
      } else {
 	toast({

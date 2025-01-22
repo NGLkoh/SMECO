@@ -21,11 +21,12 @@ useEffect(() => {
 
 const fetchProfile = async () => {
          const params = window.location.href.split('/')
-         const res = await axios.post('/api/users/usersById', {id: params[4]})
+        try{const res = await axios.post('/api/users/usersById', {id: params[4]})
          setProfile(res.data.result[0].profile[0])
          setProfileList(res.data.result[0].profile)
          setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName ? res.data.result[0].lastName  : ""}`)
-}
+       } catch(e){console.log(e)}
+  }
 
 
 const BlogTags = (props) => {
@@ -47,7 +48,7 @@ const fetchIntialBlog = async() => {
 	let params = window.location.href.split('/')
     console.log(params[4], "USER ID")
    setTemplateState([])
-    const res = await axios.post('/api/template/search', {id: params[4]})
+  try{const res = await axios.post('/api/template/search', {id: params[4]})
    res.data.result.map(async (tem) => {
              let categoryRes 
 	         if(tem.category_id){
@@ -55,7 +56,7 @@ const fetchIntialBlog = async() => {
                  setTemplateState((prevState) => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
              }
          }) 
-		console.log(res.data.result, "template")
+	} catch(e){console.log(e)}
   }
 
    return (<Box><ChakraProvider>

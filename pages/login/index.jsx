@@ -42,9 +42,8 @@ const Login = () => {
 const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   const handleLoginGoogle = async (credentialRes) => {
     const creds = jwtDecode(credentialRes.credential)
-   console.log(creds, "email")
-    const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
-
+     try{  const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
+  
     if (res.data.message === 'false') {
     setModalRegisterLogin(true)
     setDecodeCredentials(jwtDecode(credentialRes.credential)) 
@@ -70,6 +69,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
         });
       }
 	}
+   }catch(e){console.log(e)}
   }
 
   const handleLogin = async () => {

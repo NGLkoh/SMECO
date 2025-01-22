@@ -39,6 +39,8 @@ const FeaturedSecond = () => {
 
     const getTemplate = async () => {
        setTemplateState([])
+        try{
+   
          const res = await axios.post('/api/template/searchAll')
          res.data.result.map(async (tem) => {
              let categoryRes
@@ -47,6 +49,7 @@ const FeaturedSecond = () => {
                  setTemplateState(prevState => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
              }
          }) 
+		}catch(e){console.log(e)}
 	 }
 
   return (
