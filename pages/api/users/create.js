@@ -4,6 +4,8 @@ export default async function handler(req, res) {
 const UAT_URL = process.env.UAT_URL;
 	let { email, password, firstName, lastName, code, ids, businessPermit, barangayClearance } = req.body;
      console.log(email , " test")
+    const currentTime = new Date(); 
+
      try {
        const response = await axios.post(`${UAT_URL}/user/create`, {
          username: email,
@@ -17,7 +19,8 @@ const UAT_URL = process.env.UAT_URL;
          profileSet: 0,
          active: false,
 		 userType: 'user',
-		 ids: ids
+		 ids: ids,
+         "dateCreated": currentTime
          // add more data if needed
        });
        console.log(response.data);

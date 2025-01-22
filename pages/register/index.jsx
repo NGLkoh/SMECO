@@ -4,7 +4,7 @@
 
 import ReCAPTCHA from "react-google-recaptcha";
 import React, {StrictMode, useState} from 'react'
-import {Box, Text, ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack  } from '@chakra-ui/react'
+import {Box, Text, Input ,ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack, InputGroup, InputRightElement  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
 import axios from "axios";
 import Navbar from '../../components/nabvar';
@@ -16,6 +16,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import SaveGoolgeLogin  from '../../components/modal/register'
+import { FaEye, FaLock } from "react-icons/fa";
 const fileTypes = ["JPG", "PNG", "GIF"];
 const CLIENT_ID = "512275838388-jal64cg1khdpl58kt7ba9c1k2ge0u041.apps.googleusercontent.com"
 
@@ -39,7 +40,7 @@ const Register = () => {
 	const [ source, setSource] = useState('')
 	const [ open, setOpen] = useState(false)
     const [ btn , setBtn1] = useState(false)
-
+    const [showPassword, setShowPassword] = useState(false);
 const [recaptchaVerified, setRecaptchaVerified] = useState(false);
     const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
   const [decodeCredentials, setDecodeCredentials] = useState({});
@@ -61,18 +62,6 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			title: 'Enter your Business Email',
 			placeholder: 'business@gmail.com',
 			value: email
-		},
-		{
-		function: setPassword,
-		title: 'Create your Password',
-		placeholder: '*******',
-		value: password,
-		type: 'password', // Fixed: type should be a string
-		helperText: 'Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.',
-		validate: (value) => {
-			const isValid = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(value);
-			return isValid ? '' : 'Password does not meet the requirements.'; // Fixed: Ensure the validate function returns a string message
-		}
 		}
 	]
   const closeModalRegisterLogin = () =>  {
@@ -240,24 +229,46 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			    { next == 1  ? (  
             <Box pl={isLargerThan980 ? '25%' : 5} pr={ isLargerThan980 ? '25%' : 5}> 
               <Text fontSize='4xl' fontWeight={600}  mb={2} textAlign={'center'}>Register</Text>	     
-				{ fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
-			  
+  { fields.map((row, index) => (<InputCustom key={index} data={row}/>))  }
+                    <Box margin={"auto"} p={2}>  
+								<Box mt={2} >
+					<Text mb="8px">Password</Text>
+					<InputGroup>
+					 <Input
+						value={password}
+						type={showPassword ? "text" : "password"}
+						onChange={(e) => setPassword(e.target.value)}
+						bg="#FFFFFF"
+						color="#4A5568"
+						borderRadius={8}
+						placeholder="******"
+						pt={'3px'}
+						size="sm"
+                        
+						mb={4}
+					/>
+					<InputRightElement pb={'6px'}>
+					 { showPassword ? <FaLock   color='black' onClick={() => setShowPassword(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword(true)}/>}
+					</InputRightElement>
+				</InputGroup>
+				</Box>
+				</Box>
                 <Box textAlign={'center'} mt={4} >
-	<Box margin={"auto"} pl={ isLargerThan980 ? '34%' : '6%'} mb={"20px"}>
-		<ReCAPTCHA
-        sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
-        onChange={ () => onChangeRecapcha()}
-      /></Box>
+				<Box margin={"auto"} pl={ isLargerThan980 ? '34%' : '6%'} mb={"20px"}>
+					<ReCAPTCHA
+					sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
+					onChange={ () => onChangeRecapcha()}
+     				 /></Box>
 				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
-     toast({
-		title: "Please complete the reCAPTCHA",
-		description: "Warning",
-		status: "warning",
-		duration: 2000,
-		isClosable: true,
-		});
-      return;
-    } else { handleNext()}}}>
+				toast({
+					title: "Please complete the reCAPTCHA",
+					description: "Warning",
+					status: "warning",
+					duration: 2000,
+					isClosable: true,
+					});
+				return;
+				} else { handleNext()}}}>
 						Next
 				</Button>
              <Box  className="google-container"

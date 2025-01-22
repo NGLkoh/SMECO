@@ -8,7 +8,7 @@ import axios from "axios";
 import AddSubUserIndex from './add'
 import { FaTrash, FaEye  } from 'react-icons/fa'; 
 import ModalImage from '../modal/viewModalImage'
-
+import moment from 'moment';
 const AddSubUserAdmin = ({user}) => {
    const { isOpen, onOpen, onClose } = useDisclosure()
    const toast = useToast()
@@ -93,6 +93,7 @@ const AddSubUserAdmin = ({user}) => {
         <Th  color={'white'}>Business Permit</Th>
         <Th  color={'white'}>Barangay Clearance</Th>
         <Th  color={'white'}>User Type</Th>
+        <Th  color={'white'}>Date Created</Th>
         <Th  color={'white'}>Verify</Th>
         <Th  color={'white'} >Action</Th>
       </Tr>
@@ -119,7 +120,7 @@ const AddSubUserAdmin = ({user}) => {
                <FaEye/>
             </Button></Td>
 		<Td >{e.userType}</Td>
-
+        <Td >{moment(e.dateCreated).calendar()}</Td>
 	    <Td > <Select placeholder='Select option'  onChange={(r) => handleConfirmUser(e._id, r.target.value, `${e.firstName} ${e.lastName}`)} value={e.active} width={'150px'}>
 				<option value={false}> unverify</option> 
 				<option value={true}> verified</option> 

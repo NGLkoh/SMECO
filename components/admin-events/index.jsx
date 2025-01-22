@@ -46,6 +46,7 @@ const AdminEvents = ({user}) => {
   const getEvent = async () => {
 
     try {
+        setEvent([])
       const res = await axios.post('/api/event/event');
 
      res.data.result.map(async(row) => { 
@@ -56,7 +57,7 @@ const AdminEvents = ({user}) => {
       });
            resUser.data.result.map(user => userListName.push(`${user.firstName} ${user.lastName}`))
       })
-        console.log({...row, usersList : userListName ? userListName : []} , "TEST")
+      
         setEvent(oldState => [...oldState, {...row, usersList : userListName}])
     })
       
@@ -201,7 +202,7 @@ const AdminEvents = ({user}) => {
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${e.fileName}`}
 			/>   </Td>
                 <Td border={'2px solid #dddddd'}>{e.description}</Td>
-                <Td border={'2px solid #dddddd'}><FaEye onClick={() => handleViewUser(e.usersList)}/></Td>
+                <Td border={'2px solid #dddddd'}><Text cursor={'pointer'} onClick={() => handleViewUser(e.usersList)}> View Participant</Text></Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
                 <Td border={'2px solid #dddddd'}> <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e)}>
                   <FaPen/>

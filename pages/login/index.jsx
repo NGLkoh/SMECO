@@ -3,8 +3,10 @@
 import React, { useState, StrictMode } from 'react';
 import {
   Box,
+   InputGroup,
   Text,
   ChakraProvider,
+InputRightElement,
   Grid,
   GridItem,
   Image,
@@ -17,7 +19,7 @@ import {
 	useMediaQuery,Link,
 } from '@chakra-ui/react';
 import '../../resources/css/style.css';
-import { FaGoogle } from 'react-icons/fa';
+import { FaEye, FaGoogle, FaLock } from 'react-icons/fa';
 import CaptionCarousel from '../../components/carousel';
 import axios from 'axios';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -29,6 +31,7 @@ const CLIENT_ID = "512275838388-jal64cg1khdpl58kt7ba9c1k2ge0u041.apps.googleuser
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [decodeCredentials, setDecodeCredentials] = useState({});
   const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
   const toast = useToast();
@@ -157,17 +160,24 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                 mb={4}
               />
               <Text mb="8px">Password</Text>
-              <Input
-                value={password}
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                bg="#FFFFFF"
-                color="#4A5568"
-                borderRadius={8}
-                placeholder="******"
-                size="sm"
-                mb={4}
-              />
+                 <InputGroup>
+					 <Input
+						value={password}
+						type={showPassword ? "text" : "password"}
+						onChange={(e) => setPassword(e.target.value)}
+						bg="#FFFFFF"
+						color="#4A5568"
+						borderRadius={8}
+						placeholder="******"
+                        pt={'3px'}
+						size="sm"
+						mb={4}
+					/>
+					<InputRightElement pb={'6px'}>
+					 { showPassword ? <FaLock   color='black' onClick={() => setShowPassword(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword(true)}/>}
+					</InputRightElement>
+				</InputGroup>
+              
               <Flex justifyContent="space-between" mb={4}>
                 <Spacer />
                 <Text as="a" href="/forgot-password" color="blue.400">
