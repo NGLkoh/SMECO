@@ -162,7 +162,7 @@ const AdminEvents = ({user}) => {
   return (
     <Box >
 		<HStack spacing={8} alignItems={'center'}>
-		  <Box fontSize={'xl'} fontWeight={'600'}>Announcement</Box>
+		  <Box fontSize={'xl'} fontWeight={'600'}>Announcements</Box>
 		</HStack>
 
       <Box mt={2}>
@@ -192,17 +192,20 @@ const AdminEvents = ({user}) => {
 
           {
           event ?  event.map(e => <Tr key={e._id}>
-				<Td border={'2px solid #dddddd'}>{e.title}</Td>
+				<Td  textAlign={'center'} border={'2px solid #dddddd'}>{e.title}</Td>
 				<Td > <Image
-			height="60px"
+			height="200px"
              ml={2}
 			onClick={ ()  => handleOpenModal('Banner', e.fileName)}
 			cursor={'pointer'}
+      
             display={'inline-block'}
 			src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${e.fileName}`}
 			/>   </Td>
-                <Td border={'2px solid #dddddd'}>{e.description}</Td>
-                <Td border={'2px solid #dddddd'}><Text cursor={'pointer'} onClick={() => handleViewUser(e.usersList)}> View Participant</Text></Td>
+                <Td border={'2px solid #dddddd'} maxWidth="200px" wordWrap="break-word" whiteSpace="normal">
+  {e.description}
+</Td>
+                <Td border={'2px solid #dddddd'} textAlign={'center'}><Text cursor={'pointer'} onClick={() => handleViewUser(e.usersList)}> View Participant</Text></Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
                 <Td border={'2px solid #dddddd'}> <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e)}>
                   <FaPen/>
