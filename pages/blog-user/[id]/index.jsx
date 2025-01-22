@@ -24,7 +24,7 @@ const fetchProfile = async () => {
          const res = await axios.post('/api/users/usersById', {id: params[4]})
          setProfile(res.data.result[0].profile[0])
          setProfileList(res.data.result[0].profile)
-         setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName}`)
+         setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName ? res.data.result[0].lastName  : ""}`)
 }
 
 

@@ -50,8 +50,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
     setDecodeCredentials(jwtDecode(credentialRes.credential)) 
     } else if (res.data.message === 'true') {
       if (res.data.result[0].active) {
-        let origin = window.location.origin;
-        window.location.href = `${origin}/dashboard`;
+        window.location.href = "/dashboard";
         toast({
           title: 'Login Success',
           status: 'success',
@@ -185,7 +184,6 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                 </Text>
               </Flex>
               <Button
-                colorScheme="teal"
                 width="100%"
                 bg="#FFD050"
                 onClick={handleLogin}
