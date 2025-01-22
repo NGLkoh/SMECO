@@ -74,7 +74,7 @@ const fetchIntialBlog = async() => {
        <Container maxW={'7xl'} p="12">
        <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>My Posts</Heading>
        {templateState ?   templateState.map((row, key) => (
-      <Link key={key} color='teal.500' href={`/blog-client/${row._id}`}>  
+      <Link key={key} color='black' href={`/blog-client/${row._id}`}>  
       <Box
         marginTop={{ base: '1', sm: '5' }}
         display="flex"
