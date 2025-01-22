@@ -224,10 +224,10 @@ export default function BasicStatistics({ user }) {
               Interaction Graph
             </chakra.h2>
             <Flex gap={2}>
-              <Button size="sm" onClick={exportAsPNG} colorScheme="blue">
+              <Button size="sm" onClick={exportAsPNG} >
                 Export as PNG
               </Button>
-              <Button size="sm" onClick={exportAsCSV} colorScheme="green">
+              <Button size="sm" onClick={exportAsCSV} >
                 Export as CSV
               </Button>
             </Flex>

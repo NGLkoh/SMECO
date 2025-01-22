@@ -14,7 +14,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../resources/css/style.css';
 import axios from 'axios';
-
 export default function ContainerGraph({ user }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [templateState, setTemplateState] = useState([]);

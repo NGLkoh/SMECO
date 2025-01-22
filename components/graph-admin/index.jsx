@@ -179,7 +179,6 @@ export default function ContainerGraph() {
 
       <Button
         mt={5}
-        colorScheme="teal"
         onClick={exportPostsData}
       >
         Export Monthly Data
