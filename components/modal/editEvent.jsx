@@ -61,7 +61,7 @@ const EditEvent =  ({modalEditEvent, closeEditEventModal, refresh, editState}) =
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleEditEvent()}>
+			 <Button mr={3} onClick={() => handleEditEvent()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditEventModal()}>

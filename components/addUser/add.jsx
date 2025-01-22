@@ -43,6 +43,7 @@ const AddSubUserIndex = ({user, getTemplate, setAdd}) => {
 	]
 
  const handleVerify = async () => {
+        try{
 		 const res = await axios.post('/api/users/create', {ids: user, username: email, password: password, email: email, firstName: firstName, lastName: lastName  })
 		if(res.data.message === 'true') {
           toast({
@@ -63,6 +64,7 @@ const AddSubUserIndex = ({user, getTemplate, setAdd}) => {
           isClosable: true,
         })
 		}
+		} catch(e) {console.log(e)}
  }
 
    return ( <>

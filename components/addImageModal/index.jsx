@@ -30,9 +30,11 @@ const AddNewImageSection = ({user, image, setImage}) => {
   const getMedia = async () => {
 
    let checking = user.ids ? user.ids : user._id
-       const res = await axios.post('/api/s3/search', {id: checking})
+     try{ const res = await axios.post('/api/s3/search', {id: checking}) 
+       
 	   setMedia(res.data.result)
 		console.log(res)
+      }catch(e) {console.log(e)}
    }
 
   const handleChange = async (file)  => {
@@ -77,11 +79,14 @@ const AddNewImageSection = ({user, image, setImage}) => {
     }
  
   }
-    console.log(image)
- 
+
   const uploadS3 = async () => {
+        try{  
         await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-        const store = await axios.post('/api/s3/store', {id: user._id, key: fileName})
+        const store = await axios.post('/api/s3/store', {id: user._id, key: fileName}) 
+        }catch(e) {console.log(e)}
+       
+     
         toast({
           title: 'Upload Success',
           status: 'success',
@@ -90,7 +95,6 @@ const AddNewImageSection = ({user, image, setImage}) => {
           isClosable: true,
         })
          getMedia()
-        console.log(store)
    }
 
   return (	

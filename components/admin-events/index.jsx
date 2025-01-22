@@ -140,7 +140,7 @@ const AdminEvents = ({user}) => {
       position: 'top',
       render: () => (
         <Box color="white" p={3} bg="red.500" borderRadius="md">
-          <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
+          <Button onClick={() => confirmDelete(id)} >Yes, Delete</Button>
           <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
         </Box>
       ),

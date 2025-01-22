@@ -22,6 +22,7 @@ const AddSubUser = ({user}) => {
  
    const getTemplate = async () => {
 	try {
+      
 		const res = await axios.post('/api/users/subUser', {ids: user._id})
 	   setUsers(res.data.result)
 		console.log(res)
@@ -76,7 +77,7 @@ const AddSubUser = ({user}) => {
         </Flex>
 
 { add == false ? (<TableContainer>
-  <Table variant='striped' colorScheme='$F7FAFC'>
+  <Table variant='striped'>
     <Thead>
       <Tr  background='#232536' color={'white'}>
         <Th  color={'white'}>Name</Th>

@@ -114,7 +114,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
          catch(row) {console.log(row) }
 
-		 const res = await axios.post('/api/users/create', 
+		try{ const res = await axios.post('/api/users/create', 
 		{   username: email,
             password: password,
             email: email, 
@@ -124,10 +124,11 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
             businessPermit: filenameBP, 
             barangayClearance: filenameBC  })
 
-        setBtn1(true)
+        setBtn1(true)} 
+         catch(row) {console.log(row) }
 		if(res.data.message === 'true') {
            setBtn1(false)
-		 await axios.post('/api/email/sendEmail', { email:  email, code: val})
+         try{ await axios.post('/api/email/sendEmail', { email:  email, code: val})
           toast({
           title: 'Code has been sent to your Email Successfullly',
           status: 'success',
@@ -135,6 +136,8 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
           duration: 9000,
           isClosable: true,
         })
+       }catch(e) {console.log(e)}
+		 
          } else {
 	       toast({
           title: 'Error server',
@@ -146,11 +149,9 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 		}
 		 setNext(3)
     }
-   const handleLoginGoogle = async (credentialRes) => {
+    const handleLoginGoogle = async (credentialRes) => {
     const creds = jwtDecode(credentialRes.credential)
-   console.log(creds, "email")
-    const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });
-
+    try{ const res = await axios.post('/api/users/login', { username: creds.email, password: 'google' });} catch(e) { console.log(e)}
     if (res.data.message === 'false') {
     setModalRegisterLogin(true)
     setDecodeCredentials(jwtDecode(credentialRes.credential)) 
@@ -177,7 +178,8 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 	}
   }
 	const handleVerify = async () => {
-		 const res = await axios.post('/api/users/verify', {code: parseFloat(`${code1}${code2}${code3}${code4}`)})
+        try{ const res = await axios.post('/api/users/verify', {code: parseFloat(`${code1}${code2}${code3}${code4}`)})
+		} catch(e){console.log(e)}
 		if(res.data.message === 'true') {
         
           toast({
@@ -204,8 +206,8 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
  setRecaptchaVerified(true); 
  }
   const handleNext = async() => {
-      	 const res = await axios.post('/api/users/checker', {email : email})
-  
+    try{ const res = await axios.post('/api/users/checker', {email : email})}catch(e){console.log(e)}
+     
      if(res.data.message !== 'true') { 
       setNext(2)
     } else {
@@ -260,7 +262,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 					sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
 					onChange={ () => onChangeRecapcha()}
      				 /></Box>
-				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
+				<Button  isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
 				toast({
 					title: "Please complete the reCAPTCHA",
 					description: "Warning",
@@ -306,10 +308,10 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 					</Box>
 
 					<Box  mt={6}> 
-					<Button   onClick={() => setNext(1)}  margin={2} colorScheme='teal' mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
+					<Button   onClick={() => setNext(1)}  margin={2} mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
 					</Button> 
-					<Button margin={2} disabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+					<Button margin={2} disabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Continue
 					</Button>
 			 	</Box>

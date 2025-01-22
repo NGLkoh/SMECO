@@ -20,7 +20,7 @@ const BlogTags = (props) => {
     <HStack spacing={2} marginTop={marginTop}>
       {tags.map((tag) => {
         return (
-          <Tag size={'md'} variant="solid" colorScheme="orange" key={tag}>
+          <Tag size={'md'} variant="solid"  key={tag}>
             {tag}
           </Tag>
         )
@@ -39,6 +39,8 @@ const FeaturedSecond = () => {
 
     const getTemplate = async () => {
        setTemplateState([])
+        try{
+   
          const res = await axios.post('/api/template/searchAll')
          res.data.result.map(async (tem) => {
              let categoryRes
@@ -47,6 +49,7 @@ const FeaturedSecond = () => {
                  setTemplateState(prevState => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
              }
          }) 
+		}catch(e){console.log(e)}
 	 }
 
   return (

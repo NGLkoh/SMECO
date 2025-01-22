@@ -20,7 +20,7 @@ const ImageInsertTemplate = ({imageModal, closeModalImage, user , handleInset , 
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' onClick={() => handleInset()}>
+			 <Button  onClick={() => handleInset()}>
               Insert
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModalImage()}>

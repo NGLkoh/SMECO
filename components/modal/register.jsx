@@ -6,10 +6,10 @@ import ReCAPTCHA from "react-google-recaptcha";
 import React, {useState} from 'react'
 import {Modal, Box , useMediaQuery, ModalOverlay, Text, ModalContent, ModalHeader, ModalCloseButton,Input,useToast,  ModalBody , ModalFooter, Button, ChakraProvider} from '@chakra-ui/react'
 import axios from "axios";
-const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
 
 const SaveGoolgeLogin =  ({modalRegisterLogin, closeModalRegisterLogin, decodeCredentials}) => {
+   const fileTypes = ["JPG", "PNG", "GIF"];
    const [ title, setTitle] = useState()
    const [ description, setDescription] = useState()
    const [file, setFile ] = useState()
@@ -18,17 +18,9 @@ const SaveGoolgeLogin =  ({modalRegisterLogin, closeModalRegisterLogin, decodeCr
    const [barangayClearance, setBarangayClearabce] = useState(String)
    const [filenameBP, setFilenameBP] = useState()  
    const [filenameBC, setFilenameBC] = useState()  
-const [recaptchaVerified, setRecaptchaVerified] = useState(false);
-const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
-  const toast = useToast();
-   const handleSaveTemplate = async () => {
-            let checking = user.ids ? user.ids : user._id
-	        await axios.post('/api/s3/upload', {filename: fileName, base64: file})
-			await axios.post('/api/template/create', { id: checking, data: html , title: title, fileName: fileName, description: description})
-			refresh()
-            back(false)
-            closeModal()
-   }
+   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+   const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
+   const toast = useToast();
 
 const handleChangeBusinessPermit = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
@@ -79,27 +71,31 @@ const handleChangeBarangayClearance = async (file)  => {
          catch(e) { console.log(e)}
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
          catch(row) {console.log(row) }
-          const res = await axios.post('/api/users/checker', {email : decodeCredentials.email})
+
+     const res = await axios.post('/api/users/checker', {email : decodeCredentials.email})
   
      if(res.data.message !== 'true') { 
+        try{
 		 const res = await axios.post('/api/users/create', 
 		{   username: decodeCredentials.email,
             password: 'google',
             email: decodeCredentials.email, 
-            firstName: decodeCredentials.given_name, 
-            lastName:  decodeCredentials.family_name, 
+            firstName: decodeCredentials.given_name ?  decodeCredentials.given_name : "" , 
+            lastName:  decodeCredentials.family_name ?  decodeCredentials.family_name : "", 
 			code: 1111, 
             businessPermit: filenameBP, 
             barangayClearance: filenameBC  })
-		
-          toast({
-          title: 'Success',
-          status: 'Successfully created',
-	      position: 'top-right',
-          duration: 9000,
-          isClosable: true,
-        })
-         window.location.href = "/dashboard"
+           toast({
+				title: 'Successfully Created your account wait for the admin to verify your account',
+				status: 'success',
+				position: 'top-right',
+				duration: 9000,
+				isClosable: true,
+		   })
+			closeModalRegisterLogin()
+
+		} catch(e) { console.log(e)}
+         
       } else {
 				toast({
 						title: 'Email already existed!',
@@ -147,7 +143,7 @@ const handleChangeBarangayClearance = async (file)  => {
 </Box>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleRegisterGoogle()}>
+			 <Button  mr={3} onClick={() => handleRegisterGoogle()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModalRegisterLogin()}>

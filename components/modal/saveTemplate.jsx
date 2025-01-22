@@ -59,7 +59,7 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleSaveTemplate()}>
+			 <Button  mr={3} onClick={() => handleSaveTemplate()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModal()}>

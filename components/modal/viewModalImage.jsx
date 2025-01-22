@@ -22,7 +22,7 @@ const ModalImage = ({ title, source, open, onCloseModal}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={() => onCloseModal()}>
+            <Button mr={3} onClick={() => onCloseModal()}>
               Close
             </Button>
           </ModalFooter>

@@ -523,7 +523,7 @@ export const SidebarWithHeader = () => {
                 <Input onChange={(e) => setTiktok(e.target.value)}/>
 
 
-                 <Button colorScheme='blue' onClick={(e => handleSaveProfile())} mt={2} mr={3} w={'100%'}>
+                 <Button onClick={(e => handleSaveProfile())} mt={2} mr={3} w={'100%'}>
 				Save
 				</Button>
             </Box>

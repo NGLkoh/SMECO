@@ -30,8 +30,9 @@ const AddNewImageSection = ({user}) => {
   const getMedia = async () => {
 
    let checking = user.ids ? user.ids : user._id
-       const res = await axios.post('/api/s3/search', {id: checking})
-	   setMedia(res.data.result)
+        try{ const res = await axios.post('/api/s3/search', {id: checking}) 
+       
+	   setMedia(res.data.result) }catch(e) {console.log(e)}
    }
 
   const handleChange = async (file)  => {

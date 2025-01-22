@@ -32,8 +32,10 @@ const fields = [{
 const handleUpdatePassword = async () => {
       if(newPassword == confirmPassword) {
         const params = window.location.href.split('/')
-        const res = await axios.post('/api/users/reset-password-update', {token : params[4], password: newPassword})
-        window.location.href = "/login"
+        try{ 
+      const res = await axios.post('/api/users/reset-password-update', {token : params[4], password: newPassword})
+
+      window.location.href = "/login"
           toast({
 			title: "Success",
 			description: "Success reset password",
@@ -41,6 +43,10 @@ const handleUpdatePassword = async () => {
 			duration: 2000,
 			isClosable: true,
 		  });  
+
+      } catch(e) {console.log(e)}
+   
+     
 
      } else {
 	toast({
@@ -64,7 +70,7 @@ const handleUpdatePassword = async () => {
 		<Box colSpan={3} bg={'#232536'} color={'#ffffff'}  height={'100%'} minHeight="100vh"> 
        <Box pl={isLargerThan980 ? '25%' : 5} pr={ isLargerThan980 ? '25%' : 5}> 
            { fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
-          <Button margin={2} onClick={() => handleUpdatePassword()} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+          <Button margin={2} onClick={() => handleUpdatePassword()}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Send
 			 </Button>
        </Box>

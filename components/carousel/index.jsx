@@ -160,7 +160,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                   </Text>
                   <Box mt={4} textAlign="justify">
                     <Button
-                      colorScheme="teal"
+                     
                       bg="black"
                       color="white"
                       _hover={{ bg: 'gray.700' }}

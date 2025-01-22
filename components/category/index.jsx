@@ -85,7 +85,7 @@ const Category = () => {
                             <Heading mb={2} fontSize="25px" size="lg" fontWeight={500}>
                               {category.title}
                             </Heading>
-                            <Button mt={4} colorScheme="yellow"  fontWeight={500}>
+                            <Button mt={4} fontWeight={500}>
                               View Posts
                             </Button>
                           </CardBody>
