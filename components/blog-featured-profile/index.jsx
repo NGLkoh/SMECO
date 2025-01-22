@@ -16,6 +16,11 @@ import { FaFacebook, FaInstagram, FaLinkedin  } from 'react-icons/fa';
 
 export default function BlogFeaturedProfile({profile, name}) {
 const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
+
+const handleClickRedirectUrl = (url) => {
+let newUrl = url.replace("https://", "")
+window.open("https://"+newUrl, '_blank');
+}
   return (
 <ChakraProvider>
     <Container maxW={'7xl'}>
@@ -67,27 +72,28 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                
                 zIndex: -1,
               }}>
-              Hey there, I’m {name} and Welcome to my Blog
+              Hey there, I’m {name} and Welcome to my Blog 
             </Text>
           </Heading>
           <Text  color={'white'}>
           {profile? profile.description: ""}   
         </Text>
   { isLargerThan980 ? 
-          <Stack color={'white'} spacing={{ base: 4, sm: 6 }} position={'relative'} direction={{ base: 'column', sm: 'row' }}>
-  <Link href={profile ? profile.facebook : ""}><Image 
+ <Stack color={'white'} spacing={{ base: 4, sm: 6 }} position={'relative'} direction={{ base: 'column', sm: 'row' }}>
+  <Link href="#" onClick={() => handleClickRedirectUrl(profile ? profile.facebook : "")} ><Image 
       src="../fb.png" 
       alt="FB Logo" 
       boxSize="30px"
     /></Link>
-  <Link href={profile ? profile.instagram : ""}><Image 
+
+  <Link   href="#" onClick={() => handleClickRedirectUrl(profile ? profile.instagram : "")} ><Image 
       src="../IG.png" 
       alt="IG Logo" 
       boxSize="30px"
     /></Link>
   
   {/* Shopee */}
-  <Link href={profile ? profile.shopee : ""}>
+  <Link   href="#" onClick={() => handleClickRedirectUrl(profile ? profile.shopee : "")} >
     <Image 
       src="https://static.vecteezy.com/system/resources/previews/028/766/369/non_2x/shopee-icon-symbol-free-png.png" 
       alt="Shopee Logo" 
@@ -96,7 +102,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   </Link>
 
   {/* Lazada */}
-  <Link href={profile ? profile.lazada : ""}>
+  <Link   href="#" onClick={() => handleClickRedirectUrl(profile ? profile.lazada : "")} >
     <Image 
       src="https://safetyware.com/wp-content/uploads/2022/03/Lazada-Icon-Circle.png" 
       alt="Lazada Logo" 
@@ -105,7 +111,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
   </Link>
 
   {/* TikTok */}
-  <Link href={profile ? profile.tiktok : ""}>
+  <Link href="#" onClick={() => handleClickRedirectUrl(profile ? profile.tiktok : "")}>
     <Image 
       src="../tiktok.png" 
       alt="TikTok Logo" 
