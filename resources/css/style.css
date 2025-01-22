@@ -15,11 +15,15 @@
 }
 
 .highlighted-day {
-  background-color: #3182ce; /* Blue highlight */
+  background-color: #f9c74f;
   color: white;
   border-radius: 50%;
 }
 
+.highlight-date {
+  background-color: #f9c74f;
+  border-radius: 5px;
+}
 
 html, body, #fullheight {
     min-height: 100% !important;
