@@ -8,12 +8,16 @@ import InputCustom from '../inputs/index'
 import axios from 'axios'
 import { FaEye, FaLock } from 'react-icons/fa'
 const ChangePasswordModal =  ({openPassword, closeEditEventModal, username}) => {
- const toast = useToast()
+
+const toast = useToast()
 const [newPassword , setNewPassword] = useState("")
 const [confirmPassword , setConfirmPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPassword1, setShowPassword1] = useState(false);
+const [showPassword, setShowPassword] = useState(false);
+const [showPassword1, setShowPassword1] = useState(false);
+const [disBtn, setDisBtn ] = useState(false)
+
 const handleUpdatePassword = async () => {
+       setDisBtn(true)
       if(newPassword == confirmPassword) {
         const params = window.location.href.split('/')
         const res = await axios.post('/api/users/reset-password-dashboard', {username : username, password: newPassword})
@@ -26,8 +30,10 @@ const handleUpdatePassword = async () => {
 			duration: 2000,
 			isClosable: true,
 		  });  
+         setDisBtn(false)
         closeEditEventModal()
      } else {
+       setDisBtn(false)
 	toast({
 		title: "Password Not match",
 		description: "Please check password.",
@@ -98,7 +104,7 @@ const handleUpdatePassword = async () => {
           </ModalBody>
 
           <ModalFooter>
-			 <Button mr={3} onClick={() =>handleUpdatePassword()}>
+			 <Button mr={3} disabled={disBtn} onClick={() =>handleUpdatePassword()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditEventModal()}>

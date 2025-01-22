@@ -3,7 +3,7 @@
 'use client'
 
 import React, {useState} from 'react'
-import {Modal , ModalOverlay, Text, ModalContent, ModalHeader, ModalCloseButton,Input,Textarea,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
+import {Modal , ModalOverlay,useToast, Text, ModalContent, ModalHeader, ModalCloseButton,Input,Textarea,  ModalBody , ModalFooter, Button} from '@chakra-ui/react'
 import axios from "axios";
 const fileTypes = ["JPG", "PNG", "GIF"];
 import { FileUploader } from "react-drag-drop-files";
@@ -13,10 +13,12 @@ const EditTemplate =  ({modalEditTemplate, closeEditModal, refresh, editState}) 
    const [ description, setDescription] = useState()
    const [file, setFile ] = useState()
    const [fileName, setFileName ] = useState()
-
+   const [disBtn, setDisBtn ] = useState(false)
+   const toast = useToast();
    const handleEditTemplate = async () => {
+            setDisBtn(true)
 	        fileName ? await axios.post('/api/s3/upload', {filename: fileName, base64: file}) : ""
-
+         
             let editorState = {
                title: title ? title : editState.title,
                fileName: fileName? fileName : editState.fileName,
@@ -26,6 +28,15 @@ const EditTemplate =  ({modalEditTemplate, closeEditModal, refresh, editState}) 
 		    await axios.post('/api/template/update-template-data', { id: editState._id,  data: editorState, type : 2 })
             refresh()
             closeEditModal()
+
+                 toast({
+ 						title: `Successfully updated`,
+  						status: 'success',
+  						position: 'top-right',
+  						duration: 9000,
+  						isClosable: true,
+  					})
+          setDisBtn(false)
    }
 
    const handleChange = async (file)  => {
@@ -61,7 +72,7 @@ const EditTemplate =  ({modalEditTemplate, closeEditModal, refresh, editState}) 
           </ModalBody>
 
           <ModalFooter>
-			 <Button mr={3} onClick={() => handleEditTemplate()}>
+			 <Button mr={3} disabled={disBtn} onClick={() => handleEditTemplate()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditModal()}>
