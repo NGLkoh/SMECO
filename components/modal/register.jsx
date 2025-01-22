@@ -71,7 +71,8 @@ const handleChangeBarangayClearance = async (file)  => {
          catch(e) { console.log(e)}
          try{ await axios.post('/api/s3/upload', {filename: filenameBC, base64: barangayClearance}) } 
          catch(row) {console.log(row) }
-          const res = await axios.post('/api/users/checker', {email : decodeCredentials.email})
+
+     const res = await axios.post('/api/users/checker', {email : decodeCredentials.email})
   
      if(res.data.message !== 'true') { 
         try{
@@ -140,7 +141,7 @@ const handleChangeBarangayClearance = async (file)  => {
 </Box>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleRegisterGoogle()}>
+			 <Button  mr={3} onClick={() => handleRegisterGoogle()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModalRegisterLogin()}>

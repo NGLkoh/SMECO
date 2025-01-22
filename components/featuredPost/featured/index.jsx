@@ -45,7 +45,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 				{/* <Text fontSize={9} mt={4}>  By Juan Dela Cruz   l   May 23, 2024 </Text> */}
 				<Text fontWeight={600} mt={4}> 	{row.title} </Text>
 				<Text mt={4} fontSize={10}>     {row.description} </Text>
-				<Link href={`/blog-client/${row._id}`}><Button colorScheme='teal' size='lg' fontFamily="sans-serif" mt={4} borderRadius={0} backgroundColor={'#ffd050'} w={40} color={"#000000"} fontSize={14}>
+				<Link href={`/blog-client/${row._id}`}><Button  size='lg' fontFamily="sans-serif" mt={4} borderRadius={0} backgroundColor={'#ffd050'} w={40} color={"#000000"} fontSize={14}>
 					Read More <Text ml={1.5} position={'relative'} fontSize={16} bottom={'0px'}>&gt;</Text>
 				</Button></Link>
 			</Box> 

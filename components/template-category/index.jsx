@@ -147,7 +147,7 @@ const TemplateCategory = ({user}) => {
         </Flex>
 
 { add == false ? (<TableContainer>
-  <Table variant='striped' colorScheme='$F7FAFC'>
+  <Table variant='striped'>
     <Thead>
       <Tr  background='#232536' color={'white'}>
         <Th  color={'white'}>Title</Th>

@@ -25,7 +25,7 @@ const ModalSubscribe = ({ title, open, onCloseModal, subscribes}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={() => onCloseModal()}>
+            <Button mr={3} onClick={() => onCloseModal()}>
               Close
             </Button>
           </ModalFooter>

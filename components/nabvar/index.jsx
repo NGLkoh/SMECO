@@ -179,7 +179,6 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
               icon={<FaSearch />}
               aria-label="Search"
               display={{ base: 'inline-flex', md: 'none' }}
-              colorScheme="whiteAlpha"
               color="white"
               bg="transparent"
               onClick={() => setIsSearchOpen(!isSearchOpen)}

@@ -61,7 +61,7 @@ const EditTemplate =  ({modalEditTemplate, closeEditModal, refresh, editState}) 
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleEditTemplate()}>
+			 <Button mr={3} onClick={() => handleEditTemplate()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditModal()}>

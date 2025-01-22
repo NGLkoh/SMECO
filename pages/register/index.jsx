@@ -262,7 +262,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 					sitekey="6LfoxpYqAAAAAP27JqB_GiMEWoDby8gSfV_ujAeP"
 					onChange={ () => onChangeRecapcha()}
      				 /></Box>
-				<Button colorScheme='teal' isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
+				<Button  isDisabled={firstName && lastName && email && password ? false : true} mt={2} width={'98%'} bg={'#FFD050'} variant='solid' onClick={() =>  {if (!recaptchaVerified) {
 				toast({
 					title: "Please complete the reCAPTCHA",
 					description: "Warning",
@@ -308,10 +308,10 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 					</Box>
 
 					<Box  mt={6}> 
-					<Button   onClick={() => setNext(1)}  margin={2} colorScheme='teal' mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
+					<Button   onClick={() => setNext(1)}  margin={2} mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
 					</Button> 
-					<Button margin={2} disabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+					<Button margin={2} disabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Continue
 					</Button>
 			 	</Box>

@@ -85,7 +85,7 @@ const toast = useToast()
 		   position: 'top',
 		   render: () => (
 			 <Box color="white" p={3} bg="red.500" borderRadius="md">
-			   <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
+			   <Button onClick={() => confirmDelete(id)} >Yes, Delete</Button>
 			   <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
 			 </Box>
 		   ),
@@ -133,7 +133,7 @@ const toast = useToast()
               </Flex>
               <Text fontSize="sm" color="gray.600">{chat.convo ?  chat.convo[chat.convo.length - 1].message  : "" } </Text>
             </Box>
-            {chat.unread && <Badge colorScheme="blue" ml={2}></Badge>}
+            {chat.unread && <Badge ml={2}></Badge>}
 
           </Flex>
         ))}
@@ -162,7 +162,7 @@ const toast = useToast()
             </Box>
             <Flex align="center" p={4} borderTop="1px solid gray">
               <Textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Type a message..." bg="white" resize="none" mr={2} />
-              <Button colorScheme="blue" onClick={() => sendMessage()}>Send</Button>
+              <Button onClick={() => sendMessage()}>Send</Button>
             </Flex>
           </>
         ) : (

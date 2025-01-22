@@ -80,7 +80,6 @@ const FeaturedPost = () => {
                         </Text>
                         <Link href={`/blog-client/${row._id}`}>
                           <Button
-                            colorScheme="teal"
                             size="lg"
                             fontFamily="sans-serif"
                             mt={6}

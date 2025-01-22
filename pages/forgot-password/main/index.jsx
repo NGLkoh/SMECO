@@ -51,7 +51,7 @@ const handleResetPassword = async () => {
 
              { fields.map((row, index) => (<InputCustom key={index} data={row}/> ))}
       
-             <Button margin={2} onClick={() => handleResetPassword()} colorScheme='teal' mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+             <Button margin={2} onClick={() => handleResetPassword()}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Send
 			 </Button>
          </Box>

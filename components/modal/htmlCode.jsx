@@ -25,7 +25,7 @@ const HtmlModalTemplate = ({modalHtmlTemplate, setRawHtml, closeModalHtml, html,
           </ModalBody>
 
           <ModalFooter>
-			 <Button colorScheme='blue' mr={3} onClick={() => handleSaveHtml()}>
+			 <Button mr={3} onClick={() => handleSaveHtml()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModalHtml()}>
