@@ -23,6 +23,21 @@ const DetailFooter = () => {
   const handleAddSubscribe = async () => {
     try {
       if (email) {
+        // Email regex for validation
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+        if (!emailRegex.test(email)) {
+          toast({
+            title: 'Invalid Email Address',
+            description: 'Please enter a valid email address.',
+            status: 'warning',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          });
+          return; // Exit if email is not valid
+        }
+  
         const checker: AxiosResponse<{ message: string }> = await axios.post(
           '/api/subscribe/searchByEmail',
           { email }
