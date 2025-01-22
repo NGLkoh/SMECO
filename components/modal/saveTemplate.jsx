@@ -13,11 +13,11 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
    const [ description, setDescription] = useState()
    const [file, setFile ] = useState()
    const [fileName, setFileName ] = useState()
-       const [disBtn, setDisBtn ] = useState(false)
+   const [disBtn, setDisBtn ] = useState(false)
    const toast = useToast();
    const handleSaveTemplate = async () => {
          setDisBtn(true)
-        const [disBtn, setDisBtn ] = useState(false)
+       
          if(title && description && fileName) {
             try {
             let checking = user.ids ? user.ids : user._id
