@@ -4,18 +4,6 @@ import React from 'react'
 
 const Header = () => {
    return (<Head>
-  {/* Google tag (gtag.js) */}
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5SH1J2DZ49"></script>
-         <script
-            dangerouslySetInnerHTML={{
-               __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-5SH1J2DZ49');
-               `,
-            }}
-         ></script>
 		<meta name="description" content="Discover innovative strategies and tools to boost your brand's visibility and engagement."/> 	
 		<link rel="canonical" href="https://www.markadongpinoy.com/"/> 	
 		<meta property="og:locale" content="en_US"/> 	

@@ -9,7 +9,9 @@ import Footer from '../../components/footer'
 export default class index extends Component  {
     render () {
 		return (<> 
+		
 	<Navbar page='about-us'/>
+	
       <Content/>
 	{/*<Category/>
 	<ImageBanner/>*/}

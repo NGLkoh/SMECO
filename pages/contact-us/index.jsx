@@ -27,6 +27,7 @@ const ContactPage = () => {
   return (
     <>
       <Navbar />
+      
       <ChakraProvider>
         <Container
           maxW="full"

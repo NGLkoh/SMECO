@@ -14,6 +14,12 @@
   }
 }
 
+.highlighted-day {
+  background-color: #3182ce; /* Blue highlight */
+  color: white;
+  border-radius: 50%;
+}
+
 
 html, body, #fullheight {
     min-height: 100% !important;
