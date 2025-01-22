@@ -114,6 +114,7 @@ const DetailFooter = () => {
               <Input
                 placeholder="Enter Your Email"
                 bg="white"
+                color={'black'}
                 borderColor="gray.400"
                 onChange={(e) => setEmail(e.target.value)}
                 _placeholder={{ color: 'gray.500' }}

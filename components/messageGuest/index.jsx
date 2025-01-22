@@ -9,18 +9,20 @@ import {
   Text,
   Badge,
   Textarea,
+  useToast,
   Button,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import io from 'socket.io-client'
+import { FaTrash } from 'react-icons/fa';
 
 let socket;
 
 export const MessageGuest = ({ user}) => {
   const [selectedChat, setSelectedChat] = useState(null);
-   const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-
+const toast = useToast()
   useEffect(() => {
       getMessage();
       socketInitialize()
@@ -71,7 +73,43 @@ export const MessageGuest = ({ user}) => {
    }
    
   };
+   const handleDeleteMessage = async (id) => {
+      console.log(id, "TADSAD")
 
+     	toast({
+		   title: "Are you sure?",
+		   description: "Do you really want to delete this message?",
+		   status: "warning",
+		   duration: 3000,
+		   isClosable: true,
+		   position: 'top',
+		   render: () => (
+			 <Box color="white" p={3} bg="red.500" borderRadius="md">
+			   <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
+			   <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
+			 </Box>
+		   ),
+		 });
+   }
+   const confirmDelete =  async(id) => {
+      try{
+      const res = await axios.post('/api/message/remove', { id: id})
+      setMessage(message.filter(message => message._id !== id)); // Remove post from state
+      setSelectedChat(null)
+      toast({
+		title: "Already Succefully delete message",
+		description: "Successfully deleted",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
+     
+     }catch(e) {
+
+       console.log(e)
+     }
+  	  
+   } 
   return (
     <Flex h="85vh" bg="white">
       <Box w="30%" bg="white" p={4} color="black" overflowY="auto">
@@ -96,6 +134,7 @@ export const MessageGuest = ({ user}) => {
               <Text fontSize="sm" color="gray.600">{chat.convo ?  chat.convo[chat.convo.length - 1].message  : "" } </Text>
             </Box>
             {chat.unread && <Badge colorScheme="blue" ml={2}></Badge>}
+
           </Flex>
         ))}
       </Box>
@@ -108,6 +147,8 @@ export const MessageGuest = ({ user}) => {
                 <Avatar src={selectedChat.avatar} name={selectedChat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' : selectedChat.convo[0].name} mr={4} />
                 <Text fontWeight="bold">{selectedChat.users.includes(('672ff29e19abf9597c2544f6')) ?  'Admin' : selectedChat.convo[0].name }</Text>
               </Flex>
+              
+           <FaTrash cursor={'pointer'} onClick={() => handleDeleteMessage(selectedChat._id)}/>
             </Flex>
             <Box h="calc(100% - 120px)" overflowY="auto" p={4}>
               {message? (message.find(o => o._id ===  selectedChat._id).convo).map((msg, index) => (

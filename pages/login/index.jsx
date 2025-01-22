@@ -99,7 +99,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
       } else {
 
         toast({
-          title: 'Please wait for email verification',
+          title: 'Please wait for the admin to verify your account',
           status: 'warning',
           position: 'top-right',
           duration: 9000,

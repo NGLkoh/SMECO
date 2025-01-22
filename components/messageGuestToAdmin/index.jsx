@@ -9,10 +9,12 @@ import {
   Text,
   Badge,
   Textarea,
+useToast,
   Button,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import io from 'socket.io-client'
+import { FaTrash } from 'react-icons/fa';
 
 let socket;
 
@@ -20,7 +22,7 @@ export const MessageGuestToAdmin = ({ user}) => {
   const [selectedChat, setSelectedChat] = useState(null);
    const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-
+const toast = useToast()
   useEffect(() => {
       getMessage();
       socketInitialize()
@@ -80,7 +82,43 @@ export const MessageGuestToAdmin = ({ user}) => {
    }
   };
 
+  const handleDeleteMessage = async (id) => {
+      console.log(id, "TADSAD")
 
+     	toast({
+		   title: "Are you sure?",
+		   description: "Do you really want to delete this message?",
+		   status: "warning",
+		   duration: 3000,
+		   isClosable: true,
+		   position: 'top',
+		   render: () => (
+			 <Box color="white" p={3} bg="red.500" borderRadius="md">
+			   <Button onClick={() => confirmDelete(id)} colorScheme="red">Yes, Delete</Button>
+			   <Button ml={3} onClick={() => toast.closeAll()}>Cancel</Button>
+			 </Box>
+		   ),
+		 });
+   }
+   const confirmDelete =  async(id) => {
+      try{
+      const res = await axios.post('/api/message/remove', { id: id})
+      setMessage(message.filter(message => message._id !== id)); // Remove post from state
+      setSelectedChat(null)
+      toast({
+		title: "Already Succefully delete message",
+		description: "Successfully deleted",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
+     
+     }catch(e) {
+
+       console.log(e)
+     }
+  	  
+   } 
   const handleTextArea = (e) => {
     setNewMessage(e.target.value);
   }
@@ -120,6 +158,7 @@ export const MessageGuestToAdmin = ({ user}) => {
                 <Avatar src={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${selectedChat.fileName}`}  name={selectedChat.convo[0].name} mr={4} />
                 <Text fontWeight="bold">{selectedChat.convo[0].name }</Text>
               </Flex>
+               		   <FaTrash cursor={'pointer'} onClick={() => handleDeleteMessage(selectedChat._id)}/>
             </Flex>
             <Box h="calc(100% - 120px)" overflowY="auto" p={4}>
               {message ? message[0] ? (message.find(o => o._id ===  selectedChat._id).convo).map((msg, index) => (
@@ -128,6 +167,7 @@ export const MessageGuestToAdmin = ({ user}) => {
                     <Text>{msg.message}</Text>
                     <Text fontSize="xs" color="gray.500">{msg.time}</Text>
                   </Box>
+                
                 </Flex>
               )) :"" : ""}
             </Box>

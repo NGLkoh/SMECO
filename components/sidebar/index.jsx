@@ -253,6 +253,8 @@ const NavItem = ({
           borderRadius="lg"
           role="group"
           cursor="pointer"
+          bg={selectedId === id ? '#FFD050' : undefined} // Highlight selected sublink
+          color={selectedId === id ? 'black' : undefined}
           _hover={{
             bg: '#FFD050',
             color: 'black',
@@ -298,7 +300,7 @@ const NavItem = ({
               bg={selectedId === subLink.id ? '#FFD050' : undefined} // Highlight selected sublink
               color={selectedId === subLink.id ? 'black' : undefined}
               _hover={{ bg: '#FFD050', color: 'black' }}
-   borderRadius="8"
+              borderRadius="8"
               onClick={() => {
                 setNav(subLink.id);  // Navigate to the sublink
                 setSelectedId(subLink.id); // Highlight clicked sublink
@@ -360,7 +362,7 @@ const  handleLogout = async () => {
             ? `https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${user.profile[0].fileName}` 
             : "" // No avatar image, use default
         } 
-			 name={`${user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} ${user ? user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}`} />
+			 name={`${user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} ${user && user.lastName? user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}`} />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
@@ -368,7 +370,7 @@ const  handleLogout = async () => {
                   ml="2"
                   color="white"
                 >
-                  <Text fontSize="sm" color="white">{user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} {user ?  user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}</Text>
+                  <Text fontSize="sm" color="white">{user ? user.firstName.charAt(0).toUpperCase()+ user.firstName.slice(1) : ""} {user && user.lastName?  user.lastName.charAt(0).toUpperCase()+ user.lastName.slice(1) : ""}</Text>
                   <Text fontSize="xs" color="white">{user ? user.userType.charAt(0).toUpperCase()+ user.userType.slice(1) : ""}</Text>
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>

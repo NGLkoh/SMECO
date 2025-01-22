@@ -114,6 +114,14 @@ const Template = ({ user }) => {
     console.log(value, id)
     const res = await axios.post('/api/template/update-template-category', { category_id: value, id: id })
     console.log(res)
+    getTemplate()
+   	toast({
+		title: "Already Succefully change category",
+		description: "Successfully Edited",
+		status: "success",
+		duration: 2000,
+		isClosable: true,
+		});
   }
 
   const [add, setAdd] = useState(false)
