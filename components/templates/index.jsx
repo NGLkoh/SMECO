@@ -208,7 +208,7 @@ const Template = ({ user }) => {
         />
         <HStack spacing={8} alignItems={'center'}>
           <Box fontSize={'xl'} fontWeight={'600'}>Blog Articles</Box>
-            <Button
+          { edit ?   <Button
 				leftIcon={<FaImage />}
 				onClick={(e) => openImageModal()}
 				bg={'gray'} variant='solid'
@@ -217,8 +217,19 @@ const Template = ({ user }) => {
 				mr={4}>
 				Insert Image
 			</Button>
-        </HStack>
-         
+          : ""}
+
+           { add ?   <Button
+				leftIcon={<FaImage />}
+				onClick={(e) => openImageModal()}
+				bg={'gray'} variant='solid'
+				color={'#ffffff'}
+				size={'md'}
+				mr={4}>
+				Insert Image
+			</Button>
+          : ""}
+         </HStack>
         <Flex alignItems={'center'}>
           { edit ? <> <Button
                 bg={'#232536'} variant='solid'
