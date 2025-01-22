@@ -86,7 +86,7 @@ const SaveTemplate =  ({modalTemplate, closeModal, html, user, refresh, back}) =
           </ModalBody>
 
           <ModalFooter>
-			 <Button  mr={3} disabled={disBtn} onClick={() => handleSaveTemplate()}>
+			 <Button  mr={3} isDisabled={disBtn} onClick={() => handleSaveTemplate()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeModal()}>

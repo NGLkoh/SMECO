@@ -310,7 +310,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 					<Button   onClick={() => setNext(1)}  margin={2} mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
 					</Button> 
-					<Button margin={2} disabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
+					<Button margin={2} isDisabled={ btn  ? false : businessPermit && barangayClearance ? false : true }  onClick={(e) => handleSendingEmail(e)}  mt={2} display={'inline-block'} width={'auto'} bg={'#FFD050'} variant='solid'>
 						Continue
 					</Button>
 			 	</Box>

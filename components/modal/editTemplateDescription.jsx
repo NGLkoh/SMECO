@@ -72,7 +72,7 @@ const EditTemplate =  ({modalEditTemplate, closeEditModal, refresh, editState}) 
           </ModalBody>
 
           <ModalFooter>
-			 <Button mr={3} disabled={disBtn} onClick={() => handleEditTemplate()}>
+			 <Button mr={3} isDisabled={disBtn} onClick={() => handleEditTemplate()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditModal()}>

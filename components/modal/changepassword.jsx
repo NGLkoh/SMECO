@@ -104,7 +104,7 @@ const handleUpdatePassword = async () => {
           </ModalBody>
 
           <ModalFooter>
-			 <Button mr={3} disabled={disBtn} onClick={() =>handleUpdatePassword()}>
+			 <Button mr={3} isDisabled={disBtn} onClick={() =>handleUpdatePassword()}>
               Save
             </Button>
             <Button variant='ghost' mr={3} onClick={() => closeEditEventModal()}>
