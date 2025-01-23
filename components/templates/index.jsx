@@ -75,10 +75,64 @@ const Template = ({ user }) => {
   }
 
   const getCategory = async () => {
+   const defaultCategory = [
+		{
+			"_id": "679186e7a3d5bc0ac72a8fc3",
+			"title": "Food and Beverages"		
+		},
+        {
+			"_id": "67918751a3d5bc0ac72a8fc4",
+			"title": "Cosmetics and Personal Care"		
+		},
+        {
+			"_id": "67918786a3d5bc0ac72a8fc5",
+			"title": "Fashion and Apparel"		
+		},
+        {
+			"_id": "679187baa3d5bc0ac72a8fc6",
+			"title": "Electronics and Gadgets"		
+		},
+        {
+			"_id": "679187e5a3d5bc0ac72a8fc7",
+			"title": "Home and Furniture"		
+		},
+        {
+			"_id": "67918684a3d5bc0ac72a8fc2",
+			"title": "Automotive"		
+		},
+        {
+			"_id": "67918819a3d5bc0ac72a8fc8",
+			"title": "Healthcare and Wellness"		
+		},
+        {
+			"_id": "6791883fa3d5bc0ac72a8fc9",
+			"title": "Baby Products"		
+		},
+		{
+			"_id": "67918868a3d5bc0ac72a8fca",
+			"title": "Sports and Outdoor"		
+		},
+		{
+			"_id": "6791888fa3d5bc0ac72a8fcb",
+			"title": "Books and Stationery"		
+		},	
+		{
+			"_id": "679188b0a3d5bc0ac72a8fcc",
+			"title": "Toys and Games"		
+		},	
+		{
+			"_id": "679188d6a3d5bc0ac72a8fcd",
+			"title": "Pet Supplies"		
+		},	
+		{
+			"_id": "67918919a3d5bc0ac72a8fce",
+			"title": "Cleaning and Household Products"		
+		}
+        ]
     try {
       let checking = user.ids ? user.ids : user._id
       const res = await axios.post('/api/category/search', { id: checking })
-      setCategoryState([...res.data.result])
+      setCategoryState([...res.data.result, ...defaultCategory])
       console.log(res.data.result, category)
     } catch (e) { }
   }

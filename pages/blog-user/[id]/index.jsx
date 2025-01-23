@@ -14,6 +14,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
     const [name, setName] = useState("")
     const [profile, setProfile] = useState()
     const [profileList, setProfileList] = useState()
+
 useEffect(() => {
       fetchIntialBlog()
       fetchProfile()
@@ -45,16 +46,17 @@ const BlogTags = (props) => {
   )
 }
 const fetchIntialBlog = async() => {
-	let params = window.location.href.split('/')
-    console.log(params[4], "USER ID")
+   let params = window.location.href.split('/')
    setTemplateState([])
-  try{const res = await axios.post('/api/template/search', {id: params[4]})
+  try{
+   const res = await axios.post('/api/template/search', {id: params[4]})
    res.data.result.map(async (tem) => {
              let categoryRes 
 	         if(tem.category_id){
                  categoryRes  = await axios.post('/api/category/searchById', {id: tem.category_id})
                  setTemplateState((prevState) => [...prevState, {...tem, category:categoryRes.data.result[0].title  } ]);
-             }
+             
+      }
          }) 
 	} catch(e){console.log(e)}
   }

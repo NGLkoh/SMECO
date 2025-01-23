@@ -6,10 +6,7 @@ export async function middleware (request: NextRequest) {
 	if(data && data.value === 'true'){
 		if (request.nextUrl.pathname === '/dashboard'){
 		    NextResponse.rewrite(new URL('/dashboard', request.nextUrl))
-	   } else if (request.nextUrl.pathname === '/') {
-			NextResponse.rewrite(new URL('/dashboard', request.nextUrl))
-			return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-	    } else if (request.nextUrl.pathname === '/login') {
+	   } else if (request.nextUrl.pathname === '/login') {
 			NextResponse.rewrite(new URL('/dashboard', request.nextUrl))
 			return NextResponse.redirect(new URL('/login', request.nextUrl))
 		}

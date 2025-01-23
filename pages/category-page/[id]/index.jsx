@@ -62,7 +62,7 @@ const FeaturedSecond = () => {
     
     <Container maxW={'7xl'} p="12">
        
-      <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts in {title}</Heading>
+      <Heading as="h2" fontSize={ { base: 'l', sm: 'md' , lg: '2xl'}}>All posts in {title.replace('%20', " ")}</Heading>
        {
              templateState ?   templateState.map(row => (
       <Link color='black' key={row._id} href={`/blog-client/${row._id}`}>  
