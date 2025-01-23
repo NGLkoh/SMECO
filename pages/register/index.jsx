@@ -205,10 +205,31 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
  setRecaptchaVerified(true); 
  }
   const handleNext = async() => {
+     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
     try{ const res = await axios.post('/api/users/checker', {email : email})
      
      if(res.data.message !== 'true') { 
-      setNext(2)
+		if (password.length < 8) {
+
+      	toast({
+			title: 'Password must be at least 8 characters long!',
+			status: 'warning',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+           })
+		} else if (!specialCharRegex.test(password)) {
+          	toast({
+			title: 'Password must contain at least one special character!',
+			status: 'warning',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+           })
+		} else {
+		setNext(2)
+		}
+      
     } else {
 	toast({
 			title: 'Email already existed!',
@@ -242,6 +263,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 						bg="#FFFFFF"
 						color="#4A5568"
 						borderRadius={8}
+                        maxLength={8}
 						placeholder="******"
 						pt={'3px'}
 						size="sm"
