@@ -4,8 +4,9 @@
 
 import ReCAPTCHA from "react-google-recaptcha";
 import React, {StrictMode, useState} from 'react'
-import {Box, Text, Input ,ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack, InputGroup, InputRightElement  } from '@chakra-ui/react'
+import {Box, Text, Input,  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure ,ChakraProvider, PinInputField, useMediaQuery, Image, PinInput, Flex, Center, Heading  , Button, Stack, FormControl  , useToast, HStack, InputGroup, InputRightElement  } from '@chakra-ui/react'
 import ModalImage from '../../components/modal/viewModalImage'
+
 import axios from "axios";
 import Navbar from '../../components/nabvar';
 import InputCustom from '../../components/inputs/index'
@@ -20,7 +21,9 @@ import { FaEye, FaLock } from "react-icons/fa";
 const fileTypes = ["JPG", "PNG", "GIF"];
 const CLIENT_ID = "512275838388-jal64cg1khdpl58kt7ba9c1k2ge0u041.apps.googleusercontent.com"
 
+
 const Register = () => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	const [firstName, setFirstname] = useState(String)
 	const [lastName, setlastName] = useState(String)
@@ -386,7 +389,31 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 						<Image onClick={() => handleOpenModal('Business Permit','document/business-permit.png')} src="first.png" className="logo" w="150px" mb={2}/>
 						<Image onClick={() =>  handleOpenModal('Barangay Clearance','document/business-clearance-sample.png')} src="second.png" className="logo" w="150px"/>
 					</Box>
-
+					{/* Privacy Policy Section */}
+					<Box mt={4} display="flex" alignItems="center">
+							<Text fontSize="sm" mr={2}>
+							By proceeding, you agree to the{' '}
+							<Text
+								as="span"
+								color="blue.500"
+								cursor="pointer"
+								onClick={() => onOpen()}
+								fontWeight="bold"
+							>
+								Privacy Policy
+							</Text>{' '}
+							and consent to the collection of data in accordance with the 
+							<Text
+								as="span"
+								color="blue.500"
+								cursor="pointer"
+								onClick={() => onOpen()}
+								fontWeight="bold"
+							>
+								{' '}Privacy Policy Act in the Philippines.
+							</Text>
+							</Text>
+						</Box>
 					<Box  mt={6}> 
 					<Button   onClick={() => setNext(1)}  margin={2} mt={2} width={'auto'} bg={'#fffff'} border={'1px solid #000000'} color={'#000000'} variant='solid'>
 						Back
@@ -398,6 +425,8 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 				</Box>
 				</Box>
 	`			</Box>
+
+	
 					) : (<>
                    <Flex
 				minH={'90vh'}
@@ -469,10 +498,77 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 		</Box>
  <ModalImage open={open} onCloseModal={onCloseModal} source={source} title={title}/>
    <SaveGoolgeLogin modalRegisterLogin={modalRegisterLogin} closeModalRegisterLogin={closeModalRegisterLogin} decodeCredentials={decodeCredentials}/>
+ {/* Modal for Privacy Policy */}
+<Modal  width={900} isOpen={isOpen} onClose={onClose}>
+  <ModalOverlay />
   
+  <ModalContent maxWidth="1300px" width="1300px" p={10}>
+    <ModalHeader>Privacy Policy for Markadong Pinoy</ModalHeader>
+    <ModalBody>
+      <Text fontSize="14px">
+        <b>Introduction:</b> At Markadong Pinoy, we are committed to protecting the privacy of our users. This Privacy Policy outlines the types of personal data we collect, how it is used, and the steps we take to ensure its security. By using our platform, you agree to the collection and use of data in accordance with this policy.
+
+        <br /><br />
+        <b>1. Data Collection:</b> We collect personal data to facilitate services provided through the Markadong Pinoy platform. This includes:
+        <ul>
+          <li>Personal details such as name, contact information, and identification documents.</li>
+          <li>Transactional data, including interactions within the platform.</li>
+          <li>Browsing data such as IP addresses, cookies, and device details to improve user experience.</li>
+        </ul>
+
+        <br />
+        <b>2. Use of Data:</b> The data we collect is used for the following purposes:
+        <ul>
+          <li>To provide and improve our platform services.</li>
+          <li>To verify the identity and credentials of users for security purposes.</li>
+          <li>For communication regarding account updates, services, or promotional materials related to Markadong Pinoy.</li>
+          <li>To analyze platform usage and enhance the functionality and experience of users.</li>
+        </ul>
+
+        <br />
+        <b>3. Data Protection:</b> We employ various technical and administrative measures to safeguard the confidentiality, integrity, and availability of your personal data. These measures include:
+        <ul>
+          <li>Secure encryption of sensitive data during transfer and storage.</li>
+          <li>Regular audits and checks on our data storage systems.</li>
+          <li>Implementing access control measures to ensure only authorized personnel can access personal data.</li>
+        </ul>
+
+        <br />
+        <b>4. Third-party Sharing:</b> We do not sell, trade, or otherwise transfer your personal data to third parties, except in the following circumstances:
+        <ul>
+          <li>With trusted third-party service providers who assist in the operation of our platform and who have agreed to maintain confidentiality.</li>
+          <li>When required by law or governmental authorities to comply with legal processes, subpoenas, or other legal obligations.</li>
+        </ul>
+
+        <br />
+        <b>5. User Rights:</b> As a user, you have rights under the Data Privacy Act of 2012 (Republic Act No. 10173). These include:
+        <ul>
+          <li>The right to access your personal data that we store.</li>
+          <li>The right to rectify inaccurate or outdated data.</li>
+          <li>The right to object to the processing of your data for specific purposes.</li>
+          <li>The right to request deletion of your personal data, subject to certain conditions under the law.</li>
+        </ul>
+
+        <br />
+        <b>Data Privacy Act Compliance:</b> In compliance with the Data Privacy Act of 2012 in the Philippines, Markadong Pinoy ensures that all your data is handled with the utmost care and in accordance with legal requirements. We are committed to protecting your personal information and ensuring that it is never misused or accessed without your consent.
+
+        <br /><br />
+        If you have any questions regarding our privacy practices or your personal data, you can contact us at our support team for further clarification.
+
+      </Text>
+    </ModalBody>
+
+    <ModalFooter>
+      <Button onClick={onClose}>
+        Agree & Close
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
 </ChakraProvider>
 </Box></GoogleOAuthProvider></StrictMode>)
 
+    
 }
 
 export default Register
