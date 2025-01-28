@@ -128,6 +128,7 @@ const AddSubUserAdmin = ({ user }) => {
               <Tr background="#232536" color={'white'}>
                 <Th color={'white'}>Name</Th>
                 <Th color={'white'}>Email</Th>
+                <Th color={'white'}>Uploaded ID</Th>
                 <Th color={'white'}>Business Permit</Th>
                 <Th color={'white'}>Barangay Clearance</Th>
                 <Th color={'white'}>User Type</Th>
@@ -142,6 +143,17 @@ const AddSubUserAdmin = ({ user }) => {
                   <Tr key={e._id}>
                     <Td>{e.firstName} {e.lastName}</Td>
                     <Td>{e.email}</Td>
+                    <Td>
+                      <Button
+                        bg={'black'} variant='solid'
+                        color={'#ffffff'}
+                        size={'md'}
+                        onClick={() => handleOpenModal('Identification Card', e.ID)}
+                        mr={4}
+                      >
+                        <FaEye />
+                      </Button>
+                    </Td>
                     <Td>
                       <Button
                         bg={'black'} variant='solid'

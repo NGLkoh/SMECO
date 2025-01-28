@@ -24,10 +24,12 @@ const Register = () => {
  const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	const [firstName, setFirstname] = useState(String)
 	const [lastName, setlastName] = useState(String)
+	const [ID, setID] = useState(String)
     const [businessPermit, setBusinessPermit] = useState(String)
 	const [barangayClearance, setBarangayClearabce] = useState(String)
 	const [email,setEmail] = useState(String)
  	const [password, setPassword] = useState(String)
+	 const [password1, setPassword1] = useState(String)
     const [next, setNext] = useState(1)
 	const router = useRouter()
     const [code1, setCode1] = useState(Number)
@@ -41,6 +43,7 @@ const Register = () => {
 	const [ open, setOpen] = useState(false)
     const [ btn , setBtn1] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
+	const [showPassword1, setShowPassword1] = useState(false);
 const [recaptchaVerified, setRecaptchaVerified] = useState(false);
     const [modalRegisterLogin, setModalRegisterLogin] = useState(false);
   const [decodeCredentials, setDecodeCredentials] = useState({});
@@ -70,15 +73,31 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
 
 	const toast = useToast()
+
   const handleOpenModal = (title, source) => {
       setOpen(true)
       setTitle(title)
       setSource(source)
    }
 
+
    const onCloseModal = () => {
      setOpen(false)
     }
+	const handleChangeID = async (file)  => {
+		let r = (Math.random() + 1).toString(36).substring(7)
+			 setFilenameBP(`${r}-${file.name}`)
+		   new Promise((resolve, reject) => {
+				const reader = new FileReader()
+				reader.readAsDataURL(file)
+				reader.onload = () => {
+				  setID(reader.result)
+				 resolve(reader.result)
+				}
+				reader.onerror = reject
+			})
+		};
+
   const handleChangeBusinessPermit = async (file)  => {
     let r = (Math.random() + 1).toString(36).substring(7)
          setFilenameBP(`${r}-${file.name}`)
@@ -129,7 +148,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
            setBtn1(false)
          try{ await axios.post('/api/email/sendEmail', { email:  email, code: val})
           toast({
-          title: 'Code has been sent to your Email Successfullly',
+          title: 'Verification code has been sent to your Email Successfullly',
           status: 'success',
 	      position: 'top-right',
           duration: 9000,
@@ -209,7 +228,7 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
     try{ const res = await axios.post('/api/users/checker', {email : email})
      
      if(res.data.message !== 'true') { 
-		if (password.length < 8) {
+		if (password.length < 8 ) {
 
       	toast({
 			title: 'Password must be at least 8 characters long!',
@@ -226,6 +245,14 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 			duration: 9000,
 			isClosable: true,
            })
+		} else if (password !== password1) {
+			toast({
+				title: 'Password does not match!',
+				status: 'warning',
+				position: 'top-right',
+				duration: 9000,
+				isClosable: true,
+			})
 		} else {
 		setNext(2)
 		}
@@ -263,19 +290,47 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 						bg="#FFFFFF"
 						color="#4A5568"
 						borderRadius={8}
-                        maxLength={8}
+                        maxLength={30}
 						placeholder="******"
 						pt={'3px'}
 						size="sm"
                         
-						mb={4}
+						mb={0}
 					/>
+					
 					<InputRightElement pb={'6px'}>
 					 { showPassword ? <FaLock   color='black' onClick={() => setShowPassword(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword(true)}/>}
 					</InputRightElement>
 				</InputGroup>
 				</Box>
 				</Box>
+
+				<Box margin={"auto"} p={2}>  
+								<Box mt={1} >
+					<Text mb="8px">Confirm Password</Text>
+					<InputGroup>
+					 <Input
+						value={password1}
+						type={showPassword1 ? "text" : "password"}
+						onChange={(e) => setPassword1(e.target.value)}
+						bg="#FFFFFF"
+						color="#4A5568"
+						borderRadius={8}
+                        maxLength={30}
+						placeholder="******"
+						pt={'3px'}
+						size="sm"
+                        
+						mb={4}
+					/>
+					
+					<InputRightElement pb={'6px'}>
+					 { showPassword1 ? <FaLock   color='black' onClick={() => setShowPassword1(false)}/> :	<FaEye color='black' cursor={'pointer'} onClick={() => setShowPassword1(true)}/>}
+					</InputRightElement>
+				</InputGroup>
+				</Box>
+				</Box>
+
                 <Box textAlign={'center'} mt={4} >
 
 				<Box margin={"auto"} pl={ isLargerThan980 ? '34%' : '6%'} mb={"20px"}>
@@ -311,19 +366,23 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
                </Box></Box>) : next == 2 ?  (
 			     <Box pl={isLargerThan980 ? '30%': 5} pt={isLargerThan980 ? 0 : 5} pr={isLargerThan980 ? '30%': 5}  color={'#000000'}> 
                  <Box bg={'#ffff'} borderRadius={6}> 
-				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }} fontWeight={600} pt={4} mb={1} textAlign={'center'}>Upload the following documents</Text>	     
-				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>1. Updated Business Permit </Text>	     
-				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>2. Barangay Clearance</Text>
+				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }} fontWeight={600} pt={4} mb={1} textAlign={'center'}>Upload the following documents:</Text>	     
+				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>1. Valid Identification Card </Text>	
+				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>2. Updated Business Permit </Text>	       
+				 <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}   textAlign={'center'}>3. Barangay Clearance</Text>
 				   
 				   <Box pl={'15%'} pr={'15%'} pb={'15%'} mt={4}> 
-					<Text mb={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Business Permit</Text>
-				      <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeBusinessPermit(e)} name="file" types={fileTypes} />
+					  <Text mb={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Valid Identification Card</Text>
+				      <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeID(e)} name="file" types={fileTypes} />
+					  <Text mb={2} mt={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Business Permit</Text>
+                      <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeBusinessPermit(e)} name="file" types={fileTypes} />
 					  <Text mb={2} mt={2} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}>Barangay Clearance</Text>
                       <FileUploader     classes="custom-fileUploader" handleChange={(e) => handleChangeBarangayClearance(e)} name="file" types={fileTypes} />
                      
 					<Text mt={4} opacity={0.7} fontSize={{ base: '10px', md: 'xsm', lg: 'xsm' }} className='req-text'> Formats accepted are .pdf, .jpg, and .png </Text>
 					<Text mt={4} fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}> If you do not have a file you can use the sample below: </Text>
-					<Box mt={2}mr={'20%' }> 
+					<Box mt={2} mr={'20%'} > 
+					<Text mt={4} mb={'5%'}  fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }}> Upload Passport, Driver's License, National ID etc. <Text fontSize={{ base: '10px', md: 'xsm', lg: 'sm' }} onClick={() => handleOpenModal('ID Sample','document/idsample.png')} b={2}><b>View Sample</b></Text></Text>
 						<Image onClick={() => handleOpenModal('Business Permit','document/business-permit.png')} src="first.png" className="logo" w="150px" mb={2}/>
 						<Image onClick={() =>  handleOpenModal('Barangay Clearance','document/business-clearance-sample.png')} src="second.png" className="logo" w="150px"/>
 					</Box>
