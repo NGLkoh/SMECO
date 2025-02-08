@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   Text,
@@ -11,7 +11,7 @@ import {
   extendTheme,
   Center,
 } from '@chakra-ui/react';
-
+import axios from 'axios';
 // Custom breakpoints for responsiveness
 const customTheme = extendTheme({
   breakpoints: {
@@ -27,7 +27,16 @@ const Content = () => {
   const [isTablet] = useMediaQuery('(min-width: 768px) and (max-width: 979px)');
   const [isLaptop] = useMediaQuery('(min-width: 980px) and (max-width: 1279px)');
   const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)');
+  const [web, setWeb] = useState([])
+  useEffect(() => {
+      initialGetWeb()
+  }, []);
 
+ const initialGetWeb = async() => {
+      const res = await axios.post('/api/web/all')
+         console.log(res.data.result)
+        setWeb(...res.data.result)
+  }
   const getPadding = () => {
     if (isLaptop || isLargerThan1280) return '15%';
     if (isTablet) return '10%';
@@ -48,14 +57,14 @@ const Content = () => {
           {/* Top Section */}
           <Box textAlign="center" p={2} mt={20}>
             <Text fontSize={getFontSize('30px', '40px', '50px')} mb={2} fontWeight="bold">
-              Who Are We?
+             {web.aboutTitle}
             </Text>
             <Text
               fontSize={getFontSize('15px', '18px', '25px')}
               fontWeight={500}
               textAlign="center"
             >
-              Our Member Network is Committed to Learning and Helping Each Other Succeed
+             {web.aboutDesc}
             </Text>
           </Box>
 
@@ -85,9 +94,7 @@ const Content = () => {
               mt={4}
               lineHeight={1.6}
             >
-              Gain access to the country's top experts in social entrepreneurship. Grow beyond our
-              personal limits. Make breakthroughs as we redefine and realize your goals in life and
-              in business.
+             {web.aboutDesc2}
             </Text>
           </Box>
 
@@ -102,15 +109,8 @@ const Content = () => {
               <Text fontSize={getFontSize('30px', '40px', '50px')} mb={4} fontWeight="bold">
                 Our Ambition
               </Text>
-              <Text fontSize={getFontSize('16px', '18px', '20px')} textAlign="left" lineHeight={1.8}>
-                We are connected and better for knowing one another. Our members thrive because of
-                the connections we make and the relationships we develop. CAPE creates a space where
-                members can have real conversations and share experiences, successes, and failures.
-                <br />
-                <br />
-                Our goal is to enable members to achieve transformative growth. Whether it's
-                measurable shifts in business performance or personal development, the impact is
-                profound and life-changing.
+              <Text fontSize={getFontSize('16px', '18px', '20px')} textAlign="left" lineHeight={1.8} dangerouslySetInnerHTML={web ? web.aboutColumn1 ? { __html: web.aboutColumn1.replaceAll(".", ".<br><br>") } : { __html: web.aboutColumn1} : { __html: web.aboutColumn1}}>
+             
               </Text>
             </Box>
 
@@ -118,17 +118,8 @@ const Content = () => {
               <Text fontSize={getFontSize('30px', '40px', '50px')} mb={4} fontWeight="bold">
                 Our Core Values
               </Text>
-              <Text fontSize={getFontSize('16px', '18px', '20px')} textAlign="left" lineHeight={1.8}>
-                C - Commitment to excellence in all aspects, maintaining integrity and quality.
-                <br />
-                <br />
-                A - Authenticity in being truthful and dependable, fostering trust.
-                <br />
-                <br />
-                P - Progressiveness by inspiring innovation and urgent action for success.
-                <br />
-                <br />
-                E - Enterprise through continuous improvement and innovative solutions.
+              <Text fontSize={getFontSize('16px', '18px', '20px')} textAlign="left" lineHeight={1.8} dangerouslySetInnerHTML={web ? web.aboutColumn2 ? { __html:   web.aboutColumn2.replaceAll(".", ".<br><br>")}: { __html: web.aboutColumn2} : { __html: web.aboutColumn1}}>
+				
               </Text>
             </Box>
           </Grid>

@@ -26,7 +26,7 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import axios from "axios";
 import AddSubUserIndex from './add';
-import { FaTrash, FaEye } from 'react-icons/fa'; 
+import { FaTrash, FaEye, FaRecycle } from 'react-icons/fa'; 
 import ModalImage from '../modal/viewModalImage';
 import moment from 'moment';
 
@@ -35,11 +35,15 @@ const AddSubUserAdmin = ({ user }) => {
   const toast = useToast();
   const [title, setTitle] = useState("");
   const [source, setSource] = useState('');
+  const [statusFilter, setStatus] = useState(1);
+  const [activeFilter, setActive] = useState(false);
   const [open, setOpen] = useState(false);
   const [add, setAdd] = useState(false);
   const [users, setUsers] = useState([]);
+  const [isReactiveConfirmOpen, setIsReactiveConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false); // State for the delete confirmation dialog
   const [deletingUserId, setDeletingUserId] = useState(null); // Store user ID for deletion
+  const [reactiveUserId, setReactiveUserId] = useState(null); // Store user ID for deletion
 
   const cancelRef = React.useRef();
 
@@ -59,7 +63,7 @@ const AddSubUserAdmin = ({ user }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.post('/api/users/remove', { id: deletingUserId });
+      await axios.post('/api/users/remove', { id: deletingUserId  });
       toast({
         title: 'Successfully Deleted',
         status: 'success',
@@ -72,8 +76,34 @@ const AddSubUserAdmin = ({ user }) => {
     } catch (e) {
       console.error(e);
       toast({
-        title: 'Error deleting user',
-        description: 'There was an error while deleting the user. Please try again.',
+        title: 'Error Deleted user',
+        description: 'There was an error while Deleted the user. Please try again.',
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
+
+   const handleReActive = async () => {
+    try {
+      await axios.post('/api/users/reactive', { id: reactiveUserId });
+      toast({
+        title: 'Successfully reactive',
+        status: 'success',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+      getUser(); // Refresh users after deleting
+      setIsReactiveConfirmOpen(false); // Close the dialog after deletion
+    } catch (e) {
+      console.error(e);
+      toast({
+        title: 'Error reactive user',
+        description: 'There was an error while reactive the user. Please try again.',
         status: 'error',
         position: 'top-right',
         duration: 9000,
@@ -93,6 +123,7 @@ const AddSubUserAdmin = ({ user }) => {
   };
 
   const handleConfirmUser = async (id, value, name) => {
+  try{
     const res = await axios.post('/api/users/verify-user', { id: id, value: value });
     toast({
       title: `Successfully Update Status for: ${name}`,
@@ -103,7 +134,35 @@ const AddSubUserAdmin = ({ user }) => {
     });
     console.log(res);
     getUser();
+  }catch(e){
+           console.log(e);
+         }
   };
+
+  const handleChangeStatus = async (id, value, name) => {
+         try{
+         const res = await axios.post('/api/users/edit-status', { id: id, value: parseInt(value) });
+		 toast({
+			title: `Successfully Update Status `,
+			status: 'success',
+			position: 'top-right',
+			duration: 9000,
+			isClosable: true,
+			});
+         getUser();
+         }catch(e){
+           console.log(e);
+         }
+  };
+
+
+ const filterByStatus = (value) => {
+  setStatus(value)
+ }
+
+ const filterByActive = (value) => {
+  setActive(value)
+ }
 
   return (
     <ChakraProvider>
@@ -117,6 +176,22 @@ const AddSubUserAdmin = ({ user }) => {
         />
         <HStack spacing={8} alignItems={'center'}>
           <Box fontSize={'xl'} fontWeight={'600'}>View Users</Box>
+            <Select
+            onChange={(e)=> filterByStatus(e.target.value)}
+			width={'150px'}
+			>
+			<option value={1}>Approved</option> 
+			<option value={2}>Pending</option>
+			<option value={3}>Declined</option>
+			</Select>
+ 
+            <Select
+            onChange={(e)=> filterByActive(e.target.value)}
+			width={'150px'}
+			>
+			<option value={false}>Active</option> 
+			<option value={true}>InActive</option>
+			</Select>
         </HStack>
         <Flex alignItems={'center'} />
       </Flex>
@@ -133,14 +208,15 @@ const AddSubUserAdmin = ({ user }) => {
                 <Th color={'white'}>User Type</Th>
                 <Th color={'white'}>Date Created</Th>
                 <Th color={'white'}>Verify</Th>
+                <Th color={'white'}>Status</Th>
                 <Th color={'white'}>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {users && users.map((e) => (
+              {users && users.filter( x => x.archive.toString() === activeFilter.toString() && x.status === parseInt(statusFilter)).map((e) => (
                 e.userType !== "admin" && (
                   <Tr key={e._id}>
-                    <Td>{e.firstName} {e.lastName}</Td>
+                    <Td>{e.firstName} {e.lastName} </Td>
                     <Td>{e.email}</Td>
                     <Td>
                       <Button
@@ -177,9 +253,33 @@ const AddSubUserAdmin = ({ user }) => {
                         <option value={true}>verified</option>
                       </Select>
                     </Td>
+                    <Td>
+                      <Select
+                        placeholder='Select option'
+                        onChange={(r) => handleChangeStatus(e._id, r.target.value, `${e.firstName} ${e.lastName}`)}
+                        value={e.status}
+                        width={'150px'}
+                      >
+                        <option value={1}>Approved</option> 
+                        <option value={2}>Pending</option>
+                        <option value={3}>Declined</option>
+                      </Select>
+                    </Td>
                     <Td position={'relative'}>
                       <Box display={'inline'}>
-                        <Button
+
+                   {activeFilter.toString() === "true"  ?    <Button
+                          bg={'black'} variant='solid'
+                          onClick={() => {
+                            setReactiveUserId(e._id); // Set the user ID for deletion
+                            setIsReactiveConfirmOpen(true); // Show the confirmation dialog
+                          }}
+                          color={'#ffffff'}
+                          size={'md'}
+                          mr={4}
+                        >
+                          <FaRecycle />
+                        </Button> :   <Button
                           bg={'black'} variant='solid'
                           onClick={() => {
                             setDeletingUserId(e._id); // Set the user ID for deletion
@@ -190,7 +290,11 @@ const AddSubUserAdmin = ({ user }) => {
                           mr={4}
                         >
                           <FaTrash />
-                        </Button>
+                        </Button>}
+                      
+
+                   
+                    
                       </Box>
                     </Td>
                   </Tr>
@@ -229,6 +333,34 @@ const AddSubUserAdmin = ({ user }) => {
               </Button>
               <Button colorScheme="red" onClick={handleDelete} ml={3}>
                 Yes, Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
+
+     <AlertDialog
+        isOpen={isReactiveConfirmOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={() => setIsReactiveConfirmOpen(false)}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Confirm Re-active
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to reactive this user? This action cannot be undone.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={() => setIsReactiveConfirmOpen(false)}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={() => handleReActive()} ml={3}>
+                Yes, ReActive
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

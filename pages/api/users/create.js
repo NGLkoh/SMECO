@@ -3,7 +3,6 @@ import axios from "axios";
 export default async function handler(req, res) {
 const UAT_URL = process.env.UAT_URL;
 	let { email, password, firstName, lastName, code, ids, businessPermit, barangayClearance } = req.body;
-     console.log(email , " test")
     const currentTime = new Date(); 
 
      try {
@@ -20,7 +19,8 @@ const UAT_URL = process.env.UAT_URL;
          active: false,
 		 userType: 'user',
 		 ids: ids,
-         "dateCreated": currentTime
+         "dateCreated": currentTime,
+         archive:false
          // add more data if needed
        });
        console.log(response.data);

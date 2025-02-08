@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Container,
   Box,
@@ -22,8 +22,18 @@ import Navbar from '../../components/nabvar';
 import Footer from '../../components/footer';
 import { BsPerson } from 'react-icons/bs';
 import { MdOutlineEmail } from 'react-icons/md';
-
+import axios from 'axios';
 const ContactPage = () => {
+  const [web, setWeb] = useState([])
+  useEffect(() => {
+      initialGetWeb()
+  }, []);
+
+ const initialGetWeb = async() => {
+      const res = await axios.post('/api/web/all')
+         console.log(res.data.result)
+        setWeb(...res.data.result)
+  }
   return (
     <>
       <Navbar />
@@ -64,12 +74,11 @@ const ContactPage = () => {
                   Cavite Association of Producers & Entrepreneurs - CAPE
                 </Text>
                 <Text mt={4}>
-                  <b>Address:</b> The District Imus
-2/F Alagang Ayala Land Center, E.Aguinaldo Highway <br />cor. Daang Hari Road, Anabu II-D, Imus, Cavite 4103 <br />
-                  <b>Mobile:</b> +63936 9940234 <br />
-                  <b>Email:</b> capeest.2021@gmail.com <br />
-                  <b>Facebook:</b>{' '}
-                  <Link href="https://www.facebook.com/profile.php?id=100065009122013" color="blue.500" isExternal>
+                  <b>Address:</b> {web.contactAddress}<br />
+                  <b>Mobile:</b> {web.contactMobile} <br />
+                  <b>Email:</b> {web.contactEmail}<br />
+                  <b>Facebook:</b>
+                  <Link href={web.contactfacebook} color="blue.500" isExternal>
                     CAPE on Facebook
                   </Link>
                 </Text>

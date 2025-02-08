@@ -61,12 +61,16 @@ import { BsBook, BsFillCalendarEventFill, BsNewspaper } from 'react-icons/bs';
 import { FiPocket } from 'react-icons/fi';
 import ChangePasswordModal from '../modal/changepassword'
 import Subscribe from '../list-of-subscribe/index'
+import TemplateCategoryAdmin from '../template-category-admin/index';
+import TemplateAdmin from '../templates-admin/index'
+import CommentAdmin from '../comments-admin/index'
+import WebSettings from '../settings-admin/index'
 const LinkItems = [
   { name: 'Dashboard', icon: FiLayout, id: 'dashboard' },
   {
     name: 'Blog Articles',
     icon: FiFileText,
-    id: 'addTemplate',
+    id: 'template-admin',
     subLinks: [
 	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
@@ -90,7 +94,7 @@ const LinkSubUserItems = [
 	  { name: 'Categories', icon: FiLayers,  id: 'addNewCategory'},
     ],
   },
-  { name: 'Comments', icon: FiMessageSquare,  id: 'comment' },
+   
   { name: 'Anouncement', icon: BsFillCalendarEventFill,  id: 'events' },
   { name: 'Message', icon: FiMessageSquare,  id: 'guestMessage' },
   { name: 'Media', icon: FiCamera,  id: 'imageUpload' }
@@ -102,9 +106,17 @@ const LinkAdmin = [
   id: 'addNewUser-admin'
   },
   { name: 'Message', icon: FiMessageSquare, id: 'guestToAdminMessage'},
+ { name: 'Categories', icon: FiLayers,  id: 'category-admin'},
+ {
+    name: 'Blog Articles',
+    icon: FiFileText,
+    id: 'template-admin'
+  },
+  { name: 'Comments', icon: FiMessageSquare,  id: 'comment-admin' },
  { name: 'Events', icon: BsFillCalendarEventFill,  id: 'admin-events' },
  { name: 'Newsletter', icon: BsNewspaper,  id: 'admin-newletter' },
  { name: 'List of Subscribers', icon:  BsBook,  id: 'subscribe-list' },
+ { name: 'Settings', icon: FiSettings, id: 'settings-admin' }
 ];
 
 const SidebarContent = ({ onClose, user, count, setNav }) => {
@@ -558,10 +570,13 @@ export const SidebarWithHeader = () => {
         { nav === 'events'  && (<Events user={user}/>) } 
         { nav === 'admin-events'  && (<AdminEvents user={user}/>)}
         { nav === 'comment' && (<Comments user={user}/>)}
-        { nav ==='admin-newletter' && (<NewsLetter user={user}/>)}
-        { nav ==='guestToAdminMessage' && (<MessageGuestToAdmin user={user}/>)}
-        { nav ==='subscribe-list' && (<Subscribe user={user}/>)}
-
+        { nav === 'admin-newletter' && (<NewsLetter user={user}/>)}
+        { nav === 'guestToAdminMessage' && (<MessageGuestToAdmin user={user}/>)}
+        { nav === 'subscribe-list' && (<Subscribe user={user}/>)}
+        { nav === 'category-admin' && (<TemplateCategoryAdmin user={user}/>)}
+        { nav === 'template-admin' && (<TemplateAdmin user={user}/>)}
+        { nav === 'comment-admin' && (<CommentAdmin user={user}/>)}
+        { nav === 'settings-admin'  && (<WebSettings user={user}/>) } 
       </Box>
 
        { user ? user.userType == "user" && nav !== 'guestMessage' && (<ContactAdmin user={user}/>) : ""}

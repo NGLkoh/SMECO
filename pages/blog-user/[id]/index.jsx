@@ -7,14 +7,14 @@ import Navbar from '../../../components/nabvar'
 import Footer from '../../../components/footer'
 import axios from 'axios'
 import BlogFeaturedProfile from '../../../components/blog-featured-profile/index'
-
+import GuestBlogMessage from '../../../components/messageGuestBlog/index'
 const BlogClient = () => {
 const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
 	const [templateState, setTemplateState] = useState([]) 
     const [name, setName] = useState("")
     const [profile, setProfile] = useState()
     const [profileList, setProfileList] = useState()
-
+    const [userId, setUser] = useState()
 useEffect(() => {
       fetchIntialBlog()
       fetchProfile()
@@ -22,7 +22,9 @@ useEffect(() => {
 
 const fetchProfile = async () => {
          const params = window.location.href.split('/')
+        setUser(params[4])
         try{const res = await axios.post('/api/users/usersById', {id: params[4]})
+ 
          setProfile(res.data.result[0].profile[0])
          setProfileList(res.data.result[0].profile)
          setName(`${res.data.result[0].firstName} ${res.data.result[0].lastName ? res.data.result[0].lastName  : ""}`)
@@ -63,7 +65,7 @@ const fetchIntialBlog = async() => {
 
    return (<Box><ChakraProvider>
 
-
+     <GuestBlogMessage userId={userId} />
      <Navbar page='homepage' />
       <Box width={'100%'} height={'100%'} w={'100%'} position={'relative'} minHeight="100vh" p={isLargerThan980 ? 0 : 0}>
     

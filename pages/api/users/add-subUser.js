@@ -19,7 +19,8 @@ const UAT_URL = process.env.UAT_URL;
          active: false,
 		 userType: 'sub-user',
 		 ids: ids,
-          "dateCreated": currentTime
+         "dateCreated": currentTime,
+         archive:false
          // add more data if needed
        });
        console.log(response.data);

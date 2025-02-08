@@ -280,10 +280,11 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
             <GridBlurredBackdrop profile={profile} />
             {
               comments.map((e, key) => (
+               e.status === true ? 
                 <Box mb={2} key={key} border={'2px solid #e0e0e0'} p={4}>
                   <Avatar name={e.email} /> {e.email}
                   <Text pl={14} position={'relative'} bottom={'26px'} left={'-3px'}> {e.message} </Text>
-                </Box>
+                </Box> : ""
               ))
             }
           </Box>

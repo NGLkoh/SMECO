@@ -3,17 +3,10 @@ import axios from "axios";
 
 export default async function handler(req, res) {
 const UAT_URL = process.env.UAT_URL;
-	let { id, message, email } = req.body;
-    const currentTime = new Date(); 
-
+	let { id } = req.body;
      try {
-       const response = await axios.post(`${UAT_URL}/comment/create`, {
-         ids: id,
-         message: message,
-          email: email,
-		 date: currentTime,
-         status:false
-         // add more data if needed
+       const response = await axios.post(`${UAT_URL}/user/reActive`, {
+         id: id
        });
        console.log(response.data);
        res.status(200).json(response.data);

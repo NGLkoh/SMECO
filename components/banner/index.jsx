@@ -1,19 +1,28 @@
 'use client';
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, Flex, Button, Text, VStack, Link, useMediaQuery } from '@chakra-ui/react';
 import LazyLoad from 'react-lazyload';
+import axios from 'axios';
 const Banner = () => {
   const [isLargerThan980] = useMediaQuery('(min-width: 980px)');
   const [isLargerThan600] = useMediaQuery('(min-width: 600px)'); // Added for better handling on smaller screens
+  const [web, setWeb] = useState([])
+  useEffect(() => {
+      initialGetWeb()
+  }, []);
 
+ const initialGetWeb = async() => {
+      const res = await axios.post('/api/web/all')
+         console.log(res.data.result)
+        setWeb(...res.data.result)
+  }
   return (
       <Box w="100%" backgroundSize="cover">
         <LazyLoad height={1200}>
         <Flex
           w="full"
           h={isLargerThan980 ? '85vh' : isLargerThan600 ? '70vh' : '50vh'} // Adjust height based on resolution
-          backgroundImage="url('BANNER2.webp')"
+          backgroundImage={`https://smeco-bucket1.s3.ap-southeast-2.amazonaws.com/${web.featuredBanner}`}
           backgroundSize="cover"
           backgroundPosition="center"
           position="relative" // Enable positioning for the overlay
@@ -56,7 +65,7 @@ const Banner = () => {
                 color="white"
                 textAlign="left" // Ensure text doesn't shift horizontally
               >
-                Elevate your Business Marketing Game
+                {web.featuredTitle}
               </Text>
               <Text
                 fontWeight={700}
@@ -70,7 +79,7 @@ const Banner = () => {
                 color="white"
                 textAlign="left"
               >
-                "Discover innovative strategies and tools to boost your brand's visibility and engagement."
+                {web.featuredDecs}
               </Text>
 
               <Stack direction={isLargerThan600 ? 'row' : 'column'} spacing={4}>

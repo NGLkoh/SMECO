@@ -56,6 +56,7 @@ const NavLink = (props) => {
 export default function Simple() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [records, setRecords] = useState([]);
+  const [recordsNoResult, setNR] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false); // State for mobile search bar
 
   useEffect(() => {
@@ -74,6 +75,11 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
       ])
     );
   };
+ const handleCheckValue = (data) => {
+     console.log(records)
+     
+    //  setNR([{ key: data, value: "No Result"} ])
+ }
 
   return (
   
@@ -127,7 +133,8 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                     onFocus={() => {
                       console.log('This function is called when is focused');
                     }}
-                    onChange={(value) => console.log(value)}
+                    callback={(record) => console.log(record)}
+                    onChange={(value) =>  handleCheckValue(value)}
                     autoFocus
                     leftIcon={
                       <>
@@ -207,7 +214,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
         onFocus={() => {
           console.log('This function is called when is focused');
         }}
-        onChange={(value) => console.log(value)}
+        onChange={(value) => handleCheckValue(value)}
         autoFocus
         inputBoxStyles={{
           height: '40px',
