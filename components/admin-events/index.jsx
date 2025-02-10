@@ -205,7 +205,7 @@ const AdminEvents = ({user}) => {
                 <Td border={'2px solid #dddddd'} maxWidth="200px" wordWrap="break-word" whiteSpace="normal">
   {e.description}
 </Td>
-                <Td border={'2px solid #dddddd'} textAlign={'center'}><Text cursor={'pointer'} onClick={() => handleViewUser(e.usersList)}> View Participant</Text></Td>
+                <Td border={'2px solid #dddddd'} textAlign={'center'}><Text cursor={'pointer'} onClick={() => handleViewUser(e.usersList)}> View Participants</Text></Td>
 				<Td border={'2px solid #dddddd'}>{e.date ? moment(e.date).calendar() :  "N/A"}</Td>
                 <Td border={'2px solid #dddddd'}> <Button bg={'black'} variant="solid" color={'#ffffff'} size={'md'} mr={4} onClick={() => handleEdit(e)}>
                   <FaPen/>
@@ -219,7 +219,7 @@ const AdminEvents = ({user}) => {
 			</Tbody>
 		</Table>
 		</TableContainer>
-      <ModalUserEvent  title={'Users'} open={viewUSers} onCloseModal={closeModalUSers} users={users}/>
+      <ModalUserEvent  title={'Participants'} open={viewUSers} onCloseModal={closeModalUSers} users={users}/>
       <ModalImage open={open} onCloseModal={onCloseModal} source={source} title={title}/>
       <EditEvent modalEditEvent={modalEditEvent}  closeEditEventModal={closeEditEventModal} refresh={getEvent} editState={selected}/>
      </Box>

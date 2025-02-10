@@ -76,9 +76,11 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
     );
   };
  const handleCheckValue = (data) => {
-     console.log(records)
-     
-    //  setNR([{ key: data, value: "No Result"} ])
+     console.log(isNaN(data))
+     if(!isNaN(data))   
+     setNR([{ key: data, value: "No Result"} ])
+     else 
+     setNR([])
  }
 
   return (
@@ -125,8 +127,8 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
                 <Link href="/../contact-us">Contact Us</Link>
                 <Box position="relative" color={'black'} width="255px" zIndex="20">
                   <ReactSearchBox
-                    placeholder="Search Here"
-                    data={records}
+                    placeholder="Search Here2"
+                    data={recordsNoResult.length > 0 ? recordsNoResult : records}
                     onSelect={(record) => {
                       window.location.href = record.item.link;
                     }}
@@ -206,7 +208,7 @@ const [isLargerThan980] = useMediaQuery('(min-width: 980px)')
     <Flex alignItems="center" justifyContent="space-between">
       {/* Search Box */}
       <ReactSearchBox
-        placeholder="Search Here"
+        placeholder="Search Here1"
         data={records}
         onSelect={(record) => {
           window.location.href = record.item.link;

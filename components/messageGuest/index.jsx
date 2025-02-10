@@ -15,13 +15,15 @@ import {
 import axios from 'axios';
 import io from 'socket.io-client'
 import { FaTrash } from 'react-icons/fa';
-
+import HandleB2BChat from '../modal/createMessageB2B'
 let socket;
 
 export const MessageGuest = ({ user}) => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [modalB2B, setOpenModalB2B] = useState(false);
+
 const toast = useToast()
   useEffect(() => {
       getMessage();
@@ -91,6 +93,7 @@ const toast = useToast()
 		   ),
 		 });
    }
+
    const confirmDelete =  async(id) => {
       try{
       const res = await axios.post('/api/message/remove', { id: id})
@@ -108,12 +111,20 @@ const toast = useToast()
 
        console.log(e)
      }
-  	  
    } 
+
+   const handleOpenModal = () => {
+     setOpenModalB2B(true)
+  }
+  const closeB2BModal = () =>{
+     setOpenModalB2B(false)
+  }
+
   return (
     <Flex h="85vh" bg="white">
       <Box w="30%" bg="white" p={4} color="black" overflowY="auto">
-        <Text fontSize="lg" fontWeight="bold" mb={4}>Messages</Text>
+        <Text fontSize="lg" fontWeight="bold" mb={4}>Messages   <Button position={'relative !important'} onClick={() => handleOpenModal()} left={'200px'}>Create Mesage B2B</Button></Text>
+        <HandleB2BChat getMessage={getMessage} userId={user.ids ? user.ids : user._id} modalB2B={modalB2B} closeB2BModal={closeB2BModal}/>
         {message.map((chat, key) => (
           <Flex
             key={key}

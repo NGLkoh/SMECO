@@ -9,7 +9,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 let socket;
 
-const GuestBlogMessage = ({userId }) => {
+const GuestBlogMessage = ({userId, title }) => {
   console.log(userId, "USER ID")
   const [message, setMessage] = useState([]);
   const [name, setName] = useState();
@@ -68,10 +68,12 @@ const onChangeRecapcha = () => {
    
  
 const toast = useToast()
-  const handleOpenChat =  async () => {
 
- if (!recaptchaVerified) {
-    toast({
+const handleOpenChat =  async () => {
+const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ if(pattern.test(name)){
+     if (!recaptchaVerified) {
+     toast({
       title: "Please complete the reCAPTCHA.",
       description: "Warning",
       status: "warning",
@@ -79,7 +81,6 @@ const toast = useToast()
       isClosable: true,
     });
     return;
-
 
 } else {
  if(name) {
@@ -109,6 +110,15 @@ const toast = useToast()
     });
  }
 }
+  } else {
+    toast({
+      title: "Please input real email.",
+      description: "Warning",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    });
+   }
   };
 
   return (
@@ -191,7 +201,7 @@ const toast = useToast()
           <Button color="white" bg="#232536" onClick={() => sendMessage()} w="100%">
             Send
           </Button></> : <> <Text fontSize={'18px'}> 
-			 Welcome to Markadong Pinoy! </Text>
+			 Welcome to {title ? title : "Markadong Pinoy!"} </Text>
             <Text fontSize={'14px'}> Please enter an email address to indetify yourself. </Text>
             <Box m={4}>
             <Text> Email: </Text>

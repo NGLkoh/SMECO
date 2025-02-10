@@ -86,6 +86,9 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   }
 
   const handleSaveComment = async () => {
+
+const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ if(pattern.test(email)){
  if (!recaptchaVerified) {
      toast({
 		title: "Please complete the reCAPTCHA before posting comment.",
@@ -118,6 +121,15 @@ const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 		});
     }
 	}
+ } else {
+    toast({
+      title: "Please add email.",
+      description: "Warning",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    });
+  }
   }
   const handelAddLikes = async() => {
       let publicIp  = await publicIpv4();
