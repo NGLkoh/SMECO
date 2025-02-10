@@ -123,7 +123,7 @@ const toast = useToast()
   return (
     <Flex h="85vh" bg="white">
       <Box w="30%" bg="white" p={4} color="black" overflowY="auto">
-        <Text fontSize="lg" fontWeight="bold" mb={4}>Messages   <Button position={'relative !important'} onClick={() => handleOpenModal()} left={'200px'}>Create Mesage B2B</Button></Text>
+        <Text fontSize="lg" fontWeight="bold" mb={4}>Messages   <Button position={'relative !important'} onClick={() => handleOpenModal()} left={'230px'}>Create Mesage</Button></Text>
         <HandleB2BChat getMessage={getMessage} userId={user.ids ? user.ids : user._id} modalB2B={modalB2B} closeB2BModal={closeB2BModal}/>
         {message.map((chat, key) => (
           <Flex
@@ -145,7 +145,6 @@ const toast = useToast()
               <Text fontSize="sm" color="gray.600">{chat.convo ?  chat.convo[chat.convo.length - 1].message  : "" } </Text>
             </Box>
             {chat.unread && <Badge ml={2}></Badge>}
-
           </Flex>
         ))}
       </Box>
